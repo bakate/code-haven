@@ -1,13 +1,20 @@
-import { authHandler, initAuthConfig } from "@hono/auth-js";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
-import { getAuthConfig } from "@/auth";
+import { nextAuthConfiguration } from "@/auth-config";
+import { AuthConfig, authHandler, initAuthConfig } from "@hono/auth-js";
 import user from "./user";
 
 export const runtime = "edge";
 
 const app = new Hono().basePath("/api");
+
+export function getAuthConfig(): AuthConfig {
+  return {
+    ...nextAuthConfiguration,
+  };
+}
+
 app.use("*", initAuthConfig(getAuthConfig));
 app.use("/auth/*", authHandler());
 

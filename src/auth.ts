@@ -1,19 +1,7 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import NextAuth from "next-auth";
 
-import { db } from "@/db/drizzle";
-import Google from "@auth/core/providers/google";
-import { AuthConfig } from "@hono/auth-js";
-import Resend from "next-auth/providers/resend";
+import { nextAuthConfiguration } from "./auth-config";
 
-export function getAuthConfig(): AuthConfig {
-  return {
-    adapter: DrizzleAdapter(db),
-    secret: process.env.AUTH_SECRET,
-    providers: [
-      Google,
-      Resend({
-        from: process.env.RESEND_FROM_EMAIL,
-      }),
-    ],
-  };
-}
+export const { handlers, signIn, signOut, auth } = NextAuth(
+  nextAuthConfiguration
+);
