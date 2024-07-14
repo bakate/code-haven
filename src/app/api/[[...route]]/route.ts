@@ -9,10 +9,8 @@ export const runtime = "edge";
 
 const app = new Hono().basePath("/api");
 
-export function getAuthConfig(): AuthConfig {
-  return {
-    ...nextAuthConfiguration,
-  };
+function getAuthConfig(): AuthConfig {
+  return nextAuthConfiguration;
 }
 
 app.use("*", initAuthConfig(getAuthConfig));

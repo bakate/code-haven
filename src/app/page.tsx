@@ -1,17 +1,13 @@
-import { Button } from "@nextui-org/react";
-export default function Home() {
-  return (
-    <div>
-      <h1 className="text-4xl text-center">Code Haven Staging</h1>
-      <div className="flex gap-4">
-        <Button color="primary" variant="solid">
-          Solid
-        </Button>
+import { protectServer } from "@/features/auth/utils/auth-utils";
 
-        <Button color="primary" variant="ghost">
-          Ghost
-        </Button>
-      </div>
+const Home = async () => {
+  await protectServer();
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <h2 className="text-3xl">You are logged in</h2>
     </div>
   );
-}
+};
+
+export default Home;
