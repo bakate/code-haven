@@ -26,6 +26,7 @@
     "hono": "^4.4.4",
     "next": "14.2.3",
     "next-auth": "^5.0.0-beta.19",
+    "next-intl": "^3.17.2",
     "playwright": "^1.45.1",
     "react": "^18",
     "react-dom": "^18",

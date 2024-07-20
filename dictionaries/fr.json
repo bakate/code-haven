@@ -1,0 +1,21 @@
+{
+  "LocaleSwitcher": {
+    "en-us": "Anglais",
+    "fr": "Français",
+    "de": "Allemand",
+    "es": "Espagnol",
+    "it": "Italien",
+    "label": "Choisissez une langue"
+  },
+  "Navigation": {
+    "courses": "Cours",
+    "analytics": "Analytique",
+    "dashboard": "Tableau de bord",
+    "browse": "Parcourir",
+    "home": "Accueil",
+    "settings": "Paramètres",
+    "billing_subscription": "Facturation & Abonnement",
+    "logout": "Déconnexion",
+    "signed_in_as": "Connecté en tant que"
+  }
+}

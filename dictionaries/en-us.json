@@ -1,0 +1,21 @@
+{
+   "LocaleSwitcher": {
+    "en-us": "English",
+    "fr": "French",
+    "de": "German",
+    "es": "Spanish",
+    "it": "Italian",
+    "label": "Select a language"
+   },
+   "Navigation": {
+    "courses": "Courses",
+    "analytics": "Analytics",
+    "dashboard": "Dashboard",
+    "browse": "Browse",
+    "home": "Home",
+    "settings": "Settings",
+    "billing_subscription": "Billing & Subscription",
+    "logout": "Logout",
+    "signed_in_as": "Signed in as"
+   }
+}

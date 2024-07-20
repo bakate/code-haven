@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Avatar,
   Dropdown,
@@ -7,20 +6,57 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
-import { signOut, useSession } from "next-auth/react";
-import { FiLoader } from "react-icons/fi";
+import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
+import {
+  FiCreditCard,
+  FiHome,
+  FiLoader,
+  FiLogOut,
+  FiSettings,
+} from "react-icons/fi";
 
 export const UserButton = () => {
+  const t = useTranslations("Navigation");
   const session = useSession();
-  if (session.status === "loading") {
+
+  if (session?.status === "loading") {
     return <FiLoader className="size-4 animate-spin text-muted-foreground" />;
   }
 
-  if (session.status === "unauthenticated" || !session.data) {
+  if (session?.status === "unauthenticated" || !session.data) {
     return null;
   }
 
   const { email = "", image = "", name = "" } = session.data?.user ?? {};
+
+  const menuItems = [
+    {
+      label: t("signed_in_as"),
+      href: "/",
+      icon: "",
+    },
+    {
+      label: t("home"),
+      href: "/",
+      icon: FiHome,
+    },
+    {
+      label: t("settings"),
+      href: "/settings",
+      icon: FiSettings,
+    },
+    {
+      label: t("billing_subscription"),
+      href: "/billing",
+      icon: FiCreditCard,
+    },
+    {
+      label: t("logout"),
+      href: "/logout",
+      icon: FiLogOut,
+    },
+  ];
 
   return (
     <Dropdown placement="bottom-end">
@@ -37,15 +73,32 @@ export const UserButton = () => {
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        <DropdownItem key="profile" className="h-14 gap-2">
-          <p className="font-semibold">Signed in as</p>
-          <p className="font-semibold">{email}</p>
-        </DropdownItem>
-        <DropdownItem key="settings">My Settings</DropdownItem>
-        <DropdownItem key="analytics">Analytics</DropdownItem>
-        <DropdownItem key="logout" color="danger" onClick={() => signOut()}>
-          Log Out
-        </DropdownItem>
+        {menuItems.map((item, index) => {
+          if (index === 0) {
+            return (
+              <DropdownItem
+                key={item.label}
+                className="h-14 gap-2 hover:cursor-not-allowed"
+                href="#"
+                textValue={item.label}
+              >
+                <p className="font-semibold">{item.label}</p>
+                <p className="font-semibold">{email}</p>
+              </DropdownItem>
+            );
+          }
+          return (
+            <DropdownItem
+              key={item.label}
+              startContent={<item.icon />}
+              href={item.href}
+              textValue={item.label}
+              color={index === menuItems.length - 1 ? "danger" : "default"}
+            >
+              {item.label}
+            </DropdownItem>
+          );
+        })}
       </DropdownMenu>
     </Dropdown>
   );

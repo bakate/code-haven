@@ -1,7 +1,7 @@
 "use client";
 
+import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 import { UserButton } from "@/features/auth/components/user-button";
-import { cn } from "@/lib/utils";
 import {
   Link,
   Navbar,
@@ -11,16 +11,47 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-  link as linkStyles,
 } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { FiBarChart2, FiCompass, FiLayout, FiList } from "react-icons/fi";
 import { Logo } from "./logo";
 
 export default function NavbarComponent() {
-  const menuItems = ["Dashboard", "My Settings", "Log Out"];
+  const t = useTranslations("Navigation");
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  const isTeacherPage = pathname?.includes("/teacher");
+
+  const guestRoutes = [
+    {
+      label: t("dashboard"),
+      href: "/",
+      icon: FiLayout,
+    },
+    {
+      label: t("browse"),
+      href: "/search",
+      icon: FiCompass,
+    },
+  ];
+  const teacherRoutes = [
+    {
+      label: t("courses"),
+      href: "/teacher/courses",
+      icon: FiList,
+    },
+    {
+      label: t("analytics"),
+      href: "/teacher/analytics",
+      icon: FiBarChart2,
+    },
+  ];
+
+  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
   return (
     <Navbar
       maxWidth="full"
@@ -58,48 +89,30 @@ export default function NavbarComponent() {
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem isActive={pathname === "features"}>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem
-          isActive
-          className={cn(
-            linkStyles({ color: "foreground" }),
-            "data-[active=true]:text-primary data-[active=true]:font-medium"
-          )}
-        >
-          <Link href="#" aria-current="page" color="secondary">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive={pathname === "integrations"}>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
+        {routes.map((route) => (
+          <NavbarItem key={route.label} isActive={pathname === route.href}>
+            <Link href={route.href} color="foreground" isBlock>
+              {route.label}
+            </Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
 
       <NavbarContent as="div" justify="end">
         <UserButton />
+        <LocalSwitcherSelect />
       </NavbarContent>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+        {routes.map((route, index, arr) => (
+          <NavbarMenuItem key={`${route}-${index}`}>
             <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
-              }
-              className="w-full hover:cursor-pointer"
-              href={`/${item}`}
+              className="w-full hover:cursor-pointer justify-start"
+              href={route.href}
               size="lg"
+              isBlock
+              onPress={() => setIsMenuOpen(false)}
             >
-              {item}
+              {route.label}
             </Link>
           </NavbarMenuItem>
         ))}
