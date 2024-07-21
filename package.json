@@ -18,7 +18,7 @@
     "@hono/auth-js": "^1.0.8",
     "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.9.3",
-    "@nextui-org/react": "^2.4.2",
+    "@nextui-org/react": "^2.4.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.31.2",
