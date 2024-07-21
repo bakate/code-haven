@@ -16,6 +16,22 @@
     "settings": "Paramètres",
     "billing_subscription": "Facturation & Abonnement",
     "logout": "Déconnexion",
-    "signed_in_as": "Connecté en tant que"
+    "signedInAs": "Connecté en tant que"
+  },
+  "loginForm": {
+    "title": "Code Haven",
+    "subtitle": "Connectez-vous à votre compte pour continuer",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "vous@example.com",
+    "emailButton": "Envoyez-moi un lien de connexion",
+    "or": "ou",
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithGithub": "Continuer avec Github",
+    "termsOfService": "Conditions d'utilisation",
+    "privacyPolicy": "Politique de confidentialité",
+    "agreementText": "En cliquant sur continuer, vous acceptez nos"
+  },
+  "footer": {
+    "copyright": "© 2024 Code Haven. Tous droits réservés."
   }
 }

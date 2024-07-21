@@ -6,7 +6,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import {
   FiCreditCard,
@@ -15,6 +15,14 @@ import {
   FiLogOut,
   FiSettings,
 } from "react-icons/fi";
+import { IconType } from "react-icons/lib";
+
+type ItemProps = {
+  label: string;
+  href: string;
+  icon?: IconType;
+  type?: "profile" | "logout";
+};
 
 export const UserButton = () => {
   const t = useTranslations("Navigation");
@@ -30,11 +38,11 @@ export const UserButton = () => {
 
   const { email = "", image = "", name = "" } = session.data?.user ?? {};
 
-  const menuItems = [
+  const menuItems: ItemProps[] = [
     {
-      label: t("signed_in_as"),
-      href: "/",
-      icon: "",
+      label: t("signedInAs"),
+      href: "#",
+      type: "profile",
     },
     {
       label: t("home"),
@@ -55,8 +63,50 @@ export const UserButton = () => {
       label: t("logout"),
       href: "/logout",
       icon: FiLogOut,
+      type: "logout",
     },
   ];
+
+  const renderMenuItem = (item: ItemProps, index: number) => {
+    if (item.type === "profile") {
+      return (
+        <DropdownItem
+          key={item.label}
+          className="h-14 gap-2 hover:cursor-not-allowed"
+          href={item.href}
+          textValue={item.label}
+        >
+          <p className="font-semibold">{item.label}</p>
+          <p className="font-semibold">{email}</p>
+        </DropdownItem>
+      );
+    }
+
+    if (item.type === "logout") {
+      return (
+        <DropdownItem
+          key={item.label}
+          startContent={item.icon ? <item.icon /> : ""}
+          onPress={() => signOut()}
+          textValue={item.label}
+          color="danger"
+        >
+          {item.label}
+        </DropdownItem>
+      );
+    }
+
+    return (
+      <DropdownItem
+        key={item.label}
+        startContent={item.icon ? <item.icon /> : ""}
+        href={item.href}
+        textValue={item.label}
+      >
+        {item.label}
+      </DropdownItem>
+    );
+  };
 
   return (
     <Dropdown placement="bottom-end">
@@ -73,32 +123,7 @@ export const UserButton = () => {
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        {menuItems.map((item, index) => {
-          if (index === 0) {
-            return (
-              <DropdownItem
-                key={item.label}
-                className="h-14 gap-2 hover:cursor-not-allowed"
-                href="#"
-                textValue={item.label}
-              >
-                <p className="font-semibold">{item.label}</p>
-                <p className="font-semibold">{email}</p>
-              </DropdownItem>
-            );
-          }
-          return (
-            <DropdownItem
-              key={item.label}
-              startContent={<item.icon />}
-              href={item.href}
-              textValue={item.label}
-              color={index === menuItems.length - 1 ? "danger" : "default"}
-            >
-              {item.label}
-            </DropdownItem>
-          );
-        })}
+        {menuItems.map((item, index) => renderMenuItem(item, index))}
       </DropdownMenu>
     </Dropdown>
   );

@@ -3,6 +3,7 @@
 import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 import { UserButton } from "@/features/auth/components/user-button";
 import {
+  Button,
   Link,
   Navbar,
   NavbarBrand,
@@ -83,7 +84,7 @@ export default function NavbarComponent() {
         <Link color="foreground" href="/">
           <Logo />
           <p className="font-bold text-inherit text-[#007DFC] ml-2">
-            CodeHaven
+            Code Haven
           </p>
         </Link>
       </NavbarBrand>
@@ -103,17 +104,18 @@ export default function NavbarComponent() {
         <LocalSwitcherSelect />
       </NavbarContent>
       <NavbarMenu>
-        {routes.map((route, index, arr) => (
+        {routes.map((route, index) => (
           <NavbarMenuItem key={`${route}-${index}`}>
-            <Link
-              className="w-full hover:cursor-pointer justify-start"
+            <Button
+              as={Link}
+              className="w-full justify-start"
               href={route.href}
-              size="lg"
-              isBlock
+              variant="light"
+              startContent={<route.icon />}
               onPress={() => setIsMenuOpen(false)}
             >
               {route.label}
-            </Link>
+            </Button>
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
