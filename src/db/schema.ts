@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   boolean,
   integer,
@@ -6,6 +7,7 @@ import {
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
 
 import type { AdapterAccountType } from "next-auth/adapters";
 
@@ -85,3 +87,80 @@ export const authenticators = pgTable(
     }),
   })
 );
+
+const languageEnum = ["en-us", "fr", "es", "de", "it"] as const;
+
+// Course Schemas
+export const course = pgTable("course", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  isPublished: boolean("is_published").default(false),
+  price: integer("price"),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id),
+
+  categoryId: text("category_id").references(() => category.id, {
+    onDelete: "set null",
+  }),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});
+
+// Define relations for course
+export const courseRelations = relations(course, ({ one }) => ({
+  user: one(users, {
+    fields: [course.userId],
+    references: [users.id],
+  }),
+  category: one(category, {
+    fields: [course.categoryId],
+    references: [category.id],
+  }),
+}));
+
+// Define the course translation table
+export const courseTranslation = pgTable("course_translation", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  courseId: text("course_id")
+    .notNull()
+    .references(() => course.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  lang: text("lang", { enum: languageEnum }).notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+});
+
+// Define the category table
+export const category = pgTable("category", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});
+
+// Define the category translation table
+export const categoryTranslation = pgTable("category_translation", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  categoryId: text("category_id")
+    .notNull()
+    .references(() => category.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+  lang: text("lang", { enum: languageEnum }).notNull(),
+  name: text("name").notNull().unique(),
+});
+
+// Define relations for category
+export const categoryRelations = relations(category, ({ many }) => ({
+  courses: many(course),
+}));
+
+// Create insert schema for course
+export const insertCourseSchema = createInsertSchema(course);
