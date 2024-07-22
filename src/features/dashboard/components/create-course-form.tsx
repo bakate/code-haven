@@ -5,18 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Link } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
+import { useCreateTeacherCourse } from "../data/use-create-teacher-course";
 import { CreateCourseFormSchema, CreateCourseFormType } from "../types";
-
-const formSchema = z.object({
-  title: z.string().min(3, {
-    message: "Title is required",
-  }),
-});
 
 export const CreateCourseForm = () => {
   const t = useTranslations("createCourseForm");
+  const { mutate, isPending } = useCreateTeacherCourse();
   const form = useForm<CreateCourseFormType>({
     resolver: zodResolver(
       CreateCourseFormSchema({
@@ -33,8 +27,7 @@ export const CreateCourseForm = () => {
   });
 
   const onSubmit = (data: CreateCourseFormType) => {
-    toast.success("Course created successfully");
-    console.log(data);
+    mutate(data);
   };
 
   return (
@@ -62,11 +55,17 @@ export const CreateCourseForm = () => {
               )}
             />
             <div className="flex items-center gap-x-2 justify-end">
-              <Button as={Link} type="button" href="/" variant="ghost">
+              <Button
+                as={Link}
+                type="button"
+                href="/"
+                variant="ghost"
+                disabled={isPending}
+              >
                 {t("cancel_button")}
               </Button>
 
-              <Button type="submit" color="primary">
+              <Button type="submit" color="primary" disabled={isPending}>
                 {t("submit_button")}
               </Button>
             </div>

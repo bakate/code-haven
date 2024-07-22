@@ -7,7 +7,7 @@ import {
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import type { AdapterAccountType } from "next-auth/adapters";
 
@@ -95,7 +95,7 @@ export const course = pgTable("course", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  isPublished: boolean("is_published").default(false),
+  isPublished: boolean("is_published").default(false).notNull(),
   price: integer("price"),
   userId: text("user_id")
     .notNull()
@@ -164,3 +164,9 @@ export const categoryRelations = relations(category, ({ many }) => ({
 
 // Create insert schema for course
 export const insertCourseSchema = createInsertSchema(course);
+export const insertCourseTranslation = createInsertSchema(courseTranslation);
+export const selectTranslatedCourseSchema =
+  createSelectSchema(course) &&
+  insertCourseTranslation.pick({
+    title: true,
+  });

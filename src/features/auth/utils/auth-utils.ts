@@ -8,3 +8,11 @@ export const protectServer = async () => {
     redirect("/api/auth/signin");
   }
 };
+
+export const currentUser = async () => {
+  const session = await auth();
+  if (!session || !session.user) {
+    throw new Error("No user logged in");
+  }
+  return session.user;
+};

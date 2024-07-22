@@ -3,6 +3,7 @@ import { handle } from "hono/vercel";
 
 import { nextAuthConfiguration } from "@/auth-config";
 import { AuthConfig, authHandler, initAuthConfig } from "@hono/auth-js";
+import teacher from "./teacher";
 import user from "./user";
 
 export const runtime = "edge";
@@ -16,7 +17,7 @@ function getAuthConfig(): AuthConfig {
 app.use("*", initAuthConfig(getAuthConfig));
 app.use("/auth/*", authHandler());
 
-const routes = app.route("/users", user);
+const routes = app.route("/users", user).route("/teacher", teacher);
 
 export const GET = handle(app);
 export const POST = handle(app);

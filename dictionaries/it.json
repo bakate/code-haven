@@ -45,6 +45,8 @@
     "titlePlaceholder": "es. 'Sviluppo web avanzato'",
     "submit_button": "Invia",
     "cancel_button": "Annulla",
-    "titleLabel": "titolo"
+    "titleLabel": "titolo",
+    "success_message": "Corso creato con successo",
+    "error_message": "Si è verificato un errore durante la creazione del corso"
   }
 }

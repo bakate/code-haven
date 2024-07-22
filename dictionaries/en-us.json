@@ -44,6 +44,8 @@
     "titlePlaceholder": "e.g. 'Advanced web development'",
     "submit_button": "Submit",
     "cancel_button": "Cancel",
-    "titleLabel": "title"
+    "titleLabel": "title",
+   "success_message": "Course created successfully",
+    "error_message": "An error occurred while creating the course"
    }
 }

@@ -44,6 +44,8 @@
     "titlePlaceholder": "p.ej. 'Desarrollo web avanzado'",
     "submit_button": "Enviar",
     "cancel_button": "Cancelar",
-    "titleLabel": "título"
+    "titleLabel": "título",
+    "success_message": "Curso creado con éxito",
+    "error_message": "Ocurrió un error al crear el curso"
   }
 }

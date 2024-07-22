@@ -44,6 +44,8 @@
     "max_error": "Le titre est trop long.",
     "titlePlaceholder": "par ex. 'Développement web avancé'",
     "submit_button": "Soumettre",
-    "cancel_button": "Annuler"
+    "cancel_button": "Annuler",
+    "success_message": "Cours créé avec succès",
+    "error_message": "Une erreur s'est produite lors de la création du cours"
   }
 }

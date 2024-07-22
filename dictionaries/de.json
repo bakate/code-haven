@@ -44,6 +44,8 @@
     "titlePlaceholder": "z.B. 'Fortgeschrittene Webentwicklung'",
     "submit_button": "Einreichen",
     "cancel_button": "Abbrechen",
-    "titleLabel": "Titel"
+    "titleLabel": "Titel",
+    "success_message": "Kurs erfolgreich erstellt",
+    "error_message": "Beim Erstellen des Kurses ist ein Fehler aufgetreten"
   }
 }

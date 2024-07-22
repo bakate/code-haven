@@ -16,17 +16,26 @@ type TitleErrorType = {
 export type CreateCourseFormMessage = {
   title: TitleErrorType;
 };
-export const CreateCourseFormSchema = (translations: CreateCourseFormMessage) =>
-  z.object({
-    title: z
-      .string()
-      .min(minLength, {
-        message: translations.title.min_error,
-      })
-      .max(maxLength, {
-        message: translations.title.max_error,
-      }),
-  });
+export const CreateCourseFormSchema = (
+  translations?: CreateCourseFormMessage
+) => {
+  if (!translations) {
+    return z.object({
+      title: z.string().min(minLength).max(maxLength),
+    });
+  } else {
+    return z.object({
+      title: z
+        .string()
+        .min(minLength, {
+          message: translations.title.min_error,
+        })
+        .max(maxLength, {
+          message: translations.title.max_error,
+        }),
+    });
+  }
+};
 
 export type CreateCourseFormType = z.infer<
   ReturnType<typeof CreateCourseFormSchema>
