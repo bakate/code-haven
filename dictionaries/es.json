@@ -16,7 +16,9 @@
     "settings": "Configuraciones",
     "billing_subscription": "Facturación & Suscripción",
     "logout": "Cerrar sesión",
-    "signedInAs": "Conectado como"
+    "signedInAs": "Conectado como",
+    "exit": "Salir",
+    "teacher_mode": "Modo Profesor"
   },
   "loginForm": {
     "title": "Code Haven",
@@ -33,5 +35,15 @@
   },
   "footer": {
     "copyright": "© 2024 Code Haven. Todos los derechos reservados."
+  },
+  "createCourseForm": {
+    "title": "Nombra tu curso",
+    "titleDescription": "¿Cómo te gustaría nombrar tu curso? No te preocupes, puedes cambiar esto más tarde.",
+    "min_error": "El título es demasiado corto.",
+    "max_error": "El título es demasiado largo.",
+    "titlePlaceholder": "p.ej. 'Desarrollo web avanzado'",
+    "submit_button": "Enviar",
+    "cancel_button": "Cancelar",
+    "titleLabel": "título"
   }
 }

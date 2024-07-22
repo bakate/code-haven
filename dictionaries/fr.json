@@ -16,22 +16,34 @@
     "settings": "Paramètres",
     "billing_subscription": "Facturation & Abonnement",
     "logout": "Déconnexion",
-    "signedInAs": "Connecté en tant que"
+    "signedInAs": "Connecté en tant que",
+    "exit": "Quitter",
+    "teacher_mode": "Mode Enseignant"
   },
   "loginForm": {
     "title": "Code Haven",
-    "subtitle": "Connectez-vous à votre compte pour continuer",
+    "subtitle": "Connecte-toi à ton compte pour continuer.",
     "emailLabel": "Adresse e-mail",
     "emailPlaceholder": "vous@example.com",
-    "emailButton": "Envoyez-moi un lien de connexion",
+    "emailButton": "Envoie-moi un lien de connexion",
     "or": "ou",
     "continueWithGoogle": "Continuer avec Google",
     "continueWithGithub": "Continuer avec Github",
     "termsOfService": "Conditions d'utilisation",
     "privacyPolicy": "Politique de confidentialité",
-    "agreementText": "En cliquant sur continuer, vous acceptez nos"
+    "agreementText": "En cliquant sur continuer, tu acceptes nos"
   },
   "footer": {
     "copyright": "© 2024 Code Haven. Tous droits réservés."
+  },
+  "createCourseForm": {
+    "title": "Nomme ton cours",
+    "titleDescription": "Comment souhaites-tu nommer ton cours ? Ne t'inquiète pas, tu pourras changer cela plus tard.",
+    "titleLabel": "titre",
+     "min_error": "Le titre est trop court.",
+    "max_error": "Le titre est trop long.",
+    "titlePlaceholder": "par ex. 'Développement web avancé'",
+    "submit_button": "Soumettre",
+    "cancel_button": "Annuler"
   }
 }

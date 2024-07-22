@@ -16,7 +16,9 @@
     "settings": "Settings",
     "billing_subscription": "Billing & Subscription",
     "logout": "Logout",
-    "signedInAs": "Signed in as"
+    "signedInAs": "Signed in as",
+    "exit": "Exit",
+    "teacher_mode": "Teacher Mode"
    },
    "loginForm": {
     "title": "Code Haven",
@@ -33,5 +35,15 @@
    },
    "footer": {
     "copyright": "© 2024 Code Haven. All rights reserved."
+   },
+   "createCourseForm": {
+    "title": "Name your course",
+    "titleDescription": "What would you like to name your course? Don't worry, you can change this later.",
+   "min_error": "The title is too short.",
+    "max_error": "The title is too long.",
+    "titlePlaceholder": "e.g. 'Advanced web development'",
+    "submit_button": "Submit",
+    "cancel_button": "Cancel",
+    "titleLabel": "title"
    }
 }
