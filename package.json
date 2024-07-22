@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db:push": "bunx drizzle-kit push",
     "db:generate": "bunx drizzle-kit generate",
-    "db:migrate": "bun ./scripts/migrate.ts",
+    "db:migrate": "bunx drizzle-kit migrate",
     "db:studio": "bunx drizzle-kit studio"
   },
   "dependencies": {
@@ -19,9 +19,11 @@
     "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.9.3",
     "@nextui-org/react": "^2.4.6",
+    "@tanstack/react-query": "^5.51.11",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.31.2",
+    "drizzle-zod": "^0.5.1",
     "framer-motion": "^11.3.2",
     "hono": "^4.4.4",
     "next": "14.2.3",
