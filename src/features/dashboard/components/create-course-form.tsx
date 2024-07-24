@@ -9,7 +9,7 @@ import { useCreateTeacherCourse } from "../data/use-create-teacher-course";
 import { CourseTitleFormType, CreateCourseFormSchema } from "../types";
 
 export const CreateCourseForm = () => {
-  const t = useTranslations("createCourseForm");
+  const t = useTranslations("createOrEditCourseForm");
   const { mutate, isPending } = useCreateTeacherCourse();
   const form = useForm<CourseTitleFormType>({
     resolver: zodResolver(

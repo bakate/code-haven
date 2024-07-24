@@ -2,9 +2,10 @@
 
 import { Banner } from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { CourseActions } from "../components/course-actions";
+import { TitleForm } from "../components/title-form";
 import { useGetTeacherCourseById } from "../data/use-get-teacher-course-by-id";
 
 type Props = {
@@ -12,6 +13,8 @@ type Props = {
 };
 export const TeacherCourseById = ({ courseId }: Props) => {
   const t = useTranslations("teacherCourseById");
+  const locale = useLocale();
+
   const {
     data: course,
     isLoading,
@@ -28,7 +31,10 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     return <div>No data</div>;
   }
 
-  const requiredFields = [course.title, course.categoryId];
+  const translatedTitle =
+    course.titles.find((title) => title.lang === locale)?.title ?? "";
+
+  const requiredFields = [translatedTitle, course.categoryId];
 
   const totalFields = requiredFields.length;
   const filledFields = requiredFields.filter(Boolean).length;
@@ -59,10 +65,12 @@ export const TeacherCourseById = ({ courseId }: Props) => {
               <IconBadge icon={LuLayoutDashboard} />
               <h2 className="text-xl">{t("customizeYourCourse")}</h2>
             </div>
+            <TitleForm
+              initialData={{ courseId: course.id, title: translatedTitle }}
+            />
           </div>
         </div>
       </div>
-      TeacherCourseById {course.title}
     </>
   );
 };
