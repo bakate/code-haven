@@ -14,6 +14,7 @@ import { zValidator } from "@hono/zod-validator";
 import { and, desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { getLocale, getTranslations } from "next-intl/server";
+import { z } from "zod";
 
 const app = new Hono()
   .get("/", verifyAuth(), async (c) => {
@@ -115,6 +116,53 @@ const app = new Hono()
           message: translations("error_message"),
         } as const);
       }
+    }
+  )
+  .get(
+    "/:courseId",
+    verifyAuth(),
+    zValidator(
+      "param",
+      z.object({
+        courseId: z.string().uuid(),
+      })
+    ),
+    async (c) => {
+      const auth = c.get("authUser");
+      if (!auth.session?.user?.id) {
+        throw c.json({ error: "Unauthorized" } as const, 401);
+      }
+      const { courseId } = c.req.valid("param");
+
+      if (!courseId) {
+        throw c.json({ error: "Course ID is required" } as const, 422);
+      }
+
+      const locale = await getLocale();
+      const [courseData] = await db
+        .select({
+          id: course.id,
+          isPublished: course.isPublished,
+          userId: course.userId,
+          categoryId: course.categoryId,
+          title: courseTranslation.title,
+        })
+        .from(course)
+        .innerJoin(courseTranslation, eq(course.id, courseTranslation.courseId))
+        .where(
+          and(
+            eq(courseTranslation.lang, locale as Locale),
+            eq(course.id, courseId),
+            eq(course.userId, auth.session.user.id)
+          )
+        );
+      return c.json({
+        data: courseData
+          ? {
+              ...courseData,
+            }
+          : null,
+      });
     }
   );
 

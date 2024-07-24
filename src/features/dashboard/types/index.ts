@@ -19,24 +19,28 @@ export type CreateCourseFormMessage = {
 export const CreateCourseFormSchema = (
   translations?: CreateCourseFormMessage
 ) => {
-  if (!translations) {
-    return z.object({
-      title: z.string().min(minLength).max(maxLength),
-    });
-  } else {
-    return z.object({
-      title: z
-        .string()
-        .min(minLength, {
-          message: translations.title.min_error,
-        })
-        .max(maxLength, {
-          message: translations.title.max_error,
-        }),
-    });
-  }
+  return z.object({
+    title: z
+      .string()
+      .min(
+        minLength,
+        translations
+          ? {
+              message: translations.title.min_error,
+            }
+          : undefined
+      )
+      .max(
+        maxLength,
+        translations
+          ? {
+              message: translations.title.max_error,
+            }
+          : undefined
+      ),
+  });
 };
 
-export type CreateCourseFormType = z.infer<
+export type CourseTitleFormType = z.infer<
   ReturnType<typeof CreateCourseFormSchema>
 >;

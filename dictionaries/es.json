@@ -33,19 +33,40 @@
     "privacyPolicy": "Política de privacidad",
     "agreementText": "Al hacer clic en continuar, aceptas nuestros"
   },
-  "footer": {
-    "copyright": "© 2024 Code Haven. Todos los derechos reservados."
-  },
-  "createCourseForm": {
-    "title": "Nombra tu curso",
-    "titleDescription": "¿Cómo te gustaría nombrar tu curso? No te preocupes, puedes cambiar esto más tarde.",
-    "min_error": "El título es demasiado corto.",
-    "max_error": "El título es demasiado largo.",
-    "titlePlaceholder": "p.ej. 'Desarrollo web avanzado'",
-    "submit_button": "Enviar",
-    "cancel_button": "Cancelar",
-    "titleLabel": "título",
-    "success_message": "Curso creado con éxito",
-    "error_message": "Ocurrió un error al crear el curso"
+    "footer": {
+      "copyright": "© 2024 Code Haven. Todos los derechos reservados."
+    },
+    "createOrEditCourseForm": {
+      "title": "Nombra tu curso",
+      "titleDescription": "¿Cómo deseas nombrar tu curso? No te preocupes, podrás cambiarlo más tarde.",
+      "titleLabel": "título",
+      "min_error": "El título es demasiado corto.",
+      "max_error": "El título es demasiado largo.",
+      "titlePlaceholder": "p. ej., 'Desarrollo web avanzado'",
+      "submit_button": "Enviar",
+      "cancel_button": "Cancelar",
+      "success_message": "Curso creado con éxito",
+      "error_message": "Se produjo un error al crear el curso",
+      "courseTitle": "Título del curso",
+      "editTitle": "Editar título",
+      "cancel": "Cancelar",
+      "saveChange": "Guardar cambios",
+     "courseUpdatedSuccessfully": "Curso actualizado con éxito",
+     "errorCourseUpdate": "Error al actualizar el curso"
+
+    },
+    "courseById": {
+      "publish": "Publicar",
+      "unpublish": "Despublicar"
+    },
+    "teacherCourseById": {
+      "loading": "Cargando...",
+      "error": "Error",
+      "noData": "Sin datos",
+      "unpublishedBanner": "Este curso no está publicado. No será visible para los estudiantes.",
+      "courseSetup": "Configuración del curso",
+      "completeAllFields": "Completa todos los campos para publicar tu curso",
+      "customizeYourCourse": "Personaliza tu curso",
+      "completionText": "({{filledFields}}/{{totalFields}})"
+    }
   }
-}

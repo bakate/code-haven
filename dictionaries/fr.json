@@ -36,16 +36,36 @@
   "footer": {
     "copyright": "© 2024 Code Haven. Tous droits réservés."
   },
-  "createCourseForm": {
-    "title": "Nomme ton cours",
-    "titleDescription": "Comment souhaites-tu nommer ton cours ? Ne t'inquiète pas, tu pourras changer cela plus tard.",
-    "titleLabel": "titre",
-     "min_error": "Le titre est trop court.",
-    "max_error": "Le titre est trop long.",
-    "titlePlaceholder": "par ex. 'Développement web avancé'",
-    "submit_button": "Soumettre",
-    "cancel_button": "Annuler",
-    "success_message": "Cours créé avec succès",
-    "error_message": "Une erreur s'est produite lors de la création du cours"
+    "createOrEditCourseForm": {
+      "title": "Nomme ton cours",
+      "titleDescription": "Comment souhaites-tu nommer ton cours ? Ne t'inquiète pas, tu pourras changer cela plus tard.",
+      "titleLabel": "titre",
+       "min_error": "Le titre est trop court.",
+      "max_error": "Le titre est trop long.",
+      "titlePlaceholder": "par ex. 'Développement web avancé'",
+      "submit_button": "Soumettre",
+      "cancel_button": "Annuler",
+      "success_message": "Cours créé avec succès",
+      "error_message": "Une erreur s'est produite lors de la création du cours",
+      "courseTitle": "Titre du cours",
+      "editTitle": "Modifier le titre",
+      "cancel": "Annuler",
+      "saveChange": "Enregistrer les modifications",
+      "courseUpdatedSuccessfully": "Cours mis à jour avec succès",
+      "errorCourseUpdate": "Erreur lors de la mise à jour du cours"
+    },
+    "courseById": {
+      "publish": "Publier",
+      "unpublish": "Dépublier"
+    },
+    "teacherCourseById": {
+      "loading": "Chargement...",
+      "error": "Erreur",
+      "noData": "Pas de données",
+      "unpublishedBanner": "Ce cours n'est pas publié. Il ne sera pas visible par les étudiants.",
+      "courseSetup": "Configuration du cours",
+      "completeAllFields": "Complétez tous les champs pour publier votre cours",
+      "customizeYourCourse": "Personnalisez votre cours",
+      "completionText": "({{filledFields}}/{{totalFields}})"
+    }
   }
-}

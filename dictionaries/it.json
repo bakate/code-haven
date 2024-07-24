@@ -37,9 +37,9 @@
   "footer": {
     "copyright": "© 2024 Code Haven. Tutti i diritti riservati."
   },
-  "createCourseForm": {
-    "title": "Dai un nome al tuo corso",
-    "titleDescription": "Come vorresti chiamare il tuo corso? Non preoccuparti, puoi cambiarlo più tardi.",
+  "createOrEditCourseForm": {
+    "title": "Nomina il tuo corso",
+    "titleDescription": "Come vorresti chiamare il tuo corso? Non preoccuparti, potrai cambiarlo più tardi.",
     "min_error": "Il titolo è troppo corto.",
     "max_error": "Il titolo è troppo lungo.",
     "titlePlaceholder": "es. 'Sviluppo web avanzato'",
@@ -47,6 +47,26 @@
     "cancel_button": "Annulla",
     "titleLabel": "titolo",
     "success_message": "Corso creato con successo",
-    "error_message": "Si è verificato un errore durante la creazione del corso"
+    "error_message": "Si è verificato un errore durante la creazione del corso",
+    "courseTitle": "Titolo del corso",
+    "editTitle": "Modifica titolo",
+    "cancel": "Annulla",
+     "saveChange": "Salva modifiche",
+    "courseUpdatedSuccessfully": "Corso aggiornato con successo",
+    "errorCourseUpdate": "Errore durante l'aggiornamento del corso"
+  },
+  "courseById": {
+    "publish": "Pubblica",
+    "unpublish": "Rimuovi pubblicazione"
+  },
+  "teacherCourseById": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "noData": "Nessun dato",
+    "unpublishedBanner": "Questo corso non è pubblicato. Non sarà visibile agli studenti.",
+    "courseSetup": "Configurazione del corso",
+    "completeAllFields": "Completa tutti i campi per pubblicare il tuo corso",
+    "customizeYourCourse": "Personalizza il tuo corso",
+    "completionText": "({{filledFields}}/{{totalFields}})"
   }
 }

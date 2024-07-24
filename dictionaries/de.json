@@ -36,7 +36,7 @@
   "footer": {
     "copyright": "© 2024 Code Haven. Alle Rechte vorbehalten."
   },
-  "createCourseForm": {
+  "createOrEditCourseForm": {
     "title": "Benennen Sie Ihren Kurs",
     "titleDescription": "Wie möchten Sie Ihren Kurs nennen? Keine Sorge, Sie können dies später ändern.",
     "min_error": "Der Titel ist zu kurz.",
@@ -46,6 +46,26 @@
     "cancel_button": "Abbrechen",
     "titleLabel": "Titel",
     "success_message": "Kurs erfolgreich erstellt",
-    "error_message": "Beim Erstellen des Kurses ist ein Fehler aufgetreten"
+    "error_message": "Beim Erstellen des Kurses ist ein Fehler aufgetreten",
+    "courseTitle": "Kurstitel",
+    "editTitle": "Titel bearbeiten",
+    "cancel": "Abbrechen",
+     "saveChange": "Änderungen speichern",
+    "courseUpdatedSuccessfully": "Kurs erfolgreich aktualisiert",
+    "errorCourseUpdate": "Fehler beim Aktualisieren des Kurses"
+  },
+  "courseById": {
+    "publish": "Veröffentlichen",
+    "unpublish": "Veröffentlichung rückgängig machen"
+  },
+  "teacherCourseById": {
+    "loading": "Lädt...",
+    "error": "Fehler",
+    "noData": "Keine Daten",
+    "unpublishedBanner": "Dieser Kurs ist nicht veröffentlicht. Er wird für die Studierenden nicht sichtbar sein.",
+    "courseSetup": "Kurseinrichtung",
+    "completeAllFields": "Fülle alle Felder aus, um deinen Kurs zu veröffentlichen",
+    "customizeYourCourse": "Passe deinen Kurs an",
+    "completionText": "({{filledFields}}/{{totalFields}})"
   }
 }

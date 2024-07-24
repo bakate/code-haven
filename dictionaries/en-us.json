@@ -36,7 +36,7 @@
    "footer": {
     "copyright": "© 2024 Code Haven. All rights reserved."
    },
-   "createCourseForm": {
+   "createOrEditCourseForm": {
     "title": "Name your course",
     "titleDescription": "What would you like to name your course? Don't worry, you can change this later.",
    "min_error": "The title is too short.",
@@ -46,6 +46,26 @@
     "cancel_button": "Cancel",
     "titleLabel": "title",
    "success_message": "Course created successfully",
-    "error_message": "An error occurred while creating the course"
+    "error_message": "An error occurred while creating the course",
+    "courseTitle": "Course title",
+    "editTitle": "Edit title",
+    "cancel": "Cancel",
+    "saveChange": "Save changes",
+   "courseUpdatedSuccessfully": "Course updated successfully",
+   "errorCourseUpdate": "An error occurred while updating the course"
+   },
+   "courseById": {
+    "publish": "Publish",
+    "unpublish": "Unpublish"
+   },
+   "teacherCourseById": {
+    "loading": "Loading...",
+    "error": "Error",
+    "noData": "No data",
+    "unpublishedBanner": "This course is unpublished. It will not be visible to the students.",
+    "courseSetup": "Course setup",
+    "completeAllFields": "Complete all fields to publish your course",
+    "customizeYourCourse": "Customize your course",
+    "completionText": "({{filledFields}}/{{totalFields}})"
    }
 }
