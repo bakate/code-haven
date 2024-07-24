@@ -1,4 +1,3 @@
-import { ENV } from "@/env";
 import { locales } from "@/i18n-config";
 import { z } from "zod";
 
@@ -30,7 +29,7 @@ export async function translateText({ from, texts, to }: TranslationProps) {
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        "Ocp-Apim-Subscription-Key": ENV.MICROSOFT_TRANSLATOR_KEY,
+        "Ocp-Apim-Subscription-Key": process.env.MICROSOFT_TRANSLATOR_KEY!,
         "Content-type": "application/json",
         "Ocp-Apim-Subscription-Region": "francecentral",
       },
