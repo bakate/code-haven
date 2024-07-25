@@ -104,6 +104,7 @@ export const course = pgTable("course", {
   categoryId: text("category_id").references(() => category.id, {
     onDelete: "set null",
   }),
+  imageUrl: text("image_url"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
 });
@@ -163,8 +164,15 @@ export const categoryRelations = relations(category, ({ many }) => ({
 }));
 
 // Create insert schema for course
-export const insertCourseSchema = createInsertSchema(course);
 export const insertCourseTranslation = createInsertSchema(courseTranslation);
+export const insertCourseSchema = createInsertSchema(course).merge(
+  insertCourseTranslation.pick({
+    lang: true,
+    title: true,
+    description: true,
+  })
+);
+
 export const selectTranslatedCourseSchema =
   createSelectSchema(course) &&
   insertCourseTranslation.pick({
