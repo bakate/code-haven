@@ -56,7 +56,13 @@
     "cancel": "Cancel",
     "saveChange": "Save changes",
    "courseUpdatedSuccessfully": "Course updated successfully",
-   "errorCourseUpdate": "An error occurred while updating the course"
+   "errorCourseUpdate": "An error occurred while updating the course",
+   "courseImage": "Course image",
+   "addImage": "Add image",
+   "editImage": "Edit image",
+   "chooseFile": "Choose file",
+    "chooseFilesOrDragAndDrop": "Choose file or drag and drop"
+
    },
    "courseById": {
     "publish": "Publish",

@@ -5,6 +5,14 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "utfs.io",
+      },
+    ],
+  },
 };
 
 export default withNextIntl(nextConfig);

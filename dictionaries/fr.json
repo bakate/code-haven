@@ -54,6 +54,11 @@
       "descriptionLabel": "description",
       "descriptionPlaceholder": "par ex. 'Ce cours est sur...'",
       "cancel": "Annuler",
+      "courseImage": "Image du cours",
+      "addImage": "Ajouter une image",
+      "editImage": "Modifier l'image",
+      "chooseFilesOrDragAndDrop": "Choisissez un fichier ou glissez-déposez",
+        "chooseFile": "Choisir un fichier",
       "saveChange": "Enregistrer les modifications",
       "courseUpdatedSuccessfully": "Cours mis à jour avec succès",
       "errorCourseUpdate": "Erreur lors de la mise à jour du cours"
