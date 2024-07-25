@@ -2,6 +2,7 @@ import { db } from "@/db/drizzle";
 import {
   course,
   courseTranslation,
+  insertCourseSchema,
   insertCourseTranslation,
 } from "@/db/schema";
 import {
@@ -17,7 +18,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { z } from "zod";
 
 const app = new Hono()
-  .get("/", verifyAuth(), async (c) => {
+  .use("*", verifyAuth()) // Verify auth middleware for all routes
+  .get("/", async (c) => {
     const locale = await getLocale();
     const auth = c.get("authUser");
 
@@ -49,7 +51,6 @@ const app = new Hono()
   })
   .post(
     "/",
-    verifyAuth(),
     zValidator(
       "json",
       insertCourseTranslation.pick({
@@ -120,7 +121,6 @@ const app = new Hono()
   )
   .get(
     "/:courseId",
-    verifyAuth(),
     zValidator(
       "param",
       z.object({
@@ -144,6 +144,7 @@ const app = new Hono()
           isPublished: course.isPublished,
           userId: course.userId,
           categoryId: course.categoryId,
+          imageUrl: course.imageUrl,
           titles: sql<
             Array<{ lang: string; title: string; description?: string }>
           >`
@@ -171,7 +172,6 @@ const app = new Hono()
   )
   .patch(
     "/:courseId",
-    verifyAuth(),
     zValidator(
       "param",
       z.object({
@@ -180,10 +180,14 @@ const app = new Hono()
     ),
     zValidator(
       "json",
-      z.object({
-        title: z.string().optional(),
-        description: z.string().optional(),
-      })
+      insertCourseSchema
+        .omit({
+          id: true,
+          createdAt: true,
+          updatedAt: true,
+          userId: true,
+        })
+        .partial()
     ),
     async (c) => {
       const auth = c.get("authUser");
@@ -191,11 +195,12 @@ const app = new Hono()
         throw c.json({ error: "Unauthorized" } as const, 401);
       }
       const { courseId } = c.req.valid("param");
-      const { title, description } = c.req.valid("json");
+      const values = c.req.valid("json");
+
       if (!courseId) {
         throw c.json({ error: "Course ID is required" } as const, 422);
       }
-      if (!title && !description) {
+      if (!values) {
         throw c.json({ error: "Title is required" } as const, 422);
       }
       const locale = await getLocale();
@@ -205,8 +210,8 @@ const app = new Hono()
         getTranslations("createOrEditCourseForm"),
       ]);
       const usLocale = "en-us";
-
-      if (title) {
+      const { title, description, imageUrl } = values;
+      if (title && !description) {
         const [titleTranslation] = (await translateText({
           from: currentLocale === usLocale ? "en" : currentLocale,
           texts: [title],
@@ -288,6 +293,27 @@ const app = new Hono()
                 })
             )
           );
+        } catch (error) {
+          return c.json({
+            status: "error",
+            message: translations("errorCourseUpdate"),
+          } as const);
+        }
+      }
+
+      if (imageUrl) {
+        try {
+          await db
+            .update(course)
+            .set({
+              imageUrl,
+            })
+            .where(
+              and(
+                eq(course.id, courseId),
+                eq(course.userId, auth.session.user.id)
+              )
+            );
         } catch (error) {
           return c.json({
             status: "error",
