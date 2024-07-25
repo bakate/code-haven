@@ -1,0 +1,1 @@
+ALTER TABLE "category_translation" DROP CONSTRAINT "category_translation_name_unique";

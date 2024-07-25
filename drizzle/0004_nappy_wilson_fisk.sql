@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS "name_lang_unique" ON "category_translation" USING btree ("name","lang");
