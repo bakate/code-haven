@@ -16,7 +16,6 @@ const FileUpload = ({ onChange, endpoint }: Props) => {
       endpoint={endpoint}
       content={{
         label: t("chooseFilesOrDragAndDrop"),
-        button: t("chooseFile"),
       }}
       onClientUploadComplete={(res) => onChange(res?.[0]?.url)}
       onUploadError={(error: Error) => {

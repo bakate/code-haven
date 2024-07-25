@@ -88,7 +88,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
             <ImageForm
               initialData={{
                 courseId: course.id,
-                imageUrl: course.imageUrl,
+                imageUrl: course.imageUrl ?? "",
                 title: translatedTitleAndDescription?.title ?? "",
               }}
             />

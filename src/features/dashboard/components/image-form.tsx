@@ -33,6 +33,7 @@ export const ImageForm = ({ initialData }: Props) => {
           variant="ghost"
           color="primary"
           onPress={toggleEditing}
+          disabled={isPending}
           startContent={
             readOnlyWithImage ? (
               <FaPencil />
@@ -71,9 +72,16 @@ export const ImageForm = ({ initialData }: Props) => {
           endpoint="courseImage"
           onChange={(url) => {
             if (url) {
-              mutate({
-                imageUrl: url,
-              });
+              mutate(
+                {
+                  imageUrl: url,
+                },
+                {
+                  onSuccess: () => {
+                    toggleEditing();
+                  },
+                }
+              );
             }
           }}
         />

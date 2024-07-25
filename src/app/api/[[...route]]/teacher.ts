@@ -154,11 +154,7 @@ const app = new Hono()
         .from(course)
         .innerJoin(courseTranslation, eq(course.id, courseTranslation.courseId))
         .where(
-          and(
-            // eq(courseTranslation.lang, locale as Locale),
-            eq(course.id, courseId),
-            eq(course.userId, auth.session.user.id)
-          )
+          and(eq(course.id, courseId), eq(course.userId, auth.session.user.id))
         )
         .groupBy(course.id);
       return c.json({
@@ -210,18 +206,18 @@ const app = new Hono()
         getTranslations("createOrEditCourseForm"),
       ]);
       const usLocale = "en-us";
-      const { title, description, imageUrl } = values;
-      if (title && !description) {
+
+      if (values.title && !values.description) {
         const [titleTranslation] = (await translateText({
           from: currentLocale === usLocale ? "en" : currentLocale,
-          texts: [title],
+          texts: [values.title],
           to: remainingLocales(currentLocale),
         })) ?? [{ translations: [] }];
         try {
           await db
             .update(courseTranslation)
             .set({
-              title,
+              title: values.title,
             })
             .where(
               and(
@@ -254,17 +250,17 @@ const app = new Hono()
           } as const);
         }
       }
-      if (description) {
+      if (values.description) {
         const [descriptionTranslation] = (await translateText({
           from: currentLocale === usLocale ? "en" : currentLocale,
-          texts: [description],
+          texts: [values.description],
           to: remainingLocales(currentLocale),
         })) ?? [{ translations: [] }];
         try {
           await db
             .update(courseTranslation)
             .set({
-              description,
+              description: values.description,
             })
             .where(
               and(
@@ -301,25 +297,24 @@ const app = new Hono()
         }
       }
 
-      if (imageUrl) {
-        try {
-          await db
-            .update(course)
-            .set({
-              imageUrl,
-            })
-            .where(
-              and(
-                eq(course.id, courseId),
-                eq(course.userId, auth.session.user.id)
-              )
-            );
-        } catch (error) {
-          return c.json({
-            status: "error",
-            message: translations("errorCourseUpdate"),
-          } as const);
-        }
+      try {
+        await db
+          .update(course)
+          .set({
+            ...values,
+            updatedAt: new Date(),
+          })
+          .where(
+            and(
+              eq(course.id, courseId),
+              eq(course.userId, auth.session.user.id)
+            )
+          );
+      } catch (error) {
+        return c.json({
+          status: "error",
+          message: translations("errorCourseUpdate"),
+        } as const);
       }
 
       return c.json({
