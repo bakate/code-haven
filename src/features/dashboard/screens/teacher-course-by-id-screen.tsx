@@ -5,6 +5,7 @@ import { IconBadge } from "@/components/icon-badge";
 import { useLocale, useTranslations } from "next-intl";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { CourseActions } from "../components/course-actions";
+import { DescriptionForm } from "../components/description-form";
 import { TitleForm } from "../components/title-form";
 import { useGetTeacherCourseById } from "../data/use-get-teacher-course-by-id";
 
@@ -31,10 +32,15 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     return <div>No data</div>;
   }
 
-  const translatedTitle =
-    course.titles.find((title) => title.lang === locale)?.title ?? "";
+  const translatedTitleAndDescription = course.titles.find(
+    (title) => title.lang === locale
+  );
 
-  const requiredFields = [translatedTitle, course.categoryId];
+  const requiredFields = [
+    translatedTitleAndDescription?.title,
+    translatedTitleAndDescription?.description,
+    course.categoryId,
+  ];
 
   const totalFields = requiredFields.length;
   const filledFields = requiredFields.filter(Boolean).length;
@@ -66,7 +72,17 @@ export const TeacherCourseById = ({ courseId }: Props) => {
               <h2 className="text-xl">{t("customizeYourCourse")}</h2>
             </div>
             <TitleForm
-              initialData={{ courseId: course.id, title: translatedTitle }}
+              initialData={{
+                courseId: course.id,
+                title: translatedTitleAndDescription?.title ?? "",
+              }}
+            />
+            <DescriptionForm
+              initialData={{
+                courseId: course.id,
+                description: translatedTitleAndDescription?.description,
+                title: translatedTitleAndDescription?.title ?? "",
+              }}
             />
           </div>
         </div>

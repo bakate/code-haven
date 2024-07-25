@@ -138,15 +138,16 @@ const app = new Hono()
         throw c.json({ error: "Course ID is required" } as const, 422);
       }
 
-      const locale = await getLocale();
       const [courseData] = await db
         .select({
           id: course.id,
           isPublished: course.isPublished,
           userId: course.userId,
           categoryId: course.categoryId,
-          titles: sql<Array<{ lang: string; title: string }>>`
-          json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${courseTranslation.lang}))
+          titles: sql<
+            Array<{ lang: string; title: string; description?: string }>
+          >`
+          json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${courseTranslation.lang}, 'description', ${courseTranslation.description}))
           `,
         })
         .from(course)
@@ -179,8 +180,9 @@ const app = new Hono()
     ),
     zValidator(
       "json",
-      insertCourseTranslation.pick({
-        title: true,
+      z.object({
+        title: z.string().optional(),
+        description: z.string().optional(),
       })
     ),
     async (c) => {
@@ -189,11 +191,11 @@ const app = new Hono()
         throw c.json({ error: "Unauthorized" } as const, 401);
       }
       const { courseId } = c.req.valid("param");
-      const { title } = c.req.valid("json");
+      const { title, description } = c.req.valid("json");
       if (!courseId) {
         throw c.json({ error: "Course ID is required" } as const, 422);
       }
-      if (!title) {
+      if (!title && !description) {
         throw c.json({ error: "Title is required" } as const, 422);
       }
       const locale = await getLocale();
@@ -203,6 +205,7 @@ const app = new Hono()
         getTranslations("createOrEditCourseForm"),
       ]);
       const usLocale = "en-us";
+
       if (title) {
         const [titleTranslation] = (await translateText({
           from: currentLocale === usLocale ? "en" : currentLocale,
@@ -237,6 +240,52 @@ const app = new Hono()
                     )
                   )
                 )
+            )
+          );
+        } catch (error) {
+          return c.json({
+            status: "error",
+            message: translations("errorCourseUpdate"),
+          } as const);
+        }
+      }
+      if (description) {
+        const [descriptionTranslation] = (await translateText({
+          from: currentLocale === usLocale ? "en" : currentLocale,
+          texts: [description],
+          to: remainingLocales(currentLocale),
+        })) ?? [{ translations: [] }];
+        try {
+          await db
+            .update(courseTranslation)
+            .set({
+              description,
+            })
+            .where(
+              and(
+                eq(courseTranslation.courseId, courseId),
+                eq(courseTranslation.lang, locale as Locale)
+              )
+            );
+          await Promise.all(
+            descriptionTranslation.translations.map(({ text, to }) =>
+              db
+                .update(courseTranslation)
+                .set({
+                  description: text,
+                })
+                .where(
+                  and(
+                    eq(courseTranslation.courseId, courseId),
+                    eq(
+                      courseTranslation.lang,
+                      to === "en" ? usLocale : (to as Locale)
+                    )
+                  )
+                )
+                .catch((error) => {
+                  console.error(error);
+                })
             )
           );
         } catch (error) {

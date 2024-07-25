@@ -38,6 +38,8 @@ export const CreateCourseFormSchema = (
             }
           : undefined
       ),
+
+    description: z.string().optional(),
   });
 };
 

@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form, FormField } from "@/components/ui/form";
-import { Button, Input } from "@nextui-org/react";
+import { cn } from "@/lib/utils";
+import { Button, Textarea } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,11 +15,12 @@ import { CourseTitleFormType, CreateCourseFormSchema } from "../types";
 type Props = {
   initialData: {
     courseId: string;
+    description?: string;
     title: string;
   };
 };
 
-export const TitleForm = ({ initialData }: Props) => {
+export const DescriptionForm = ({ initialData }: Props) => {
   const { mutate, isPending } = useEditTeacherCourseById(initialData.courseId);
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
@@ -34,6 +36,7 @@ export const TitleForm = ({ initialData }: Props) => {
       })
     ),
     defaultValues: {
+      description: initialData.description,
       title: initialData.title,
     },
     mode: "onBlur",
@@ -45,18 +48,25 @@ export const TitleForm = ({ initialData }: Props) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md">
       <div className="font-medium flex items-center justify-between">
-        {t("courseTitle")}
+        {t("courseDescription")}
         <Button
           variant="ghost"
           color="primary"
           onPress={toggleEditing}
           startContent={!isEditing ? <FaPencil /> : null}
         >
-          {isEditing ? t("cancel") : t("editTitle")}
+          {isEditing ? t("cancel") : t("editDescription")}
         </Button>
       </div>
       {!isEditing ? (
-        <p className="text-small mt-2">{initialData.title}</p>
+        <p
+          className={cn(
+            "text-small mt-2",
+            !initialData.description && "text-slate-500 italic"
+          )}
+        >
+          {initialData.description ?? "No description"}
+        </p>
       ) : null}
       {isEditing ? (
         <Form {...form}>
@@ -66,12 +76,12 @@ export const TitleForm = ({ initialData }: Props) => {
           >
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field, fieldState }) => (
-                <Input
+                <Textarea
                   {...field}
-                  label={t("titleLabel")}
-                  placeholder={t("titlePlaceholder")}
+                  label={t("descriptionLabel")}
+                  placeholder={t("descriptionPlaceholder")}
                   isInvalid={!!fieldState.error}
                   errorMessage={fieldState.error?.message}
                 />
