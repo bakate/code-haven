@@ -3,7 +3,14 @@
 import { Banner } from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
 import { useLocale, useTranslations } from "next-intl";
-import { LuLayoutDashboard } from "react-icons/lu";
+import { useMemo } from "react";
+import {
+  LuEuro,
+  LuFile,
+  LuLayoutDashboard,
+  LuListChecks,
+} from "react-icons/lu";
+import { AttachmentsForm } from "../components/attachments-form";
 import { CategoryForm } from "../components/category-form";
 import { CourseActions } from "../components/course-actions";
 import { DescriptionForm } from "../components/description-form";
@@ -21,21 +28,23 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   const locale = useLocale();
   const categoriesQuery = useGetCategories();
 
-  const categoriesTranslated = categoriesQuery.data?.map((category) => {
-    const translatedCategory = category.names.find(
-      (name) => name.lang === locale
-    );
-    if (translatedCategory) {
+  const categoriesTranslated = useMemo(() => {
+    return categoriesQuery.data?.map((category) => {
+      const translatedCategory = category.names.find(
+        (name) => name.lang === locale
+      );
+      if (translatedCategory) {
+        return {
+          value: category.id,
+          label: translatedCategory.name,
+        };
+      }
       return {
         value: category.id,
-        label: translatedCategory.name,
+        label: category.id,
       };
-    }
-    return {
-      value: category.id,
-      label: category.id,
-    };
-  });
+    });
+  }, [locale, categoriesQuery.data]);
 
   const {
     data: course,
@@ -64,6 +73,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     course.imageUrl,
     course.categoryId,
     course.price,
+    course.attachments,
   ];
 
   const totalFields = requiredFields.length;
@@ -124,6 +134,20 @@ export const TeacherCourseById = ({ courseId }: Props) => {
               }}
               options={categoriesTranslated}
             />
+          </div>
+          <div className="space-y-6">
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={LuListChecks} />
+                <h2 className="text-xl">Course chapters</h2>
+              </div>
+              <>{/* ChaptersForm */}</>
+            </div>
+
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={LuEuro} />
+              <h2 className="text-xl">Sell your course</h2>
+            </div>
             <PriceForm
               initialData={{
                 courseId: course.id,
@@ -131,6 +155,19 @@ export const TeacherCourseById = ({ courseId }: Props) => {
                 title: translatedTitleAndDescription?.title ?? "",
               }}
             />
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={LuFile} />
+                <h2 className="text-xl">Resources and attachments</h2>
+              </div>
+              <AttachmentsForm
+                initialData={{
+                  courseId: course.id,
+                  attachments: course.attachments ?? [],
+                  title: translatedTitleAndDescription?.title ?? "",
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

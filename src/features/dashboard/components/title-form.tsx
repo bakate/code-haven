@@ -40,7 +40,9 @@ export const TitleForm = ({ initialData }: Props) => {
   });
 
   const onSubmit = (data: CourseFormType) => {
-    mutate(data);
+    mutate({
+      title: data.title,
+    });
   };
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md">
@@ -67,6 +69,7 @@ export const TitleForm = ({ initialData }: Props) => {
             <FormField
               control={form.control}
               name="title"
+              disabled={isPending}
               render={({ field, fieldState }) => (
                 <Input
                   {...field}

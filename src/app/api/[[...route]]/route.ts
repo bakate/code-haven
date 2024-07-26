@@ -3,6 +3,7 @@ import { handle } from "hono/vercel";
 
 import { nextAuthConfiguration } from "@/auth-config";
 import { AuthConfig, authHandler, initAuthConfig } from "@hono/auth-js";
+import attachment from "./attachment";
 import category from "./category";
 import teacher from "./teacher";
 import user from "./user";
@@ -21,7 +22,8 @@ app.use("/auth/*", authHandler());
 const routes = app
   .route("/users", user)
   .route("/teacher", teacher)
-  .route("/categories", category);
+  .route("/categories", category)
+  .route("/attachments", attachment);
 export const GET = handle(app);
 export const POST = handle(app);
 export const PATCH = handle(app);

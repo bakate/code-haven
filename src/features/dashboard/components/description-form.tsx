@@ -43,7 +43,9 @@ export const DescriptionForm = ({ initialData }: Props) => {
   });
 
   const onSubmit = (data: CourseFormType) => {
-    mutate(data);
+    mutate({
+      description: data.description,
+    });
   };
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md">

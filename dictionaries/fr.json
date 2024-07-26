@@ -72,6 +72,10 @@
        "setPricePlaceholder": "Définir un prix pour votre cours",
        "priceLabel": "Prix",
        "priceMustBePositive": "Le prix doit être un nombre positif",
+       "courseAttachments": "Pièces jointes du cours",
+       "addFile": "Ajouter un fichier",
+       "noAttachmentsYet": "Pas encore de pièces jointes",
+       "addAnything": "Ajoutez tout ce dont vos étudiants pourraient avoir besoin pour compléter le cours",
       "errorCourseUpdate": "Erreur lors de la mise à jour du cours"
     },
     "courseById": {

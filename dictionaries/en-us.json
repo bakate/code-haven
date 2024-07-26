@@ -71,6 +71,10 @@
    "noPrice": "No Price",
    "setPricePlaceholder": "Set a price for your course",
    "priceMustBePositive": "Price must be a positive number",
+   "courseAttachments": "Course attachments",
+   "addFile": "Add a file",
+   "noAttachmentsYet": "No attachments yet",
+   "addAnything": "Add anything your students might need to complete the course",
    "priceLabel": "Price",
     "searchCategory": "Search a category"
 

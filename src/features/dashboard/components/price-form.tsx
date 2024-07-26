@@ -90,6 +90,7 @@ export const PriceForm = ({ initialData }: Props) => {
                   label={t("priceLabel")}
                   min={1}
                   step={0.01}
+                  disabled={isPending}
                   placeholder={t("setPricePlaceholder")}
                   isInvalid={!!fieldState.error}
                   startContent={

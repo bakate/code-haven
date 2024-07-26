@@ -72,6 +72,10 @@
     "setPricePlaceholder": "Imposta un prezzo per il tuo corso",
     "priceLabel": "Prezzo",
     "priceMustBePositive": "Il prezzo deve essere un numero positivo",
+    "courseAttachments": "Allegati del corso",
+    "addFile": "Aggiungi un file",
+    "noAttachmentsYet": "Nessun allegato ancora",
+    "addAnything": "Aggiungi tutto ciò di cui i tuoi studenti potrebbero aver bisogno per completare il corso",
     "courseUpdatedSuccessfully": "Corso aggiornato con successo",
     "errorCourseUpdate": "Errore durante l'aggiornamento del corso"
   },

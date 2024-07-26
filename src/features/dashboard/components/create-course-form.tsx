@@ -21,13 +21,15 @@ export const CreateCourseForm = () => {
       })
     ),
     defaultValues: {
-      title: "coucou mon grand",
+      title: "apprendre JavaScript",
     },
     mode: "onBlur",
   });
 
   const onSubmit = (data: CourseFormType) => {
-    mutate(data);
+    mutate({
+      title: data.title,
+    });
   };
 
   return (

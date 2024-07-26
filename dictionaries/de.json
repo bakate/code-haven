@@ -70,6 +70,10 @@
    "noPrice": "Kein Preis",
    "setPricePlaceholder": "Legen Sie einen Preis für Ihren Kurs fest",
    "priceLabel": "Preis",
+   "courseAttachments": "Kursanhänge",
+   "addFile": "Datei hinzufügen",
+   "noAttachmentsYet": "Noch keine Anhänge",
+   "addAnything": "Fügen Sie alles hinzu, was Ihre Schüler benötigen, um den Kurs abzuschließen",
    "priceMustBePositive": "Der Preis muss eine positive Zahl sein",
     "courseUpdatedSuccessfully": "Kurs erfolgreich aktualisiert",
     "errorCourseUpdate": "Fehler beim Aktualisieren des Kurses"

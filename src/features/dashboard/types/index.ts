@@ -54,7 +54,7 @@ export const CreateCourseFormSchema = (
             const price = parseFloat(value);
             return price > 0;
           }
-          return false;
+          return true;
         },
         { message: translations?.price?.min_error }
       ),

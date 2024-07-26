@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 type Props = {
-  onChange: (url?: string) => void;
+  onChange: (url?: string, name?: string) => void;
   endpoint: keyof typeof ourFileRouter;
 };
 const FileUpload = ({ onChange, endpoint }: Props) => {
@@ -17,7 +17,7 @@ const FileUpload = ({ onChange, endpoint }: Props) => {
       content={{
         label: t("chooseFilesOrDragAndDrop"),
       }}
-      onClientUploadComplete={(res) => onChange(res?.[0]?.url)}
+      onClientUploadComplete={(res) => onChange(res?.[0]?.url, res?.[0]?.name)}
       onUploadError={(error: Error) => {
         toast.error(`${error?.message}`);
       }}

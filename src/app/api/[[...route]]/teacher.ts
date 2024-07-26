@@ -1,5 +1,6 @@
 import { db } from "@/db/drizzle";
 import {
+  attachment,
   course,
   courseTranslation,
   insertCourseSchema,
@@ -32,6 +33,9 @@ const app = new Hono()
         id: course.id,
         isPublished: course.isPublished,
         userId: course.userId,
+        attachments: sql<
+          Array<{ id: string; url: string; name: string }>
+        >` json_agg(json_build_object('id', ${attachment.id}, 'url', ${attachment.url}, 'name', ${attachment.name}))`,
         categoryId: course.categoryId,
         price: course.price,
         title: courseTranslation.title,
@@ -150,11 +154,16 @@ const app = new Hono()
           titles: sql<
             Array<{ lang: string; title: string; description?: string }>
           >`
-          json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${courseTranslation.lang}, 'description', ${courseTranslation.description}))
+          json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${courseTranslation.lang}, 'description', ${courseTranslation.description})) FILTER (WHERE ${courseTranslation.title} IS NOT NULL)
           `,
+          attachments: sql<
+            Array<{ id: string; url: string; name: string }>
+          >` jsonb_agg(DISTINCT jsonb_build_object('id', ${attachment.id}, 'url', ${attachment.url}, 'name', ${attachment.name})) FILTER (WHERE ${attachment.id} IS NOT NULL)`,
         })
+
         .from(course)
         .innerJoin(courseTranslation, eq(course.id, courseTranslation.courseId))
+        .leftJoin(attachment, eq(course.id, attachment.courseId))
         .where(
           and(eq(course.id, courseId), eq(course.userId, auth.session.user.id))
         )
