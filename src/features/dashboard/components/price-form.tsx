@@ -71,7 +71,7 @@ export const PriceForm = ({ initialData }: Props) => {
       </div>
       {!isEditing ? (
         <p className="text-small mt-2">
-          {initialData.price ? initialData.price : t("noPrice")}{" "}
+          {initialData.price ? parseFloat(initialData.price) : t("noPrice")}{" "}
         </p>
       ) : null}
       {isEditing ? (

@@ -151,7 +151,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
             <PriceForm
               initialData={{
                 courseId: course.id,
-                price: String(course.price),
+                price: course.price ? String(course.price) : undefined,
                 title: translatedTitleAndDescription?.title ?? "",
               }}
             />
