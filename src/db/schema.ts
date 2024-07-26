@@ -121,6 +121,7 @@ export const courseRelations = relations(course, ({ one, many }) => ({
     references: [category.id],
   }),
   attachments: many(attachment),
+  chapters: many(chapter),
 }));
 
 // Define the course translation table
@@ -201,3 +202,38 @@ export const attachment = pgTable("attachments", {
 });
 
 export const insertAttachmentSchema = createInsertSchema(attachment);
+
+export const chapter = pgTable("chapter", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  courseId: text("course_id")
+    .notNull()
+    .references(() => course.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  isPublished: boolean("is_published").default(false).notNull(),
+  isFree: boolean("is_free").default(false).notNull(),
+  position: integer("position").notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});
+
+export const chapterTranslation = pgTable("chapter_translation", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  chapterId: text("chapter_id")
+    .notNull()
+    .references(() => chapter.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  lang: text("lang", { enum: languageEnum }).notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+});
+
+export const insertChapterTranslation = createInsertSchema(chapterTranslation);
+export const insertChapterSchema = createInsertSchema(chapter).merge(
+  insertChapterTranslation.pick({
+    lang: true,
+    title: true,
+    description: true,
+  })
+);
