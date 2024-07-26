@@ -111,7 +111,7 @@ export const course = pgTable("course", {
 });
 
 // Define relations for course
-export const courseRelations = relations(course, ({ one }) => ({
+export const courseRelations = relations(course, ({ one, many }) => ({
   user: one(users, {
     fields: [course.userId],
     references: [users.id],
@@ -120,6 +120,7 @@ export const courseRelations = relations(course, ({ one }) => ({
     fields: [course.categoryId],
     references: [category.id],
   }),
+  attachments: many(attachment),
 }));
 
 // Define the course translation table
@@ -185,3 +186,18 @@ export const selectTranslatedCourseSchema =
   insertCourseTranslation.pick({
     title: true,
   });
+
+export const attachment = pgTable("attachments", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  courseId: text("course_id")
+    .notNull()
+    .references(() => course.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  name: text("name").notNull(),
+  url: text("url").notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});
+
+export const insertAttachmentSchema = createInsertSchema(attachment);

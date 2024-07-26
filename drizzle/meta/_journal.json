@@ -36,6 +36,20 @@
       "when": 1721925345537,
       "tag": "0004_nappy_wilson_fisk",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1721978935188,
+      "tag": "0005_pink_living_mummy",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1721991843342,
+      "tag": "0006_square_whiplash",
+      "breakpoints": true
     }
   ]
 }
