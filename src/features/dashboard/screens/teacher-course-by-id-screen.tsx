@@ -4,10 +4,12 @@ import { Banner } from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
 import { useLocale, useTranslations } from "next-intl";
 import { LuLayoutDashboard } from "react-icons/lu";
+import { CategoryForm } from "../components/category-form";
 import { CourseActions } from "../components/course-actions";
 import { DescriptionForm } from "../components/description-form";
 import { ImageForm } from "../components/image-form";
 import { TitleForm } from "../components/title-form";
+import { useGetCategories } from "../data/use-get-categories";
 import { useGetTeacherCourseById } from "../data/use-get-teacher-course-by-id";
 
 type Props = {
@@ -16,6 +18,23 @@ type Props = {
 export const TeacherCourseById = ({ courseId }: Props) => {
   const t = useTranslations("teacherCourseById");
   const locale = useLocale();
+  const categoriesQuery = useGetCategories();
+
+  const categoriesTranslated = categoriesQuery.data?.map((category) => {
+    const translatedCategory = category.names.find(
+      (name) => name.lang === locale
+    );
+    if (translatedCategory) {
+      return {
+        value: category.id,
+        label: translatedCategory.name,
+      };
+    }
+    return {
+      value: category.id,
+      label: category.id,
+    };
+  });
 
   const {
     data: course,
@@ -40,6 +59,8 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   const requiredFields = [
     translatedTitleAndDescription?.title,
     translatedTitleAndDescription?.description,
+    course.categoryId,
+    course.imageUrl,
     course.categoryId,
   ];
 
@@ -91,6 +112,15 @@ export const TeacherCourseById = ({ courseId }: Props) => {
                 imageUrl: course.imageUrl ?? "",
                 title: translatedTitleAndDescription?.title ?? "",
               }}
+            />
+
+            <CategoryForm
+              initialData={{
+                courseId: course.id,
+                categoryId: course.categoryId ?? "",
+                title: translatedTitleAndDescription?.title ?? "",
+              }}
+              options={categoriesTranslated}
             />
           </div>
         </div>

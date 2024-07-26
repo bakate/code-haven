@@ -60,6 +60,11 @@
     "descriptionPlaceholder": "z.B. 'Dieser Kurs handelt von...'",
     "cancel": "Abbrechen",
      "saveChange": "Änderungen speichern",
+     "courseCategory": "Kurskategorie",
+     "editCategory": "Kategorie bearbeiten",
+     "noCategory": "Keine Kategorie",
+     "searchCategory": "Kategorie suchen",
+       "category": "Kategorie",
     "courseUpdatedSuccessfully": "Kurs erfolgreich aktualisiert",
     "errorCourseUpdate": "Fehler beim Aktualisieren des Kurses"
   },

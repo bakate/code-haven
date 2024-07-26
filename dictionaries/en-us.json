@@ -61,7 +61,12 @@
    "addImage": "Add image",
    "editImage": "Edit image",
    "chooseFile": "Choose file",
-    "chooseFilesOrDragAndDrop": "Choose file or drag and drop"
+    "chooseFilesOrDragAndDrop": "Choose file or drag and drop",
+    "courseCategory": "Course category",
+    "editCategory": "Edit category",
+    "noCategory": "No category",
+      "category": "Category",
+    "searchCategory": "Search a category"
 
    },
    "courseById": {

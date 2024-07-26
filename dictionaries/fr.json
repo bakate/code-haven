@@ -58,9 +58,14 @@
       "addImage": "Ajouter une image",
       "editImage": "Modifier l'image",
       "chooseFilesOrDragAndDrop": "Choisissez un fichier ou glissez-déposez",
-        "chooseFile": "Choisir un fichier",
+      "chooseFile": "Choisir un fichier",
       "saveChange": "Enregistrer les modifications",
       "courseUpdatedSuccessfully": "Cours mis à jour avec succès",
+      "courseCategory": "Catégorie du cours",
+      "editCategory": "Modifier la catégorie",
+      "noCategory": "Aucune catégorie",
+      "searchCategory": "Rechercher une catégorie",
+       "category": "Catégorie",
       "errorCourseUpdate": "Erreur lors de la mise à jour du cours"
     },
     "courseById": {

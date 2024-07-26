@@ -40,9 +40,8 @@ export const CreateCourseFormSchema = (
       ),
 
     description: z.string().optional(),
+    categoryId: z.string().optional(),
   });
 };
 
-export type CourseTitleFormType = z.infer<
-  ReturnType<typeof CreateCourseFormSchema>
->;
+export type CourseFormType = z.infer<ReturnType<typeof CreateCourseFormSchema>>;

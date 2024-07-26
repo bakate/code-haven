@@ -61,6 +61,11 @@
     "chooseFilesOrDragAndDrop": "Scegli i file o trascinali qui",
     "cancel": "Annulla",
      "saveChange": "Salva modifiche",
+     "courseCategory": "Categoria del corso",
+     "editCategory": "Modifica categoria",
+     "noCategory": "Nessuna categoria",
+     "searchCategory": "Cerca una categoria",
+     "category": "Categoria",
     "courseUpdatedSuccessfully": "Corso aggiornato con successo",
     "errorCourseUpdate": "Errore durante l'aggiornamento del corso"
   },

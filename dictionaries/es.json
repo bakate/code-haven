@@ -58,8 +58,13 @@
       "chooseFile": "Elegir archivo",
       "descriptionLabel": "Descripción",
        "descriptionPlaceholder": "p. ej., 'Este curso trata sobre...'",
+       "courseCategory": "Categoría del curso",
+       "editCategory": "Editar categoría",
+       "noCategory": "Sin categoría",
+       "searchCategory": "Buscar una categoría",
       "cancel": "Cancelar",
       "saveChange": "Guardar cambios",
+      "category": "Categoría",
      "courseUpdatedSuccessfully": "Curso actualizado con éxito",
      "errorCourseUpdate": "Error al actualizar el curso"
 
