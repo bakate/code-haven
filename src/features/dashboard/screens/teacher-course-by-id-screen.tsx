@@ -12,6 +12,7 @@ import {
 } from "react-icons/lu";
 import { AttachmentsForm } from "../components/attachments-form";
 import { CategoryForm } from "../components/category-form";
+import { ChaptersForm } from "../components/chapters-form";
 import { CourseActions } from "../components/course-actions";
 import { DescriptionForm } from "../components/description-form";
 import { ImageForm } from "../components/image-form";
@@ -65,6 +66,9 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   const translatedTitleAndDescription = course.titles.find(
     (title) => title.lang === locale
   );
+  const translatedChapter = (course.chapters ?? []).find((chapter) => {
+    return chapter.lang === locale;
+  });
 
   const requiredFields = [
     translatedTitleAndDescription?.title,
@@ -139,14 +143,19 @@ export const TeacherCourseById = ({ courseId }: Props) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LuListChecks} />
-                <h2 className="text-xl">Course chapters</h2>
+                <h2 className="text-xl">{t("courseChapters")}</h2>
               </div>
-              <>{/* ChaptersForm */}</>
+              <ChaptersForm
+                initialData={{
+                  courseId: course.id,
+                  title: translatedChapter?.title ?? "",
+                }}
+              />
             </div>
 
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LuEuro} />
-              <h2 className="text-xl">Sell your course</h2>
+              <h2 className="text-xl">{t("sellYourCourse")}</h2>
             </div>
             <PriceForm
               initialData={{
@@ -158,7 +167,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LuFile} />
-                <h2 className="text-xl">Resources and attachments</h2>
+                <h2 className="text-xl">{t("resourcesAndAttachments")}</h2>
               </div>
               <AttachmentsForm
                 initialData={{

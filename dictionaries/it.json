@@ -77,6 +77,11 @@
     "noAttachmentsYet": "Nessun allegato ancora",
     "addAnything": "Aggiungi tutto ciò di cui i tuoi studenti potrebbero aver bisogno per completare il corso",
     "courseUpdatedSuccessfully": "Corso aggiornato con successo",
+    "createChapters": "Crea capitoli",
+    "editChapterTitle": "Modifica titolo del capitolo",
+    "chapterTitlePlaceholder": "es. 'Introduzione'",
+    "noChapters": "Nessun capitolo",
+    "chapterLabel": "Capitolo",
     "errorCourseUpdate": "Errore durante l'aggiornamento del corso"
   },
   "courseById": {
@@ -91,6 +96,9 @@
     "courseSetup": "Configurazione del corso",
     "completeAllFields": "Completa tutti i campi per pubblicare il tuo corso",
     "customizeYourCourse": "Personalizza il tuo corso",
-    "completionText": "({{filledFields}}/{{totalFields}})"
+    "completionText": "({{filledFields}}/{{totalFields}})",
+    "courseChapters": "Capitoli del corso",
+    "sellYourCourse": "Vendi il tuo corso",
+    "resourcesAndAttachments": "Risorse e allegati"
   }
 }

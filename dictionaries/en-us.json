@@ -76,6 +76,11 @@
    "noAttachmentsYet": "No attachments yet",
    "addAnything": "Add anything your students might need to complete the course",
    "priceLabel": "Price",
+   "createChapters": "Create chapters",
+   "editChapterTitle": "Edit chapter title",
+   "chapterTitlePlaceholder": "e.g. 'Introduction'",
+   "noChapters": "No chapters",
+   "chapterLabel": "Chapter",
     "searchCategory": "Search a category"
 
    },
@@ -91,6 +96,9 @@
     "courseSetup": "Course setup",
     "completeAllFields": "Complete all fields to publish your course",
     "customizeYourCourse": "Customize your course",
-    "completionText": "({{filledFields}}/{{totalFields}})"
+    "completionText": "({{filledFields}}/{{totalFields}})",
+    "courseChapters": "Course chapters",
+    "sellYourCourse": "Sell your course",
+    "resourcesAndAttachments": "Resources and attachments"
    }
 }

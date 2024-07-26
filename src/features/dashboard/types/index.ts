@@ -62,3 +62,33 @@ export const CreateCourseFormSchema = (
 };
 
 export type CourseFormType = z.infer<ReturnType<typeof CreateCourseFormSchema>>;
+
+type ChapterFormTitleError = {
+  title: TitleErrorType;
+};
+export const ChapterTitleSchema = (translations?: ChapterFormTitleError) => {
+  return z.object({
+    title: z
+      .string()
+      .min(
+        minLength,
+        translations
+          ? {
+              message: translations.title.min_error,
+            }
+          : undefined
+      )
+      .max(
+        maxLength,
+        translations
+          ? {
+              message: translations.title.max_error,
+            }
+          : undefined
+      ),
+  });
+};
+
+export type ChapterFormTitleType = z.infer<
+  ReturnType<typeof ChapterTitleSchema>
+>;

@@ -75,6 +75,11 @@
      "noAttachmentsYet": "Aún no hay archivos adjuntos",
      "addAnything": "Agrega cualquier cosa que tus estudiantes puedan necesitar para completar el curso",
       "priceMustBePositive": "El precio debe ser un número positivo",
+      "createChapters": "Crear capítulos",
+      "editChapterTitle": "Editar título del capítulo",
+      "chapterTitlePlaceholder": "p. ej., 'Introducción a HTML'",
+      "noChapters": "Aún no hay capítulos",
+      "chapterLabel": "Capítulo",
      "courseUpdatedSuccessfully": "Curso actualizado con éxito",
      "errorCourseUpdate": "Error al actualizar el curso"
 
@@ -91,6 +96,9 @@
       "courseSetup": "Configuración del curso",
       "completeAllFields": "Completa todos los campos para publicar tu curso",
       "customizeYourCourse": "Personaliza tu curso",
-      "completionText": "({{filledFields}}/{{totalFields}})"
+      "completionText": "({{filledFields}}/{{totalFields}})",
+      "courseChapters": "Capítulos del curso",
+      "sellYourCourse": "Vende tu curso",
+      "resourcesAndAttachments": "Recursos y adjuntos"
     }
   }

@@ -1,6 +1,8 @@
 import { db } from "@/db/drizzle";
 import {
   attachment,
+  chapter,
+  chapterTranslation,
   course,
   courseTranslation,
   insertCourseSchema,
@@ -159,11 +161,30 @@ const app = new Hono()
           attachments: sql<
             Array<{ id: string; url: string; name: string }>
           >` jsonb_agg(DISTINCT jsonb_build_object('id', ${attachment.id}, 'url', ${attachment.url}, 'name', ${attachment.name})) FILTER (WHERE ${attachment.id} IS NOT NULL)`,
+          chapters: sql<
+            Array<{
+              id: string;
+              title: string;
+              lang: Locale;
+              position: number;
+              isFree: boolean;
+              isPublished: boolean;
+              description?: string;
+            }>
+          >`
+      jsonb_agg(DISTINCT jsonb_build_object('id', ${chapter.id}, 'title', ${chapterTranslation.title}, 'position', ${chapter.position}, 'isFree', ${chapter.isFree}, 'isPublished', ${chapter.isPublished},
+      'description', ${chapterTranslation.description}, 'lang', ${chapterTranslation.lang})) FILTER (WHERE ${chapter.id} IS NOT NULL)
+      `,
         })
 
         .from(course)
         .innerJoin(courseTranslation, eq(course.id, courseTranslation.courseId))
         .leftJoin(attachment, eq(course.id, attachment.courseId))
+        .leftJoin(chapter, eq(course.id, chapter.courseId))
+        .leftJoin(
+          chapterTranslation,
+          eq(chapter.id, chapterTranslation.chapterId)
+        )
         .where(
           and(eq(course.id, courseId), eq(course.userId, auth.session.user.id))
         )

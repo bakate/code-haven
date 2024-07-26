@@ -76,6 +76,11 @@
        "addFile": "Ajouter un fichier",
        "noAttachmentsYet": "Pas encore de pièces jointes",
        "addAnything": "Ajoutez tout ce dont vos étudiants pourraient avoir besoin pour compléter le cours",
+       "createChapters": "Créer des chapitres",
+       "editChapterTitle": "Modifier le titre du chapitre",
+       "chapterLabel": "Titre du chapitre",
+       "chapterTitlePlaceholder": "Par exemple : 'Introduction'",
+       "noChapters": "Aucun chapitre",
       "errorCourseUpdate": "Erreur lors de la mise à jour du cours"
     },
     "courseById": {
@@ -90,6 +95,9 @@
       "courseSetup": "Configuration du cours",
       "completeAllFields": "Complétez tous les champs pour publier votre cours",
       "customizeYourCourse": "Personnalisez votre cours",
-      "completionText": "({{filledFields}}/{{totalFields}})"
+      "completionText": "({{filledFields}}/{{totalFields}})",
+      "courseChapters": "Chapitres du cours",
+      "sellYourCourse": "Vendre votre cours",
+      "resourcesAndAttachments": "Ressources et pièces jointes"
     }
   }

@@ -74,6 +74,11 @@
    "addFile": "Datei hinzufügen",
    "noAttachmentsYet": "Noch keine Anhänge",
    "addAnything": "Fügen Sie alles hinzu, was Ihre Schüler benötigen, um den Kurs abzuschließen",
+   "createChapters": "Erstellen Sie Kapitel",
+   "editChapterTitle": "Kapiteltitel bearbeiten",
+   "chapterTitlePlaceholder": "z.B. 'Grundlagen'",
+   "noChapters": "Keine Kapitel",
+   "chapterLabel": "Kapitel",
    "priceMustBePositive": "Der Preis muss eine positive Zahl sein",
     "courseUpdatedSuccessfully": "Kurs erfolgreich aktualisiert",
     "errorCourseUpdate": "Fehler beim Aktualisieren des Kurses"
@@ -90,6 +95,9 @@
     "courseSetup": "Kurseinrichtung",
     "completeAllFields": "Fülle alle Felder aus, um deinen Kurs zu veröffentlichen",
     "customizeYourCourse": "Passe deinen Kurs an",
-    "completionText": "({{filledFields}}/{{totalFields}})"
+    "completionText": "({{filledFields}}/{{totalFields}})",
+    "courseChapters": "Kurskapitel",
+    "sellYourCourse": "Ihren Kurs verkaufen",
+    "resourcesAndAttachments": "Ressourcen und Anhänge"
   }
 }

@@ -5,6 +5,7 @@ import { nextAuthConfiguration } from "@/auth-config";
 import { AuthConfig, authHandler, initAuthConfig } from "@hono/auth-js";
 import attachment from "./attachment";
 import category from "./category";
+import chapter from "./chapter";
 import teacher from "./teacher";
 import user from "./user";
 
@@ -23,7 +24,8 @@ const routes = app
   .route("/users", user)
   .route("/teacher", teacher)
   .route("/categories", category)
-  .route("/attachments", attachment);
+  .route("/attachments", attachment)
+  .route("/chapters", chapter);
 export const GET = handle(app);
 export const POST = handle(app);
 export const PATCH = handle(app);
