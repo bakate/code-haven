@@ -15,6 +15,9 @@ type TitleErrorType = {
 };
 export type CreateCourseFormMessage = {
   title: TitleErrorType;
+  price?: {
+    min_error: string;
+  };
 };
 export const CreateCourseFormSchema = (
   translations?: CreateCourseFormMessage
@@ -38,9 +41,23 @@ export const CreateCourseFormSchema = (
             }
           : undefined
       ),
-
     description: z.string().optional(),
     categoryId: z.string().optional(),
+    imageUrl: z.string().optional(),
+    // we receive a string from the form, we need to convert it and make sure it's positive number
+    price: z
+      .string()
+      .optional()
+      .refine(
+        (value) => {
+          if (value) {
+            const price = parseFloat(value);
+            return price > 0;
+          }
+          return false;
+        },
+        { message: translations?.price?.min_error }
+      ),
   });
 };
 

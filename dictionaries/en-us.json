@@ -65,7 +65,13 @@
     "courseCategory": "Course category",
     "editCategory": "Edit category",
     "noCategory": "No category",
-      "category": "Category",
+   "category": "Category",
+   "coursePrice": "Course Price",
+   "editPrice": "Edit Price",
+   "noPrice": "No Price",
+   "setPricePlaceholder": "Set a price for your course",
+   "priceMustBePositive": "Price must be a positive number",
+   "priceLabel": "Price",
     "searchCategory": "Search a category"
 
    },

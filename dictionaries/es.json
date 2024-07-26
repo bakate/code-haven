@@ -65,6 +65,12 @@
       "cancel": "Cancelar",
       "saveChange": "Guardar cambios",
       "category": "Categoría",
+      "coursePrice": "Precio del curso",
+      "editPrice": "Editar precio",
+      "noPrice": "Sin precio",
+      "setPricePlaceholder": "Establece un precio para tu curso",
+      "priceLabel": "Precio",
+      "priceMustBePositive": "El precio debe ser un número positivo",
      "courseUpdatedSuccessfully": "Curso actualizado con éxito",
      "errorCourseUpdate": "Error al actualizar el curso"
 

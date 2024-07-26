@@ -1,0 +1,115 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Form, FormField } from "@/components/ui/form";
+import { Button, Input } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaPencil } from "react-icons/fa6";
+import { useEditTeacherCourseById } from "../data/use-edit-teacher-course";
+import { CourseFormType, CreateCourseFormSchema } from "../types";
+
+type Props = {
+  initialData: CourseFormType & {
+    courseId: string;
+  };
+};
+
+export const PriceForm = ({ initialData }: Props) => {
+  const { mutate, isPending } = useEditTeacherCourseById(initialData.courseId);
+  const [isEditing, setIsEditing] = useState(false);
+  const toggleEditing = () => setIsEditing((prev) => !prev);
+  const t = useTranslations("createOrEditCourseForm");
+
+  const form = useForm<CourseFormType>({
+    resolver: zodResolver(
+      CreateCourseFormSchema({
+        title: {
+          max_error: t("max_error"),
+          min_error: t("min_error"),
+        },
+        price: {
+          min_error: t("priceMustBePositive"),
+        },
+      })
+    ),
+    defaultValues: {
+      price: initialData.price,
+      title: initialData.title,
+    },
+    mode: "onBlur",
+  });
+
+  const onSubmit = (data: CourseFormType) => {
+    if (data.price) {
+      mutate(
+        {
+          price: parseFloat(data.price),
+        },
+        {
+          onSuccess: () => {
+            toggleEditing();
+          },
+        }
+      );
+    }
+  };
+  return (
+    <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md">
+      <div className="font-medium flex items-center justify-between">
+        {t("coursePrice")}
+        <Button
+          variant="ghost"
+          color="primary"
+          onPress={toggleEditing}
+          startContent={!isEditing ? <FaPencil /> : null}
+        >
+          {isEditing ? t("cancel") : t("editPrice")}
+        </Button>
+      </div>
+      {!isEditing ? (
+        <p className="text-small mt-2">
+          {initialData.price ? initialData.price : t("noPrice")}{" "}
+        </p>
+      ) : null}
+      {isEditing ? (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 mt-4"
+          >
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field, fieldState }) => (
+                <Input
+                  type="number"
+                  {...field}
+                  label={t("priceLabel")}
+                  min={1}
+                  step={0.01}
+                  placeholder={t("setPricePlaceholder")}
+                  isInvalid={!!fieldState.error}
+                  startContent={
+                    <div className="pointer-events-none flex items-center">
+                      <span className="text-default-400 text-small">€</span>
+                    </div>
+                  }
+                  errorMessage={fieldState.error?.message}
+                />
+              )}
+            />
+
+            <div className="flex items-center gap-x2">
+              <Button type="submit" color="primary" disabled={isPending}>
+                {t("saveChange")}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      ) : null}
+    </div>
+  );
+};

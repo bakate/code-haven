@@ -66,6 +66,12 @@
       "noCategory": "Aucune catégorie",
       "searchCategory": "Rechercher une catégorie",
        "category": "Catégorie",
+       "coursePrice": "Prix du cours",
+       "editPrice": "Modifier le prix",
+       "noPrice": "Pas de prix",
+       "setPricePlaceholder": "Définir un prix pour votre cours",
+       "priceLabel": "Prix",
+       "priceMustBePositive": "Le prix doit être un nombre positif",
       "errorCourseUpdate": "Erreur lors de la mise à jour du cours"
     },
     "courseById": {

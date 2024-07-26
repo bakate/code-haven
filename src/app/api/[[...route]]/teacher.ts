@@ -33,6 +33,7 @@ const app = new Hono()
         isPublished: course.isPublished,
         userId: course.userId,
         categoryId: course.categoryId,
+        price: course.price,
         title: courseTranslation.title,
       })
       .from(course)
@@ -144,6 +145,7 @@ const app = new Hono()
           isPublished: course.isPublished,
           userId: course.userId,
           categoryId: course.categoryId,
+          price: course.price,
           imageUrl: course.imageUrl,
           titles: sql<
             Array<{ lang: string; title: string; description?: string }>

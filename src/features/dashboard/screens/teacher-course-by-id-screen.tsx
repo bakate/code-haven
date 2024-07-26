@@ -8,6 +8,7 @@ import { CategoryForm } from "../components/category-form";
 import { CourseActions } from "../components/course-actions";
 import { DescriptionForm } from "../components/description-form";
 import { ImageForm } from "../components/image-form";
+import { PriceForm } from "../components/price-form";
 import { TitleForm } from "../components/title-form";
 import { useGetCategories } from "../data/use-get-categories";
 import { useGetTeacherCourseById } from "../data/use-get-teacher-course-by-id";
@@ -62,6 +63,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     course.categoryId,
     course.imageUrl,
     course.categoryId,
+    course.price,
   ];
 
   const totalFields = requiredFields.length;
@@ -121,6 +123,13 @@ export const TeacherCourseById = ({ courseId }: Props) => {
                 title: translatedTitleAndDescription?.title ?? "",
               }}
               options={categoriesTranslated}
+            />
+            <PriceForm
+              initialData={{
+                courseId: course.id,
+                price: String(course.price),
+                title: translatedTitleAndDescription?.title ?? "",
+              }}
             />
           </div>
         </div>
