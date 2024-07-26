@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPencil } from "react-icons/fa6";
 import { useEditTeacherCourseById } from "../data/use-edit-teacher-course";
-import { CourseTitleFormType, CreateCourseFormSchema } from "../types";
+import { CourseFormType, CreateCourseFormSchema } from "../types";
 
 type Props = {
   initialData: {
@@ -26,7 +26,7 @@ export const DescriptionForm = ({ initialData }: Props) => {
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
 
-  const form = useForm<CourseTitleFormType>({
+  const form = useForm<CourseFormType>({
     resolver: zodResolver(
       CreateCourseFormSchema({
         title: {
@@ -42,7 +42,7 @@ export const DescriptionForm = ({ initialData }: Props) => {
     mode: "onBlur",
   });
 
-  const onSubmit = (data: CourseTitleFormType) => {
+  const onSubmit = (data: CourseFormType) => {
     mutate(data);
   };
   return (

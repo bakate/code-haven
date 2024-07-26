@@ -6,12 +6,12 @@ import { Button, Input, Link } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { useCreateTeacherCourse } from "../data/use-create-teacher-course";
-import { CourseTitleFormType, CreateCourseFormSchema } from "../types";
+import { CourseFormType, CreateCourseFormSchema } from "../types";
 
 export const CreateCourseForm = () => {
   const t = useTranslations("createOrEditCourseForm");
   const { mutate, isPending } = useCreateTeacherCourse();
-  const form = useForm<CourseTitleFormType>({
+  const form = useForm<CourseFormType>({
     resolver: zodResolver(
       CreateCourseFormSchema({
         title: {
@@ -26,7 +26,7 @@ export const CreateCourseForm = () => {
     mode: "onBlur",
   });
 
-  const onSubmit = (data: CourseTitleFormType) => {
+  const onSubmit = (data: CourseFormType) => {
     mutate(data);
   };
 

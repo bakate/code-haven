@@ -33,7 +33,7 @@ export const ImageForm = ({ initialData }: Props) => {
           variant="ghost"
           color="primary"
           onPress={toggleEditing}
-          disabled={isPending}
+          disabled
           startContent={
             readOnlyWithImage ? (
               <FaPencil />
