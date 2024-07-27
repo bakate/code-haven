@@ -37,21 +37,28 @@ const app = new Hono()
         userId: course.userId,
         attachments: sql<
           Array<{ id: string; url: string; name: string }>
-        >` json_agg(json_build_object('id', ${attachment.id}, 'url', ${attachment.url}, 'name', ${attachment.name}))`,
+        >` jsonb_agg(jsonb_build_object('id', ${attachment.id}, 'url', ${attachment.url}, 'name', ${attachment.name})) FILTER (WHERE ${attachment.id} IS NOT NULL)`,
+        titles: sql<
+          Array<{ lang: string; title: string; description?: string }>
+        >`
+      json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${courseTranslation.lang}, 'description', ${courseTranslation.description})) FILTER (WHERE ${courseTranslation.title} IS NOT NULL)
+      `,
         categoryId: course.categoryId,
+        imageUrl: course.imageUrl,
         price: course.price,
-        title: courseTranslation.title,
       })
       .from(course)
       .innerJoin(courseTranslation, eq(course.id, courseTranslation.courseId))
+      .leftJoin(attachment, eq(course.id, attachment.courseId))
       .where(
         and(
-          eq(courseTranslation.lang, locale as Locale),
+          // eq(courseTranslation.lang, locale as Locale),
           eq(course.userId, auth.session.user.id)
         )
       )
 
-      .orderBy(desc(course.createdAt));
+      .orderBy(desc(course.createdAt))
+      .groupBy(course.id);
     return c.json({
       data: courses,
     });
