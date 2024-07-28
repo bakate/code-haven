@@ -11,17 +11,24 @@ import { useForm } from "react-hook-form";
 
 import { FiPlus } from "react-icons/fi";
 import { useCreateChapter } from "../data/use-create-chapter";
-import { ChapterFormTitleType, ChapterTitleSchema } from "../types";
+import { useReorderChapters } from "../data/use-reorder-chapters";
+import {
+  ChapterFormTitleType,
+  ChapterTitleSchema,
+  selectChapterType,
+} from "../types";
+import { ChaptersList } from "./chapters-list";
 
 type Props = {
   initialData: {
     courseId: string;
-    title: string;
+    chapters: selectChapterType[];
   };
 };
 
 export const ChaptersForm = ({ initialData }: Props) => {
   const { mutate, isPending } = useCreateChapter();
+  const reorderMutation = useReorderChapters();
   const [isCreating, setIsCreating] = useState(false);
   const toggleCreating = () => setIsCreating((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
@@ -36,7 +43,7 @@ export const ChaptersForm = ({ initialData }: Props) => {
       })
     ),
     defaultValues: {
-      title: "nouveau chapitre",
+      title: "",
     },
     mode: "onBlur",
   });
@@ -55,6 +62,16 @@ export const ChaptersForm = ({ initialData }: Props) => {
       }
     );
   };
+
+  const onEdit = (chapterId: string) => {
+    // TODO
+  };
+
+  const onReorder = (
+    updateData: { id: string; position: number; courseId: string }[]
+  ) => {
+    reorderMutation.mutate(updateData);
+  };
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md">
       <div className="font-medium flex items-center justify-between">
@@ -65,19 +82,10 @@ export const ChaptersForm = ({ initialData }: Props) => {
           onPress={toggleCreating}
           startContent={!isCreating ? <FiPlus /> : null}
         >
-          {isCreating ? t("cancel") : t("editChapterTitle")}
+          {isCreating ? t("cancel") : t("addChapterTitle")}
         </Button>
       </div>
-      {!isCreating ? (
-        <p
-          className={cn(
-            "text-small mt-2",
-            !initialData.title && "text-slate-500 italic"
-          )}
-        >
-          {initialData.title ?? t("noChapters")}
-        </p>
-      ) : null}
+
       {isCreating ? (
         <Form {...form}>
           <form
@@ -97,15 +105,36 @@ export const ChaptersForm = ({ initialData }: Props) => {
                 />
               )}
             />
-
-            <div className="flex items-center gap-x2">
-              <Button type="submit" color="primary" disabled={isPending}>
-                {t("submit_button")}
-              </Button>
-            </div>
+            <Button type="submit" color="primary" disabled={isPending}>
+              {t("submit_button")}
+            </Button>
           </form>
         </Form>
-      ) : null}
+      ) : (
+        <>
+          <div
+            className={cn(
+              "text-sm my-2",
+              !initialData.chapters.length ? "text-slate-500 italic" : ""
+            )}
+          >
+            {!initialData.chapters.length ? (
+              t("noChapters")
+            ) : (
+              <ChaptersList
+                onEdit={onEdit}
+                onReorder={onReorder}
+                items={initialData.chapters}
+              />
+            )}
+          </div>
+          {!isCreating ? (
+            <p className="text-small mt-4 text-foreground-400">
+              {t("dragAndDropToReorder")}
+            </p>
+          ) : null}
+        </>
+      )}
     </div>
   );
 };

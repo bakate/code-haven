@@ -201,6 +201,14 @@ export const attachment = pgTable("attachments", {
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
 });
 
+// Add this relation definition
+export const attachmentRelations = relations(attachment, ({ one }) => ({
+  course: one(course, {
+    fields: [attachment.courseId],
+    references: [course.id],
+  }),
+}));
+
 export const insertAttachmentSchema = createInsertSchema(attachment);
 
 export const chapter = pgTable("chapter", {
@@ -217,6 +225,14 @@ export const chapter = pgTable("chapter", {
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
 });
 
+export const chapterRelations = relations(chapter, ({ one, many }) => ({
+  course: one(course, {
+    fields: [chapter.courseId],
+    references: [course.id],
+  }),
+  chapterTranslations: many(chapterTranslation),
+}));
+
 export const chapterTranslation = pgTable("chapter_translation", {
   id: text("id")
     .primaryKey()
@@ -228,6 +244,16 @@ export const chapterTranslation = pgTable("chapter_translation", {
   title: text("title").notNull(),
   description: text("description"),
 });
+
+export const chapterTranslationRelations = relations(
+  chapterTranslation,
+  ({ one }) => ({
+    chapter: one(chapter, {
+      fields: [chapterTranslation.chapterId],
+      references: [chapter.id],
+    }),
+  })
+);
 
 export const insertChapterTranslation = createInsertSchema(chapterTranslation);
 export const insertChapterSchema = createInsertSchema(chapter).merge(

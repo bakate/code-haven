@@ -1,3 +1,4 @@
+import { insertChapterSchema } from "@/db/schema";
 import { IconType } from "react-icons/lib";
 import { z } from "zod";
 
@@ -92,3 +93,5 @@ export const ChapterTitleSchema = (translations?: ChapterFormTitleError) => {
 export type ChapterFormTitleType = z.infer<
   ReturnType<typeof ChapterTitleSchema>
 >;
+
+export type selectChapterType = z.infer<typeof insertChapterSchema>;

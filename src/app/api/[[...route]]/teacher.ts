@@ -177,21 +177,36 @@ const app = new Hono()
               isFree: boolean;
               isPublished: boolean;
               description?: string;
+              courseId: string;
             }>
           >`
-      jsonb_agg(DISTINCT jsonb_build_object('id', ${chapter.id}, 'title', ${chapterTranslation.title}, 'position', ${chapter.position}, 'isFree', ${chapter.isFree}, 'isPublished', ${chapter.isPublished},
-      'description', ${chapterTranslation.description}, 'lang', ${chapterTranslation.lang})) FILTER (WHERE ${chapter.id} IS NOT NULL)
-      `,
+       COALESCE(
+        (SELECT json_agg(ch ORDER BY ch->>'position')
+         FROM (
+           SELECT jsonb_build_object(
+             'id', ${chapter.id},
+             'title', ${chapterTranslation.title},
+             'position', ${chapter.position},
+             'isFree', ${chapter.isFree},
+             'isPublished', ${chapter.isPublished},
+             'courseId', ${chapter.courseId},
+             'description', ${chapterTranslation.description},
+             'lang', ${chapterTranslation.lang}
+           ) AS ch
+           FROM ${chapter}
+           LEFT JOIN ${chapterTranslation} ON ${eq(
+            chapter.id,
+            chapterTranslation.chapterId
+          )}
+           WHERE ${eq(chapter.courseId, course.id)}
+         ) subq
+        ), '[]'::json
+      )`,
         })
 
         .from(course)
         .innerJoin(courseTranslation, eq(course.id, courseTranslation.courseId))
         .leftJoin(attachment, eq(course.id, attachment.courseId))
-        .leftJoin(chapter, eq(course.id, chapter.courseId))
-        .leftJoin(
-          chapterTranslation,
-          eq(chapter.id, chapterTranslation.chapterId)
-        )
         .where(
           and(eq(course.id, courseId), eq(course.userId, auth.session.user.id))
         )

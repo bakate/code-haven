@@ -3,7 +3,7 @@
 import { Banner } from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
 import { useLocale, useTranslations } from "next-intl";
-import { useMemo } from "react";
+import { useCallback } from "react";
 import {
   LuEuro,
   LuFile,
@@ -29,7 +29,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   const locale = useLocale();
   const categoriesQuery = useGetCategories();
 
-  const categoriesTranslated = useMemo(() => {
+  const categoriesTranslated = useCallback(() => {
     return categoriesQuery.data?.map((category) => {
       const translatedCategory = category.names.find(
         (name) => name.lang === locale
@@ -53,6 +53,12 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     isError,
   } = useGetTeacherCourseById(courseId);
 
+  const translatedChapters = useCallback(() => {
+    return (course?.chapters || []).filter((chapter) => {
+      return chapter.lang === locale;
+    });
+  }, [course, locale]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -66,9 +72,6 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   const translatedTitleAndDescription = course.titles.find(
     (title) => title.lang === locale
   );
-  const translatedChapter = (course.chapters ?? []).find((chapter) => {
-    return chapter.lang === locale;
-  });
 
   const requiredFields = [
     translatedTitleAndDescription?.title,
@@ -136,7 +139,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
                 categoryId: course.categoryId ?? "",
                 title: translatedTitleAndDescription?.title ?? "",
               }}
-              options={categoriesTranslated}
+              options={categoriesTranslated ? categoriesTranslated() : []}
             />
           </div>
           <div className="space-y-6">
@@ -148,7 +151,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
               <ChaptersForm
                 initialData={{
                   courseId: course.id,
-                  title: translatedChapter?.title ?? "",
+                  chapters: translatedChapters ? translatedChapters() : [],
                 }}
               />
             </div>

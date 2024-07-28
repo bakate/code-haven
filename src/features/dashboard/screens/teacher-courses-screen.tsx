@@ -17,7 +17,7 @@ export const TeacherCoursesScreen = () => {
     <div>
       {data.map((course) => (
         <div key={course.id}>
-          <h1>{course.title}</h1>
+          <h1>{course.id}</h1>
         </div>
       ))}
     </div>
