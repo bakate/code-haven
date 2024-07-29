@@ -4,7 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form, FormField } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import { Autocomplete, AutocompleteItem, Button } from "@nextui-org/react";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Button,
+  CircularProgress,
+} from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -86,28 +91,34 @@ export const CategoryForm = ({ initialData, options }: Props) => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4 mt-4"
           >
-            <FormField
-              control={form.control}
-              name="categoryId"
-              render={({ field, fieldState }) => {
-                return (
-                  <Autocomplete
-                    defaultItems={options ?? []}
-                    label={t("category")}
-                    placeholder={t("searchCategory")}
-                    className="max-w-xs"
-                    selectedKey={field.value}
-                    onSelectionChange={field.onChange}
-                  >
-                    {(option) => (
-                      <AutocompleteItem key={option.value}>
-                        {option.label}
-                      </AutocompleteItem>
-                    )}
-                  </Autocomplete>
-                );
-              }}
-            />
+            {isPending ? (
+              <div className="flex justify-center items-center">
+                <CircularProgress color="primary" />
+              </div>
+            ) : (
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => {
+                  return (
+                    <Autocomplete
+                      defaultItems={options ?? []}
+                      label={t("category")}
+                      placeholder={t("searchCategory")}
+                      className="max-w-xs"
+                      selectedKey={field.value}
+                      onSelectionChange={field.onChange}
+                    >
+                      {(option) => (
+                        <AutocompleteItem key={option.value}>
+                          {option.label}
+                        </AutocompleteItem>
+                      )}
+                    </Autocomplete>
+                  );
+                }}
+              />
+            )}
 
             <div className="flex items-center gap-x2">
               <Button type="submit" color="primary" disabled={isPending}>

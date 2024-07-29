@@ -2,6 +2,7 @@
 
 import { Banner } from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
+import { Skeleton } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback } from "react";
 import {
@@ -14,6 +15,10 @@ import { AttachmentsForm } from "../components/attachments-form";
 import { CategoryForm } from "../components/category-form";
 import { ChaptersForm } from "../components/chapters-form";
 import { CourseActions } from "../components/course-actions";
+import {
+  FullWidthSkeleton,
+  SkeletonWithIcon,
+} from "../components/custom-skeletons";
 import { DescriptionForm } from "../components/description-form";
 import { ImageForm } from "../components/image-form";
 import { PriceForm } from "../components/price-form";
@@ -60,7 +65,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   }, [course, locale]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CourseSkeleton />;
   }
   if (isError) {
     return <div>Error</div>;
@@ -186,3 +191,38 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     </>
   );
 };
+
+// skeleton view
+const CourseSkeleton = () => (
+  <div className="p-6">
+    <FullWidthSkeleton />
+    <div className="flex items-center justify-between mt-6">
+      <div className="flex flex-col gap-y-2">
+        <Skeleton className="h-16 rounded-lg w-[300px]" />
+        <Skeleton className="h-12 rounded-lg" />
+      </div>
+      <Skeleton className="w-20 h-6 rounded-lg" />
+    </div>
+    <div className="grid md:grid-cols-2 gap-6 mt-16">
+      <SkeletonWithIcon icon={LuLayoutDashboard} />
+      <FullWidthSkeleton height="h-12" />
+
+      {[1, 2, 3].map((index) => (
+        <FullWidthSkeleton key={index} />
+      ))}
+
+      <Skeleton />
+
+      <div className="space-y-6">
+        {[{ icon: LuListChecks }, { icon: LuEuro }, { icon: LuFile }].map(
+          ({ icon }, index) => (
+            <div key={index} className="space-y-6">
+              <SkeletonWithIcon icon={icon} />
+              <FullWidthSkeleton />
+            </div>
+          )
+        )}
+      </div>
+    </div>
+  </div>
+);

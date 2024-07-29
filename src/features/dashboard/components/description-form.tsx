@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form, FormField } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import { Button, Textarea } from "@nextui-org/react";
+import { Button, CircularProgress, Textarea } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -76,19 +76,25 @@ export const DescriptionForm = ({ initialData }: Props) => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4 mt-4"
           >
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field, fieldState }) => (
-                <Textarea
-                  {...field}
-                  label={t("descriptionLabel")}
-                  placeholder={t("descriptionPlaceholder")}
-                  isInvalid={!!fieldState.error}
-                  errorMessage={fieldState.error?.message}
-                />
-              )}
-            />
+            {isPending ? (
+              <div className="flex justify-center items-center">
+                <CircularProgress color="primary" />
+              </div>
+            ) : (
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field, fieldState }) => (
+                  <Textarea
+                    {...field}
+                    label={t("descriptionLabel")}
+                    placeholder={t("descriptionPlaceholder")}
+                    isInvalid={!!fieldState.error}
+                    errorMessage={fieldState.error?.message}
+                  />
+                )}
+              />
+            )}
 
             <div className="flex items-center gap-x2">
               <Button type="submit" color="primary" disabled={isPending}>

@@ -4,11 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form, FormField } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import { Button, Input } from "@nextui-org/react";
+import { Button, CircularProgress, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { useRouter } from "next/navigation";
 import { FiPlus } from "react-icons/fi";
 import { useCreateChapter } from "../data/use-create-chapter";
 import { useReorderChapters } from "../data/use-reorder-chapters";
@@ -32,6 +33,7 @@ export const ChaptersForm = ({ initialData }: Props) => {
   const [isCreating, setIsCreating] = useState(false);
   const toggleCreating = () => setIsCreating((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
+  const router = useRouter();
 
   const form = useForm<ChapterFormTitleType>({
     resolver: zodResolver(
@@ -64,7 +66,9 @@ export const ChaptersForm = ({ initialData }: Props) => {
   };
 
   const onEdit = (chapterId: string) => {
-    // TODO
+    router.push(
+      `/teacher/courses/${initialData.courseId}/chapters/${chapterId}`
+    );
   };
 
   const onReorder = (
@@ -92,19 +96,25 @@ export const ChaptersForm = ({ initialData }: Props) => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4 mt-4"
           >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field, fieldState }) => (
-                <Input
-                  {...field}
-                  label={t("chapterLabel")}
-                  placeholder={t("chapterTitlePlaceholder")}
-                  isInvalid={!!fieldState.error}
-                  errorMessage={fieldState.error?.message}
-                />
-              )}
-            />
+            {isPending ? (
+              <div className="flex justify-center items-center">
+                <CircularProgress color="primary" />
+              </div>
+            ) : (
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field, fieldState }) => (
+                  <Input
+                    {...field}
+                    label={t("chapterLabel")}
+                    placeholder={t("chapterTitlePlaceholder")}
+                    isInvalid={!!fieldState.error}
+                    errorMessage={fieldState.error?.message}
+                  />
+                )}
+              />
+            )}
             <Button type="submit" color="primary" disabled={isPending}>
               {t("submit_button")}
             </Button>
