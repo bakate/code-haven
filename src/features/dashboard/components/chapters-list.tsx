@@ -8,7 +8,7 @@ import {
   Droppable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { Badge } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { LuGrip, LuPencil } from "react-icons/lu";
@@ -92,19 +92,19 @@ export const ChaptersList = ({ items, onEdit, onReorder }: Props) => {
                     </div>
                     {chapter.title}
 
-                    <div className="ml-auto pr-2 flex items-center gap-x-2">
-                      {chapter.isFree && <Badge>{t("free")}</Badge>}
-                      <Badge
-                        className={cn(
-                          "bg-slate-500",
-                          chapter.isPublished && "bg-sky-700"
-                        )}
+                    <div className="ml-auto pr-2 flex items-center gap-x-2 relative">
+                      {chapter.isFree && (
+                        <Chip variant="flat">{t("free")}</Chip>
+                      )}
+                      <Chip
+                        variant="flat"
+                        color={chapter.isPublished ? "success" : "secondary"}
                       >
                         {chapter.isPublished ? t("published") : t("draft")}
-                      </Badge>
+                      </Chip>
                       <LuPencil
-                        onClick={() => {}}
-                        className="w-4 h-4 cursor-pointer hover:opacity-75 transition"
+                        onClick={() => onEdit(chapter.id!)}
+                        className="w-4 h-4 hover:cursor-pointer hover:opacity-75 transition"
                       />
                     </div>
                   </div>

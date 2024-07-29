@@ -1,0 +1,31 @@
+import { honoClient } from "@/lib/hono";
+import { useQuery } from "@tanstack/react-query";
+import { InferResponseType } from "hono";
+
+export type ResponseType = InferResponseType<
+  (typeof honoClient.api.chapters)[":chapterId"]["$get"],
+  200
+>;
+
+export const useGetChapterById = (chapterId: string, courseId: string) => {
+  const query = useQuery({
+    enabled: !!chapterId,
+    queryKey: ["chapter", { chapterId }],
+    queryFn: async () => {
+      const response = await honoClient.api.chapters[":chapterId"].$get({
+        param: {
+          chapterId,
+        },
+        query: {
+          courseId,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const { data } = await response.json();
+      return data;
+    },
+  });
+  return query;
+};

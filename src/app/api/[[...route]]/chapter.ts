@@ -7,7 +7,7 @@ import {
 import { Locale } from "@/i18n-config";
 import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { getLocale, getTranslations } from "next-intl/server";
 import { z } from "zod";
@@ -156,6 +156,75 @@ const app = new Hono()
           message: translations("errorReorderingChapters"),
         } as const);
       }
+    }
+  )
+  .get(
+    "/:chapterId",
+    zValidator(
+      "param",
+      z.object({
+        chapterId: z.string().min(1),
+      })
+    ),
+    zValidator(
+      "query",
+      z.object({
+        courseId: z.string().min(1),
+      })
+    ),
+
+    async (c) => {
+      const auth = c.get("authUser");
+      if (!auth.session?.user?.id) {
+        throw c.json({ error: "Unauthorized" } as const, 401);
+      }
+      const { chapterId } = c.req.valid("param");
+      const { courseId } = c.req.valid("query");
+
+      if (!chapterId) {
+        throw c.json({ error: "Missing required chapter ID" } as const, 422);
+      }
+      if (!courseId) {
+        throw c.json({ error: "Missing required course ID" } as const, 422);
+      }
+      const [data] = await db
+        .select({
+          id: chapter.id,
+          courseId: chapter.courseId,
+          position: chapter.position,
+          isPublished: chapter.isPublished,
+          isFree: chapter.isFree,
+          titlesAndDescriptions: sql<
+            Array<{
+              title: string;
+              description?: string;
+              lang: Locale;
+            }>
+          >`
+          jsonb_agg(
+            jsonb_build_object(
+              'title', ${chapterTranslation.title},
+              'description', ${chapterTranslation.description},
+              'lang', ${chapterTranslation.lang}
+            )
+          )
+          `,
+        })
+        .from(chapter)
+        .leftJoin(
+          chapterTranslation,
+          eq(chapter.id, chapterTranslation.chapterId)
+        )
+        .where(and(eq(chapter.id, chapterId), eq(chapter.courseId, courseId)))
+        .groupBy(chapter.id);
+
+      if (!chapter) {
+        throw c.json({ error: "Chapter not found" } as const, 404);
+      }
+      return c.json({
+        status: "success",
+        data,
+      } as const);
     }
   );
 

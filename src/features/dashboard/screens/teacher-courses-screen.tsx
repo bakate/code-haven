@@ -1,4 +1,5 @@
 "use client";
+import { Link } from "@nextui-org/react";
 import { useGetTeacherCourses } from "../data/use-get-teacher-courses";
 
 export const TeacherCoursesScreen = () => {
@@ -17,7 +18,9 @@ export const TeacherCoursesScreen = () => {
     <div>
       {data.map((course) => (
         <div key={course.id}>
-          <h1>{course.id}</h1>
+          <Link href={`/teacher/courses/${course.id}`}>
+            <h1>{course.id}</h1>
+          </Link>
         </div>
       ))}
     </div>
