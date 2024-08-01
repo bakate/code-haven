@@ -5,9 +5,11 @@ import {
   chapterTranslation,
   course,
   courseTranslation,
-  insertCourseSchema,
-  insertCourseTranslation,
 } from "@/db/schema";
+import {
+  insertCourseTranslation,
+  selectCourseSchema,
+} from "@/features/dashboard/types/course.type";
 import {
   remainingLocales,
   translateText,
@@ -23,7 +25,6 @@ import { z } from "zod";
 const app = new Hono()
   .use("*", verifyAuth()) // Verify auth middleware for all routes
   .get("/", async (c) => {
-    const locale = await getLocale();
     const auth = c.get("authUser");
 
     if (!auth.session?.user?.id) {
@@ -230,7 +231,7 @@ const app = new Hono()
     ),
     zValidator(
       "json",
-      insertCourseSchema
+      selectCourseSchema
         .omit({
           id: true,
           createdAt: true,

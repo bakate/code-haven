@@ -8,7 +8,6 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import type { AdapterAccountType } from "next-auth/adapters";
 
@@ -172,22 +171,6 @@ export const categoryRelations = relations(category, ({ many }) => ({
   courses: many(course),
 }));
 
-// Create insert schema for course
-export const insertCourseTranslation = createInsertSchema(courseTranslation);
-export const insertCourseSchema = createInsertSchema(course).merge(
-  insertCourseTranslation.pick({
-    lang: true,
-    title: true,
-    description: true,
-  })
-);
-
-export const selectTranslatedCourseSchema =
-  createSelectSchema(course) &&
-  insertCourseTranslation.pick({
-    title: true,
-  });
-
 export const attachment = pgTable("attachments", {
   id: text("id")
     .primaryKey()
@@ -208,8 +191,6 @@ export const attachmentRelations = relations(attachment, ({ one }) => ({
     references: [course.id],
   }),
 }));
-
-export const insertAttachmentSchema = createInsertSchema(attachment);
 
 export const chapter = pgTable("chapter", {
   id: text("id")
@@ -252,14 +233,5 @@ export const chapterTranslationRelations = relations(
       fields: [chapterTranslation.chapterId],
       references: [chapter.id],
     }),
-  })
-);
-
-export const insertChapterTranslation = createInsertSchema(chapterTranslation);
-export const insertChapterSchema = createInsertSchema(chapter).merge(
-  insertChapterTranslation.pick({
-    lang: true,
-    title: true,
-    description: true,
   })
 );

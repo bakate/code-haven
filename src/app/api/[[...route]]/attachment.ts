@@ -1,5 +1,10 @@
 import { db } from "@/db/drizzle";
-import { attachment, insertAttachmentSchema } from "@/db/schema";
+import { attachment } from "@/db/schema";
+import {
+  insertAttachmentSchema,
+  selectAttachmentSchema,
+} from "@/features/dashboard/types/attachment.type";
+
 import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";
 import { and, eq } from "drizzle-orm";
@@ -43,13 +48,13 @@ const app = new Hono()
     "/:id",
     zValidator(
       "param",
-      insertAttachmentSchema.pick({
+      selectAttachmentSchema.pick({
         id: true,
       })
     ),
     zValidator(
       "json",
-      insertAttachmentSchema.pick({
+      selectAttachmentSchema.pick({
         courseId: true,
       })
     ),
