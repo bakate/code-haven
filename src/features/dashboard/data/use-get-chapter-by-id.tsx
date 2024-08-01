@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { InferResponseType } from "hono";
 
 export type ResponseType = InferResponseType<
-  (typeof honoClient.api.chapters)[":chapterId"]["$get"],
+  (typeof honoClient.api.chapters)[":id"]["$get"],
   200
 >;
 
@@ -12,9 +12,9 @@ export const useGetChapterById = (chapterId: string, courseId: string) => {
     enabled: !!chapterId,
     queryKey: ["chapter", { chapterId }],
     queryFn: async () => {
-      const response = await honoClient.api.chapters[":chapterId"].$get({
+      const response = await honoClient.api.chapters[":id"].$get({
         param: {
-          chapterId,
+          id: chapterId,
         },
         query: {
           courseId,

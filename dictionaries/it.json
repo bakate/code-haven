@@ -88,7 +88,17 @@
     "draft": "Bozza",
     "noChapters": "Nessun capitolo",
     "chapterLabel": "Capitolo",
-    "errorCourseUpdate": "Errore durante l'aggiornamento del corso"
+    "errorCourseUpdate": "Errore durante l'aggiornamento del corso",
+    "freePreview": "Anteprima gratuita",
+    "notFree": "Non gratuito",
+    "checkBoxLabel": "Crea capitolo gratuito",
+    "editAccess": "Modifica accesso",
+    "unpublishedWarning": "Attenzione: se pubblichi questo corso, non potrai più modificarlo. Sei sicuro di volerlo pubblicare?",
+    "backToCourseSetup": "Torna alla configurazione del corso",
+    "chapterCreation": "Creazione capitolo",
+    "completeAllFields": "Completa tutti i campi per pubblicare il tuo corso",
+    "customizeYourChapter": "Personalizza il tuo capitolo",
+    "accessSettings": "Impostazioni accesso"
   },
   "courseById": {
     "publish": "Pubblica",

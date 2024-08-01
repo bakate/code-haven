@@ -87,7 +87,17 @@
   "errorReorderingChapters": "Fehler beim Neuordnen der Kapitel",
    "priceMustBePositive": "Der Preis muss eine positive Zahl sein",
     "courseUpdatedSuccessfully": "Kurs erfolgreich aktualisiert",
-    "errorCourseUpdate": "Fehler beim Aktualisieren des Kurses"
+    "errorCourseUpdate": "Fehler beim Aktualisieren des Kurses",
+    "freePreview": "Kostenloses Vorschau",
+    "notFree": "Nicht kostenlos",
+    "checkBoxLabel": "Ich stimme den oben genannten Bedingungen zu",
+    "editAccess": "Zugang bearbeiten",
+    "unpublishedWarning": "Dieser Kurs ist noch nicht veröffentlicht. Er wird für die Studierenden nicht sichtbar sein.",
+    "backToCourseSetup": "Zurück zum Kurseinrichtung",
+    "chapterCreation": "Kapitel erstellen",
+    "completeAllFields": "Füllen Sie alle Felder aus, um deinen Kurs zu veröffentlichen",
+    "customizeYourChapter": "Anpassen Sie Ihr Kapitel",
+    "accessSettings": "Zugangseinstellungen"
   },
   "courseById": {
     "publish": "Veröffentlichen",

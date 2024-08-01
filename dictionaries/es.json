@@ -87,7 +87,17 @@
       "draft": "Borrador",
       "chapterLabel": "Capítulo",
      "courseUpdatedSuccessfully": "Curso actualizado con éxito",
-     "errorCourseUpdate": "Error al actualizar el curso"
+     "errorCourseUpdate": "Error al actualizar el curso",
+     "freePreview": "Este capítulo es gratuito para previsualización.",
+    "notFree": "Este capítulo no es gratuito.",
+    "checkBoxLabel": "Marque esta casilla si desea que este capítulo sea gratuito para previsualización",
+    "editAccess": "Editar acceso",
+    "unpublishedWarning": "Este capítulo no está publicado. No será visible en el curso.",
+    "backToCourseSetup": "Volver a la configuración del curso",
+    "chapterCreation": "Creación de capítulo",
+    "completeAllFields": "Complete todos los campos para crear un capítulo.",
+    "customizeYourChapter": "Personaliza tu capítulo",
+    "accessSettings": "Configuraciones de acceso"
 
     },
     "courseById": {

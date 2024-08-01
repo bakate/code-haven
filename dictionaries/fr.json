@@ -87,7 +87,17 @@
        "published": "Publié",
        "draft": "Brouillon",
        "noChapters": "Aucun chapitre",
-      "errorCourseUpdate": "Erreur lors de la mise à jour du cours"
+     "errorCourseUpdate": "Erreur lors de la mise à jour du cours",
+     "freePreview": "Ce chapitre est gratuit pour la prévisualisation.",
+    "notFree": "Ce chapitre n'est pas gratuit.",
+    "checkBoxLabel": "Ce chapitre est gratuit",
+    "editAccess": "Modifier l'accès",
+    "unpublishedWarning": "Ce chapitre n'est pas publié. Il ne sera pas visible par les étudiants.",
+    "backToCourseSetup": "Retour à la configuration du cours",
+    "chapterCreation": "Créer un chapitre",
+    "completeAllFields": "Complétez tous les champs pour publier votre cours",
+    "customizeYourChapter": "Personnalisez votre chapitre",
+    "accessSettings": "Paramètres d'accès"
     },
     "courseById": {
       "publish": "Publier",
