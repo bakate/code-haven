@@ -20,6 +20,8 @@
     "@hono/auth-js": "^1.0.8",
     "@hono/zod-validator": "^0.2.2",
     "@hookform/resolvers": "^3.9.0",
+    "@mux/mux-node": "^8.8.0",
+    "@mux/mux-player-react": "^2.8.1",
     "@neondatabase/serverless": "^0.9.3",
     "@nextui-org/react": "^2.4.6",
     "@tanstack/react-query": "^5.51.11",
