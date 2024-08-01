@@ -26,6 +26,11 @@ export const ourFileRouter = {
         url: file.url,
       };
     }),
+  chapterVideo: f({ video: { maxFileSize: "512GB", maxFileCount: 1 } })
+    .middleware(async () => handleAuth())
+    .onUploadComplete(async ({ file }) => {
+      return { name: file.name, url: file.url };
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

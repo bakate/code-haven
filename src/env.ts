@@ -14,6 +14,8 @@ const schema = z.object({
   MICROSOFT_TRANSLATOR_KEY: z.string(),
   NEXT_PUBLIC_APP_URL: z.string(),
   NEON_DATABASE_URL: z.string(),
+  MUX_TOKEN_ID: z.string(),
+  MUX_TOKEN_SECRET: z.string(),
 });
 
 const validEnv = schema.safeParse(process.env);

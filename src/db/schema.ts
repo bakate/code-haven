@@ -202,6 +202,8 @@ export const chapter = pgTable("chapter", {
   isPublished: boolean("is_published").default(false).notNull(),
   isFree: boolean("is_free").default(false).notNull(),
   position: integer("position").notNull(),
+  muxDataId: text("mux_data_id"),
+  videoUrl: text("video_url"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
 });
@@ -212,6 +214,10 @@ export const chapterRelations = relations(chapter, ({ one, many }) => ({
     references: [course.id],
   }),
   chapterTranslations: many(chapterTranslation),
+  muxData: one(muxData, {
+    fields: [chapter.muxDataId],
+    references: [muxData.id],
+  }),
 }));
 
 export const chapterTranslation = pgTable("chapter_translation", {
@@ -235,3 +241,17 @@ export const chapterTranslationRelations = relations(
     }),
   })
 );
+
+export const muxData = pgTable("mux_data", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  assetId: text("asset_id").notNull(),
+  playbackId: text("playback_id"),
+  chapterId: text("chapter_id").references(() => chapter.id, {
+    onDelete: "cascade",
+    onUpdate: "cascade",
+  }),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});
