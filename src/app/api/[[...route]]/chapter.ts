@@ -1,5 +1,9 @@
 import { db } from "@/db/drizzle";
-import { chapter, chapterTranslation, insertChapterSchema } from "@/db/schema";
+import { chapter, chapterTranslation } from "@/db/schema";
+import {
+  insertChapterSchema,
+  selectChapterSchema,
+} from "@/features/dashboard/types/chapter.type";
 import {
   remainingLocales,
   translateText,
@@ -56,7 +60,6 @@ const app = new Hono()
         .where(eq(chapter.courseId, values.courseId))
         .orderBy(desc(chapter.position))
         .limit(1);
-      console.log({ latestChapter });
 
       const newPosition = latestChapter ? latestChapter.position + 1 : 1;
 
@@ -158,12 +161,139 @@ const app = new Hono()
       }
     }
   )
-  .get(
-    "/:chapterId",
+  .patch(
+    "/:id",
     zValidator(
       "param",
-      z.object({
-        chapterId: z.string().min(1),
+      selectChapterSchema.pick({
+        id: true,
+      })
+    ),
+    zValidator(
+      "json",
+      selectChapterSchema
+        .pick({
+          title: true,
+          description: true,
+          isFree: true,
+          isPublished: true,
+          courseId: true,
+        })
+        .partial()
+    ),
+    async (c) => {
+      const auth = c.get("authUser");
+      if (!auth.session?.user?.id) {
+        throw c.json({ error: "Unauthorized" } as const, 401);
+      }
+      const { id } = c.req.valid("param");
+      const values = c.req.valid("json");
+      if (!id) {
+        throw c.json({ error: "Missing required chapter ID" } as const, 422);
+      }
+      if (!values) {
+        throw c.json({ error: "Missing required fields" } as const, 422);
+      }
+      if (!values?.courseId) {
+        throw c.json({ error: "Missing required course ID" } as const, 422);
+      }
+      const [currentLocale, translations] = await Promise.all([
+        getLocale(),
+        getTranslations("createOrEditCourseForm"),
+      ]);
+      const usLocale = "en-us";
+
+      const updateTranslations = async (field: "title" | "description") => {
+        if (values[field]) {
+          const [fieldTranslations] = (await translateText({
+            from: currentLocale === usLocale ? "en" : currentLocale,
+            texts: [values[field]],
+            to: remainingLocales(currentLocale),
+          })) ?? [{ translations: [] }];
+
+          try {
+            await db
+              .update(chapterTranslation)
+              .set({
+                [field]: values[field],
+              })
+              .where(
+                and(
+                  eq(chapterTranslation.chapterId, id),
+                  eq(chapterTranslation.lang, currentLocale as Locale)
+                )
+              );
+            await Promise.all(
+              fieldTranslations.translations.map(({ text, to }) => {
+                return db
+                  .update(chapterTranslation)
+                  .set({
+                    [field]: text,
+                  })
+                  .where(
+                    and(
+                      eq(chapterTranslation.chapterId, id),
+                      eq(
+                        chapterTranslation.lang,
+                        to === "en" ? usLocale : (to as Locale)
+                      )
+                    )
+                  );
+              })
+            );
+          } catch (error) {
+            return {
+              status: "error",
+              message: translations("error_message"),
+            } as const;
+          }
+        }
+      };
+
+      if (values.title || values.description) {
+        const updateResults = await Promise.all([
+          updateTranslations("title"),
+          updateTranslations("description"),
+        ]);
+        if (updateResults.some((result) => result?.status === "error")) {
+          return c.json({
+            status: "error",
+            message: translations("error_message"),
+          } as const);
+        }
+      }
+      // other fields
+
+      try {
+        await db
+          .update(chapter)
+          .set({
+            ...values,
+            updatedAt: new Date(),
+          })
+          .where(
+            and(eq(chapter.id, id), eq(chapter.courseId, values.courseId))
+          );
+        return c.json({
+          status: "success",
+          message: translations("courseUpdatedSuccessfully"),
+          courseId: values.courseId,
+          chapterId: id,
+        } as const);
+      } catch (error) {
+        return c.json({
+          status: "error",
+          message: translations("error_message"),
+        } as const);
+      }
+    }
+  )
+  .get(
+    "/:id",
+    zValidator(
+      "param",
+      selectChapterSchema.pick({
+        id: true,
       })
     ),
     zValidator(
@@ -178,7 +308,7 @@ const app = new Hono()
       if (!auth.session?.user?.id) {
         throw c.json({ error: "Unauthorized" } as const, 401);
       }
-      const { chapterId } = c.req.valid("param");
+      const { id: chapterId } = c.req.valid("param");
       const { courseId } = c.req.valid("query");
 
       if (!chapterId) {
