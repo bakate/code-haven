@@ -4,10 +4,11 @@ import { IconBadge } from "@/components/icon-badge";
 import { Link } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import { LuArrowLeft, LuEye, LuLayoutDashboard } from "react-icons/lu";
+import { LuArrowLeft, LuEye, LuLayoutDashboard, LuVideo } from "react-icons/lu";
 import { ChapterAccessSettingsForm } from "../components/chapter/chapter-access-settings-form";
 import { ChapterDescriptionForm } from "../components/chapter/chapter-description-form";
 import { ChapterTitleForm } from "../components/chapter/chapter-title-form";
+import { ChapterVideoForm } from "../components/chapter/chapter-video-form";
 import { useGetChapterById } from "../data/use-get-chapter-by-id";
 
 type Props = {
@@ -120,14 +121,16 @@ export const EditChapterScreen = ({ params }: Props) => {
           </div>
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={LuEye} />
-              <h2 className="text-xl">Access settings</h2>
+              <IconBadge icon={LuVideo} />
+              <h2 className="text-xl">Add a video</h2>
             </div>
-            <ChapterTitleForm
+            <ChapterVideoForm
               initialData={{
                 chapterId: chapter.id,
+                playbackId: chapter.playbackId ?? "",
                 title: chapterTranslation.title,
                 courseId: chapter.courseId,
+                videoStatus: chapter.videoStatus,
               }}
             />
           </div>
