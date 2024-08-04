@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 const schema = z.object({
-  NODE_ENV: z.enum(["production", "development", "test"] as const),
+  NODE_ENV: z
+    .enum(["production", "development", "test"] as const)
+    .default("production"),
   AUTH_SECRET: z.string(),
   AUTH_GOOGLE_ID: z.string(),
   AUTH_GOOGLE_SECRET: z.string(),
