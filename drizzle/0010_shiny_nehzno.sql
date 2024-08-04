@@ -1,0 +1,1 @@
+ALTER TABLE "mux_data" ADD COLUMN "status" text DEFAULT 'processing' NOT NULL;

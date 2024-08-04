@@ -1,6 +1,6 @@
-import { insertChapterSchema } from "@/db/schema";
 import { IconType } from "react-icons/lib";
 import { z } from "zod";
+import { insertChapterSchema } from "./chapter.type";
 
 export type CourseRoutes = {
   label: string;
