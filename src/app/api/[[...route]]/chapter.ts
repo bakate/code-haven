@@ -1,5 +1,6 @@
 import { db } from "@/db/drizzle";
-import { chapter, chapterTranslation } from "@/db/schema";
+import { chapter, chapterTranslation, muxData } from "@/db/schema";
+import { ENV } from "@/env";
 import {
   insertChapterSchema,
   selectChapterSchema,
@@ -178,6 +179,8 @@ const app = new Hono()
           isFree: true,
           isPublished: true,
           courseId: true,
+          videoUrl: true,
+          muxDataId: true,
         })
         .partial()
     ),
@@ -262,7 +265,18 @@ const app = new Hono()
           } as const);
         }
       }
-      // other fields
+
+      if (values.videoUrl) {
+        const muxResult = await handleMuxVideo({
+          id,
+          videoUrl: values.videoUrl,
+          translations,
+        });
+        if (muxResult.status === "error") {
+          return c.json(muxResult);
+        }
+        values.muxDataId = muxResult.muxDataId;
+      }
 
       try {
         await db
@@ -324,6 +338,8 @@ const app = new Hono()
           position: chapter.position,
           isPublished: chapter.isPublished,
           isFree: chapter.isFree,
+          playbackId: muxData?.playbackId,
+          videoStatus: muxData?.status,
           titlesAndDescriptions: sql<
             Array<{
               title: string;
@@ -345,8 +361,9 @@ const app = new Hono()
           chapterTranslation,
           eq(chapter.id, chapterTranslation.chapterId)
         )
+        .leftJoin(muxData, eq(muxData.chapterId, chapterId))
         .where(and(eq(chapter.id, chapterId), eq(chapter.courseId, courseId)))
-        .groupBy(chapter.id);
+        .groupBy(chapter.id, muxData.playbackId, muxData.status);
 
       if (!chapter) {
         throw c.json({ error: "Chapter not found" } as const, 404);
@@ -359,3 +376,111 @@ const app = new Hono()
   );
 
 export default app;
+
+// helpers for the chapter API
+
+async function pollMuxUploadStatus({
+  muxDataId,
+  interval = 9000, // every 9 seconds
+  timeout = 1000 * 60 * 5, // 5 minutes
+}: {
+  muxDataId: string;
+  timeout?: number;
+  interval?: number;
+}) {
+  const start = Date.now();
+
+  while (Date.now() - start < timeout) {
+    const currentMuxData = await db.query.muxData.findFirst({
+      where: eq(muxData.id, muxDataId),
+      columns: {
+        status: true,
+      },
+    });
+    if (!currentMuxData) {
+      return false;
+    }
+
+    if (currentMuxData.status === "ready") {
+      return true;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, interval));
+  }
+  return false;
+}
+
+const handleMuxVideo = async ({
+  id,
+  translations,
+  videoUrl,
+}: {
+  id: string;
+  videoUrl: string;
+  translations: any;
+}) => {
+  const existingMuxData = await db.query.muxData.findFirst({
+    where: eq(muxData.chapterId, id),
+    columns: { assetId: true },
+  });
+
+  if (existingMuxData) {
+    await db.delete(muxData).where(eq(muxData.chapterId, id));
+    await fetch(
+      `https://api.mux.com/video/v1/assets/${existingMuxData.assetId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Basic ${btoa(
+            `${ENV.MUX_TOKEN_ID}:${ENV.MUX_TOKEN_SECRET}`
+          )}`,
+        },
+      }
+    );
+  }
+  const muxResponse = await fetch("https://api.mux.com/video/v1/assets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${btoa(
+        `${ENV.MUX_TOKEN_ID}:${ENV.MUX_TOKEN_SECRET}`
+      )}`,
+    },
+    body: JSON.stringify({
+      input: [{ url: videoUrl }],
+      playback_policy: ["public"],
+      test: false,
+    }),
+  });
+
+  if (!muxResponse.ok) {
+    return { status: "error", message: translations("error_message") } as const;
+  }
+
+  const asset = await muxResponse.json();
+  try {
+    const [{ newMuxDataId = "" }] = await db
+      .insert(muxData)
+      .values({
+        chapterId: id,
+        assetId: asset.data.id,
+        playbackId: asset.data.playback_ids?.[0].id,
+      })
+      .returning({ newMuxDataId: muxData.id });
+
+    const uploadComplete = await pollMuxUploadStatus({
+      muxDataId: newMuxDataId,
+    });
+
+    if (!uploadComplete) {
+      return {
+        status: "error",
+        message: translations("errorCourseUpdate"),
+      } as const;
+    }
+
+    return { status: "success", muxDataId: newMuxDataId };
+  } catch (error) {
+    return { status: "error", message: translations("error_message") } as const;
+  }
+};
