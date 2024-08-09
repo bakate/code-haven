@@ -130,7 +130,6 @@ export const EditChapterScreen = ({ params }: Props) => {
                 playbackId: chapter.playbackId ?? "",
                 title: chapterTranslation.title,
                 courseId: chapter.courseId,
-                videoStatus: chapter.videoStatus,
               }}
             />
           </div>

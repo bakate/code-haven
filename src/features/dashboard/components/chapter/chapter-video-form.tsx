@@ -3,10 +3,12 @@
 import useClientCheck from "@/features/auth/hooks/use-client-check";
 import MuxPlayer from "@mux/mux-player-react";
 import { Button, CircularProgress } from "@nextui-org/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useEffect, useReducer } from "react";
+import { memo, useEffect, useReducer } from "react";
 import { FaPencil, FaPlus, FaVideo } from "react-icons/fa6";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
+import { useVideoStatus } from "../../data/use-get-chapter-by-id";
 import { SelectMuxDataType } from "../../types/mux.type";
 import FileUpload from "../file-upload";
 
@@ -16,30 +18,26 @@ type Props = {
     playbackId?: string;
     title: string;
     chapterId: SelectMuxDataType["chapterId"];
-    videoStatus?: SelectMuxDataType["status"] | null;
   };
 };
 
 type ChapterVideoState = {
   isEditing: boolean;
   playbackId: string | null;
-  videoUrl: string | null;
   videoStatus?: SelectMuxDataType["status"] | null;
   isLoading: boolean;
+  isUploading: false;
 };
 
 type ChapterVideoAction =
   | { type: "SET_EDITING"; payload: boolean }
   | {
-      type: "SET_PLAYBACK_ID";
+      type: "SET_VIDEO_DATA";
       payload: {
-        playbackId: string;
-        videoStatus: SelectMuxDataType["status"] | null;
+        videoStatus: SelectMuxDataType["status"];
+        playbackId?: string | null;
+        isUploading: boolean;
       };
-    }
-  | {
-      type: "SET_VIDEO_URL";
-      payload: string | null;
     }
   | { type: "SET_LOADING"; payload: boolean };
 
@@ -50,17 +48,16 @@ const chapterVideoReducer = (
   switch (action.type) {
     case "SET_EDITING":
       return { ...state, isEditing: action.payload };
-    case "SET_PLAYBACK_ID":
+    case "SET_VIDEO_DATA":
       return {
         ...state,
-        playbackId: action.payload.playbackId,
         videoStatus: action.payload.videoStatus,
+        ...(action.payload.playbackId && {
+          playbackId: action.payload.playbackId,
+        }),
+        isUploading: action.payload.isUploading ?? false,
       };
-    case "SET_VIDEO_URL":
-      return {
-        ...state,
-        videoUrl: action.payload || null,
-      };
+
     case "SET_LOADING":
       return { ...state, isLoading: action.payload };
 
@@ -73,34 +70,53 @@ const initialState: ChapterVideoState = {
   isEditing: false,
   playbackId: null,
   videoStatus: undefined,
-  videoUrl: null,
   isLoading: false,
+  isUploading: false,
 };
 
 export const ChapterVideoForm = ({ initialData }: Props) => {
+  const queryClient = useQueryClient();
   const { mutate, isPending } = useEditChapterById(initialData.chapterId);
+  const { data: videoStatus, isPending: videoStatusPending } = useVideoStatus(
+    initialData.chapterId
+  );
   const [state, dispatch] = useReducer(chapterVideoReducer, initialState);
 
   const isClient = useClientCheck();
 
   useEffect(() => {
-    if (initialData.playbackId) {
-      if (
-        state.playbackId === null ||
-        initialData.playbackId !== state.playbackId
-      ) {
+    if (videoStatusPending) {
+      dispatch({ type: "SET_LOADING", payload: true });
+    }
+    if (!videoStatus || videoStatus === "ready") {
+      if (!state.videoStatus || state.videoStatus === "processing") {
         dispatch({
-          type: "SET_PLAYBACK_ID",
+          type: "SET_VIDEO_DATA",
           payload: {
-            playbackId: initialData.playbackId,
-            videoStatus: initialData.videoStatus ?? null,
+            videoStatus: "ready",
+            ...(state.playbackId === null && {
+              playbackId: initialData.playbackId,
+            }),
+            isUploading: false,
           },
         });
       }
+      dispatch({ type: "SET_LOADING", payload: false });
     }
-    dispatch({ type: "SET_EDITING", payload: false });
-    dispatch({ type: "SET_LOADING", payload: false });
-  }, [initialData.playbackId, initialData.videoStatus, state.playbackId]);
+    if (videoStatus === "processing") {
+      dispatch({ type: "SET_LOADING", payload: true });
+      dispatch({
+        type: "SET_VIDEO_DATA",
+        payload: { videoStatus: "processing" },
+      });
+    }
+  }, [
+    videoStatus,
+    initialData.playbackId,
+    state.playbackId,
+    state.videoStatus,
+    videoStatusPending,
+  ]);
 
   const t = useTranslations("createOrEditCourseForm");
 
@@ -131,17 +147,33 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
   };
 
   const handleFileUpload = (url?: string, name?: string) => {
+    queryClient.invalidateQueries({
+      queryKey: ["videoStatus", { chapterId: initialData.chapterId }],
+    });
     if (url) {
       dispatch({ type: "SET_LOADING", payload: true });
       dispatch({ type: "SET_EDITING", payload: false });
-      dispatch({
-        type: "SET_VIDEO_URL",
-        payload: url,
-      });
-      mutate({
-        videoUrl: url,
-        courseId: initialData.courseId,
-      });
+      mutate(
+        {
+          videoUrl: url,
+          courseId: initialData.courseId,
+        },
+        {
+          onSuccess(data) {
+            if (data.status === "processing" && data.playbackId) {
+              dispatch({ type: "SET_LOADING", payload: true });
+              dispatch({
+                type: "SET_VIDEO_DATA",
+                payload: {
+                  playbackId: data.playbackId,
+                  videoStatus: "processing",
+                  isUploading: true,
+                },
+              });
+            }
+          },
+        }
+      );
     }
   };
 
@@ -159,7 +191,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
           onPress={() =>
             dispatch({ type: "SET_EDITING", payload: !state.isEditing })
           }
-          disabled={isPending}
+          disabled={state.isLoading || isPending}
           startContent={getButtonStartIcon(state.isEditing, state.playbackId)}
         >
           {getButtonContent(state.isEditing, state.playbackId)}
@@ -167,7 +199,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
       </div>
 
       {state.isLoading ? (
-        <Loader />
+        <Loader withLabel={Boolean(state.videoStatus === "processing")} />
       ) : state.isEditing ? (
         <>
           <FileUpload endpoint="chapterVideo" onChange={handleFileUpload} />
@@ -181,52 +213,57 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
           videoStatus={state.videoStatus ?? null}
           courseId={initialData.courseId}
           title={initialData.title}
+          isUploading={state.isUploading}
         />
       )}
     </div>
   );
 };
 
-// const youtubeVideo = "https://www.youtube.com/watch?v=Xmwl5cPoWWk&list=PPSV&ab_channel=TypedRocks",
-
-const VideoDisplay = ({
-  playbackId,
-  videoStatus,
-  courseId,
-  title,
-}: {
+type VideoDisplayProps = {
   playbackId: string | null;
   videoStatus: SelectMuxDataType["status"] | null;
   courseId: string;
   title: string;
-}) => {
-  if (!playbackId) {
+  isUploading: boolean;
+};
+
+const VideoDisplay = memo<VideoDisplayProps>(
+  ({ playbackId, videoStatus, courseId, title, isUploading }) => {
+    if (!playbackId || !videoStatus || isUploading) {
+      return (
+        <div className="flex items-center justify-center mt-4 h-60 bg-slate-200 rounded-md">
+          <FaVideo className="size-10 text-slate-500" />
+        </div>
+      );
+    }
+
     return (
-      <div className="flex items-center justify-center mt-4 h-60 bg-slate-200 rounded-md">
-        <FaVideo className="size-10 text-slate-500" />
+      <div className="relative aspect-video mt-4">
+        {videoStatus === "ready" && playbackId ? (
+          <MuxPlayer
+            className="aspect-video mb-6 w-full"
+            playbackId={playbackId}
+            streamType="on-demand"
+            title={title}
+            metadata={{
+              video_series: courseId,
+              video_title: title,
+            }}
+          />
+        ) : null}
       </div>
     );
   }
-  return (
-    <div className="relative aspect-video mt-4">
-      {videoStatus === "ready" && playbackId ? (
-        <MuxPlayer
-          className="aspect-video mb-6 w-full"
-          playbackId={playbackId}
-          streamType="on-demand"
-          metadata={{
-            video_series: courseId,
-            video_title: title,
-          }}
-        />
-      ) : null}
-    </div>
-  );
-};
+);
 
-const Loader = () => (
+VideoDisplay.displayName = "VideoDisplay";
+
+const Loader = ({ withLabel = false }: { withLabel?: boolean }) => (
   <div className="grid place-items-center gap-3">
     <CircularProgress color="primary" aria-label="Loading..." />
-    <h2 className="text-slate-500">Video is processing. Please wait.</h2>
+    {withLabel ? (
+      <h2 className="text-slate-500">Video is processing. Please wait.</h2>
+    ) : null}
   </div>
 );

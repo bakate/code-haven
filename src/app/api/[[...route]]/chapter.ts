@@ -265,7 +265,7 @@ const app = new Hono()
           } as const);
         }
       }
-
+      let newPlaybackId;
       if (values.videoUrl) {
         const muxResult = await handleMuxVideo({
           id,
@@ -276,6 +276,7 @@ const app = new Hono()
           return c.json(muxResult);
         }
         values.muxDataId = muxResult.muxDataId;
+        newPlaybackId = muxResult.playbackId;
       }
 
       try {
@@ -289,10 +290,11 @@ const app = new Hono()
             and(eq(chapter.id, id), eq(chapter.courseId, values.courseId))
           );
         return c.json({
-          status: "success",
+          status: values.videoUrl ? "processing" : "success",
           message: translations("courseUpdatedSuccessfully"),
           courseId: values.courseId,
           chapterId: id,
+          playbackId: newPlaybackId,
         } as const);
       } catch (error) {
         return c.json({
@@ -300,6 +302,35 @@ const app = new Hono()
           message: translations("error_message"),
         } as const);
       }
+    }
+  )
+  .get(
+    "/video-status",
+    zValidator(
+      "query",
+      selectChapterSchema.pick({
+        id: true,
+      })
+    ),
+    async (c) => {
+      const auth = c.get("authUser");
+      if (!auth.session?.user?.id) {
+        throw c.json({ error: "Unauthorized" } as const, 401);
+      }
+      const { id: chapterId } = c.req.valid("query");
+
+      if (!chapterId) {
+        throw c.json({ error: "Missing required chapter ID" } as const, 422);
+      }
+
+      const [{ status = null } = {}] = await db
+        .select({
+          status: muxData.status,
+        })
+        .from(muxData)
+        .where(eq(muxData.chapterId, chapterId));
+
+      return c.json({ status } as const);
     }
   )
   .get(
@@ -312,8 +343,8 @@ const app = new Hono()
     ),
     zValidator(
       "query",
-      z.object({
-        courseId: z.string().min(1),
+      selectChapterSchema.pick({
+        courseId: true,
       })
     ),
 
@@ -459,27 +490,16 @@ const handleMuxVideo = async ({
 
   const asset = await muxResponse.json();
   try {
-    const [{ newMuxDataId = "" }] = await db
+    const [{ newMuxDataId = "", playbackId }] = await db
       .insert(muxData)
       .values({
         chapterId: id,
         assetId: asset.data.id,
         playbackId: asset.data.playback_ids?.[0].id,
       })
-      .returning({ newMuxDataId: muxData.id });
+      .returning({ newMuxDataId: muxData.id, playbackId: muxData.playbackId });
 
-    const uploadComplete = await pollMuxUploadStatus({
-      muxDataId: newMuxDataId,
-    });
-
-    if (!uploadComplete) {
-      return {
-        status: "error",
-        message: translations("errorCourseUpdate"),
-      } as const;
-    }
-
-    return { status: "success", muxDataId: newMuxDataId };
+    return { status: "processing", muxDataId: newMuxDataId, playbackId };
   } catch (error) {
     return { status: "error", message: translations("error_message") } as const;
   }

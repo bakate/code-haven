@@ -27,10 +27,17 @@ export const useEditChapterById = (chapterId: string) => {
       return response.json();
     },
     onSuccess: (data) => {
-      toast.success(data.message);
-      queryClient.invalidateQueries({
-        queryKey: ["chapter", { chapterId }],
-      });
+      if (data.status === "success") {
+        toast.success(data.message);
+        queryClient.invalidateQueries({
+          queryKey: ["chapter", { chapterId }],
+        });
+      }
+      if (data.status === "processing") {
+        queryClient.invalidateQueries({
+          queryKey: ["videoStatus", { chapterId }],
+        });
+      }
     },
     onError: (error) => {
       toast.error(error.message);

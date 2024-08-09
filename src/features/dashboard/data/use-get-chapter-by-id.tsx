@@ -29,3 +29,30 @@ export const useGetChapterById = (chapterId: string, courseId: string) => {
   });
   return query;
 };
+
+export const useVideoStatus = (chapterId: string) => {
+  return useQuery({
+    queryKey: ["videoStatus", { chapterId }],
+    enabled: !!chapterId,
+    queryFn: async () => {
+      const response = await honoClient.api.chapters["video-status"].$get({
+        query: {
+          id: chapterId,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const { status } = await response.json();
+      return status;
+    },
+    refetchInterval: (query) => {
+      if (query.state.data && query.state.data === "processing") {
+        return 5000;
+      }
+      return false;
+    },
+    notifyOnChangeProps: ["data"],
+    refetchIntervalInBackground: true,
+  });
+};
