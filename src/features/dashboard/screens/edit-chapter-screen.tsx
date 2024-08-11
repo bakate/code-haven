@@ -9,7 +9,7 @@ import { ChapterAccessSettingsForm } from "../components/chapter/chapter-access-
 import { ChapterDescriptionForm } from "../components/chapter/chapter-description-form";
 import { ChapterTitleForm } from "../components/chapter/chapter-title-form";
 import { ChapterVideoForm } from "../components/chapter/chapter-video-form";
-import { useGetChapterById } from "../data/use-get-chapter-by-id";
+import { useGetChapterById, useVideoStatus } from "../data/use-get-chapter-by-id";
 
 type Props = {
   params: {
@@ -23,6 +23,9 @@ export const EditChapterScreen = ({ params }: Props) => {
     isError,
     isFetching,
   } = useGetChapterById(params.chapterId, params.courseId);
+  const { data: videoStatus } = useVideoStatus(
+    params.chapterId
+  );
   const locale = useLocale();
   const t = useTranslations("createOrEditCourseForm");
   if (isError) {
@@ -130,6 +133,7 @@ export const EditChapterScreen = ({ params }: Props) => {
                 playbackId: chapter.playbackId ?? "",
                 title: chapterTranslation.title,
                 courseId: chapter.courseId,
+                videoStatus: videoStatus ?? null,
               }}
             />
           </div>

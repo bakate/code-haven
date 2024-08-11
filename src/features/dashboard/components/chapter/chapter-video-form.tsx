@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl";
 import { memo, useEffect, useReducer } from "react";
 import { FaPencil, FaPlus, FaVideo } from "react-icons/fa6";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
-import { useVideoStatus } from "../../data/use-get-chapter-by-id";
 import { SelectMuxDataType } from "../../types/mux.type";
 import FileUpload from "../file-upload";
 
@@ -18,28 +17,20 @@ type Props = {
     playbackId?: string;
     title: string;
     chapterId: SelectMuxDataType["chapterId"];
+    videoStatus: SelectMuxDataType["status"] | null;
   };
 };
 
 type ChapterVideoState = {
   isEditing: boolean;
   playbackId: string | null;
-  videoStatus?: SelectMuxDataType["status"] | null;
   isLoading: boolean;
-  isUploading: false;
 };
 
 type ChapterVideoAction =
   | { type: "SET_EDITING"; payload: boolean }
-  | {
-      type: "SET_VIDEO_DATA";
-      payload: {
-        videoStatus: SelectMuxDataType["status"];
-        playbackId?: string | null;
-        isUploading: boolean;
-      };
-    }
-  | { type: "SET_LOADING"; payload: boolean };
+  | { type: "SET_LOADING"; payload: boolean }
+  | { type: "SET_PLAYBACK_ID"; payload: string | null };
 
 const chapterVideoReducer = (
   state: ChapterVideoState,
@@ -48,18 +39,11 @@ const chapterVideoReducer = (
   switch (action.type) {
     case "SET_EDITING":
       return { ...state, isEditing: action.payload };
-    case "SET_VIDEO_DATA":
-      return {
-        ...state,
-        videoStatus: action.payload.videoStatus,
-        ...(action.payload.playbackId && {
-          playbackId: action.payload.playbackId,
-        }),
-        isUploading: action.payload.isUploading ?? false,
-      };
 
     case "SET_LOADING":
       return { ...state, isLoading: action.payload };
+    case "SET_PLAYBACK_ID":
+      return { ...state, playbackId: action.payload };
 
     default:
       return state;
@@ -69,54 +53,48 @@ const chapterVideoReducer = (
 const initialState: ChapterVideoState = {
   isEditing: false,
   playbackId: null,
-  videoStatus: undefined,
   isLoading: false,
-  isUploading: false,
 };
 
 export const ChapterVideoForm = ({ initialData }: Props) => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useEditChapterById(initialData.chapterId);
-  const { data: videoStatus, isPending: videoStatusPending } = useVideoStatus(
-    initialData.chapterId
-  );
   const [state, dispatch] = useReducer(chapterVideoReducer, initialState);
 
   const isClient = useClientCheck();
 
+
+
   useEffect(() => {
-    if (videoStatusPending) {
-      dispatch({ type: "SET_LOADING", payload: true });
+    const { videoStatus, playbackId } = initialData;
+    if (!videoStatus && playbackId) {
+      dispatch({
+        type: "SET_PLAYBACK_ID",
+        payload: playbackId,
+      });
     }
-    if (!videoStatus || videoStatus === "ready") {
-      if (!state.videoStatus || state.videoStatus === "processing") {
+    if (videoStatus === "ready") {
+      dispatch({
+        type: "SET_LOADING",
+        payload: false,
+      });
+      if (playbackId && !state.playbackId) {
         dispatch({
-          type: "SET_VIDEO_DATA",
-          payload: {
-            videoStatus: "ready",
-            ...(state.playbackId === null && {
-              playbackId: initialData.playbackId,
-            }),
-            isUploading: false,
-          },
+          type: "SET_PLAYBACK_ID",
+          payload: playbackId,
         });
       }
-      dispatch({ type: "SET_LOADING", payload: false });
     }
     if (videoStatus === "processing") {
       dispatch({ type: "SET_LOADING", payload: true });
-      dispatch({
-        type: "SET_VIDEO_DATA",
-        payload: { videoStatus: "processing" },
-      });
+      dispatch({ type: "SET_EDITING", payload: false });
     }
   }, [
-    videoStatus,
-    initialData.playbackId,
+    initialData,
     state.playbackId,
-    state.videoStatus,
-    videoStatusPending,
   ]);
+
+
 
   const t = useTranslations("createOrEditCourseForm");
 
@@ -151,8 +129,6 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
       queryKey: ["videoStatus", { chapterId: initialData.chapterId }],
     });
     if (url) {
-      dispatch({ type: "SET_LOADING", payload: true });
-      dispatch({ type: "SET_EDITING", payload: false });
       mutate(
         {
           videoUrl: url,
@@ -161,14 +137,11 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
         {
           onSuccess(data) {
             if (data.status === "processing" && data.playbackId) {
-              dispatch({ type: "SET_LOADING", payload: true });
+
               dispatch({
-                type: "SET_VIDEO_DATA",
-                payload: {
-                  playbackId: data.playbackId,
-                  videoStatus: "processing",
-                  isUploading: true,
-                },
+                type: "SET_PLAYBACK_ID",
+                payload: data.playbackId,
+
               });
             }
           },
@@ -199,7 +172,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
       </div>
 
       {state.isLoading ? (
-        <Loader withLabel={Boolean(state.videoStatus === "processing")} />
+        <Loader withLabel={Boolean(initialData.videoStatus === "processing")} />
       ) : state.isEditing ? (
         <>
           <FileUpload endpoint="chapterVideo" onChange={handleFileUpload} />
@@ -210,10 +183,10 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
       ) : (
         <VideoDisplay
           playbackId={state.playbackId}
-          videoStatus={state.videoStatus ?? null}
+
           courseId={initialData.courseId}
           title={initialData.title}
-          isUploading={state.isUploading}
+
         />
       )}
     </div>
@@ -222,15 +195,14 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
 
 type VideoDisplayProps = {
   playbackId: string | null;
-  videoStatus: SelectMuxDataType["status"] | null;
   courseId: string;
   title: string;
-  isUploading: boolean;
+
 };
 
 const VideoDisplay = memo<VideoDisplayProps>(
-  ({ playbackId, videoStatus, courseId, title, isUploading }) => {
-    if (!playbackId || !videoStatus || isUploading) {
+  ({ playbackId, courseId, title }) => {
+    if (!playbackId) {
       return (
         <div className="flex items-center justify-center mt-4 h-60 bg-slate-200 rounded-md">
           <FaVideo className="size-10 text-slate-500" />
@@ -240,18 +212,17 @@ const VideoDisplay = memo<VideoDisplayProps>(
 
     return (
       <div className="relative aspect-video mt-4">
-        {videoStatus === "ready" && playbackId ? (
-          <MuxPlayer
-            className="aspect-video mb-6 w-full"
-            playbackId={playbackId}
-            streamType="on-demand"
-            title={title}
-            metadata={{
-              video_series: courseId,
-              video_title: title,
-            }}
-          />
-        ) : null}
+
+        <MuxPlayer
+          className="aspect-video mb-6 w-full"
+          playbackId={playbackId}
+          streamType="on-demand"
+          title={title}
+          metadata={{
+            video_series: courseId,
+            video_title: title,
+          }}
+        />
       </div>
     );
   }
