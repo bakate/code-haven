@@ -410,37 +410,6 @@ export default app;
 
 // helpers for the chapter API
 
-async function pollMuxUploadStatus({
-  muxDataId,
-  interval = 9000, // every 9 seconds
-  timeout = 1000 * 60 * 5, // 5 minutes
-}: {
-  muxDataId: string;
-  timeout?: number;
-  interval?: number;
-}) {
-  const start = Date.now();
-
-  while (Date.now() - start < timeout) {
-    const currentMuxData = await db.query.muxData.findFirst({
-      where: eq(muxData.id, muxDataId),
-      columns: {
-        status: true,
-      },
-    });
-    if (!currentMuxData) {
-      return false;
-    }
-
-    if (currentMuxData.status === "ready") {
-      return true;
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, interval));
-  }
-  return false;
-}
-
 const handleMuxVideo = async ({
   id,
   translations,
@@ -473,6 +442,7 @@ const handleMuxVideo = async ({
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": ENV.NEXT_PUBLIC_APP_URL,
       Authorization: `Basic ${btoa(
         `${ENV.MUX_TOKEN_ID}:${ENV.MUX_TOKEN_SECRET}`
       )}`,

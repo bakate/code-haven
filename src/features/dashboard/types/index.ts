@@ -45,7 +45,7 @@ export const CreateCourseFormSchema = (
     description: z.string().optional(),
     categoryId: z.string().optional(),
     imageUrl: z.string().optional(),
-    isFree: z.coerce.boolean().default(false),
+    isFree: z.coerce.boolean().optional().default(false),
     // we receive a string from the form, we need to convert it and make sure it's positive number
     price: z
       .string()

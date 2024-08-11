@@ -103,10 +103,10 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
       return t("cancel");
     }
     if (!isEditing && !playbackId) {
-      return "Add a video";
+      return t("addVideo");
     }
     if (!isEditing && playbackId) {
-      return "Edit video";
+      return t("editVideo");
     }
     return "";
   };
@@ -157,7 +157,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md relative">
       <div className="font-medium flex items-center justify-between">
-        Chapter video
+        {t("chapterVideo")}
         <Button
           variant="ghost"
           color="primary"
@@ -172,12 +172,12 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
       </div>
 
       {state.isLoading ? (
-        <Loader withLabel={Boolean(initialData.videoStatus === "processing")} />
+        <Loader withLabel={Boolean(initialData.videoStatus === "processing")} label={t("videoProcessing")} />
       ) : state.isEditing ? (
         <>
           <FileUpload endpoint="chapterVideo" onChange={handleFileUpload} />
           <div className="text-small mt-4 text-slate-500">
-            Upload this chapter&apos;s video. The maximum file size is 512GB
+            {t("uploadInstruction", { size: 512 })}
           </div>
         </>
       ) : (
@@ -230,11 +230,11 @@ const VideoDisplay = memo<VideoDisplayProps>(
 
 VideoDisplay.displayName = "VideoDisplay";
 
-const Loader = ({ withLabel = false }: { withLabel?: boolean }) => (
+const Loader = ({ withLabel = false, label }: { withLabel?: boolean, label?: string }) => (
   <div className="grid place-items-center gap-3">
     <CircularProgress color="primary" aria-label="Loading..." />
     {withLabel ? (
-      <h2 className="text-slate-500">Video is processing. Please wait.</h2>
+      <h2 className="text-slate-500">{label}</h2>
     ) : null}
   </div>
 );

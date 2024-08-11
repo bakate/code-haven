@@ -98,7 +98,12 @@
     "chapterCreation": "Creazione capitolo",
     "completeAllFields": "Completa tutti i campi per pubblicare il tuo corso",
     "customizeYourChapter": "Personalizza il tuo capitolo",
-    "accessSettings": "Impostazioni accesso"
+    "accessSettings": "Impostazioni accesso",
+    "addVideo": "Aggiungi un video",
+    "editVideo": "Modifica video",
+    "videoProcessing": "Il video è in elaborazione. Attendere prego.",
+    "uploadInstruction": "Carica il video di questo capitolo. La dimensione massima del file è {size}GB",
+    "chapterVideo": "Video capitolo"
   },
   "courseById": {
     "publish": "Pubblica",

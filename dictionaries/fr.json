@@ -97,7 +97,12 @@
     "chapterCreation": "Créer un chapitre",
     "completeAllFields": "Complétez tous les champs pour publier votre cours",
     "customizeYourChapter": "Personnalisez votre chapitre",
-    "accessSettings": "Paramètres d'accès"
+    "accessSettings": "Paramètres d'accès",
+    "addVideo": "Ajouter une vidéo",
+    "editVideo": "Modifier la vidéo",
+    "videoProcessing": "La vidéo est en cours de traitement. Veuillez patienter.",
+    "uploadInstruction": "Téléchargez la vidéo de ce chapitre. La taille maximale du fichier est de {size} Go",
+    "chapterVideo": "Vidéo du chapitre"
     },
     "courseById": {
       "publish": "Publier",

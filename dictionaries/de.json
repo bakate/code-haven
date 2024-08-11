@@ -97,7 +97,12 @@
     "chapterCreation": "Kapitel erstellen",
     "completeAllFields": "Füllen Sie alle Felder aus, um deinen Kurs zu veröffentlichen",
     "customizeYourChapter": "Anpassen Sie Ihr Kapitel",
-    "accessSettings": "Zugangseinstellungen"
+    "accessSettings": "Zugangseinstellungen",
+    "addVideo": "Ein Video hinzufügen",
+    "editVideo": "Video bearbeiten",
+    "videoProcessing": "Das Video wird verarbeitet. Bitte warten.",
+    "uploadInstruction": "Laden Sie das Video dieses Kapitels hoch. Die maximale Dateigröße beträgt {size} GB",
+    "chapterVideo": "Kapitelvideo"
   },
   "courseById": {
     "publish": "Veröffentlichen",

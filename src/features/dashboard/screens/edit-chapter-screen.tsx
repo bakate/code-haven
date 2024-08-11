@@ -125,7 +125,7 @@ export const EditChapterScreen = ({ params }: Props) => {
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LuVideo} />
-              <h2 className="text-xl">Add a video</h2>
+              <h2 className="text-xl">{t('addVideo')}</h2>
             </div>
             <ChapterVideoForm
               initialData={{

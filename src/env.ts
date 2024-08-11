@@ -18,6 +18,7 @@ const schema = z.object({
   NEON_DATABASE_URL: z.string(),
   MUX_TOKEN_ID: z.string(),
   MUX_TOKEN_SECRET: z.string(),
+  MUX_WEBHOOK_SECRET: z.string(),
 });
 
 const validEnv = schema.safeParse(process.env);

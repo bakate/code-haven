@@ -97,7 +97,12 @@
   "chapterCreation": "Chapter creation",
   "completeAllFields": "Complete all fields to create a chapter.",
   "customizeYourChapter": "Customize your chapter",
-  "accessSettings": "Access settings"
+  "accessSettings": "Access settings",
+  "addVideo": "Add a video",
+  "editVideo": "Edit video",
+  "videoProcessing": "Video is processing. Please wait.",
+  "uploadInstruction": "Upload this chapter's video. The maximum file size is {size}GB",
+  "chapterVideo": "Chapter video"
 
    },
    "courseById": {
