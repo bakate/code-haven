@@ -377,6 +377,43 @@ const app = new Hono()
         message: translations("courseUpdatedSuccessfully"),
       } as const);
     }
+  )
+  .delete(
+    "/:courseId",
+    zValidator(
+      "param",
+      z.object({
+        courseId: z.string().uuid(),
+      })
+    ),
+    async (c) => {
+      const auth = c.get("authUser");
+      if (!auth.session?.user?.id) {
+        throw c.json({ error: "Unauthorized" } as const, 401);
+      }
+      const { courseId } = c.req.valid("param");
+      const translations = await getTranslations("teacherCourseById");
+
+      try {
+        await db
+          .delete(course)
+          .where(
+            and(
+              eq(course.id, courseId),
+              eq(course.userId, auth.session.user.id)
+            )
+          );
+      } catch (error) {
+        return c.json({
+          status: "error",
+          message: translations("courseDeletedError"),
+        } as const);
+      }
+      return c.json({
+        status: "success",
+        message: translations("courseDeletedSuccessfully"),
+      } as const);
+    }
   );
 
 export default app;
