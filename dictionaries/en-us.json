@@ -113,10 +113,6 @@
   "chapterDeletedError": "Error deleting chapter"
 
    },
-   "courseById": {
-    "publish": "Publish",
-    "unpublish": "Unpublish"
-   },
    "teacherCourseById": {
     "loading": "Loading...",
     "error": "Error",
@@ -128,6 +124,12 @@
     "completionText": "({{filledFields}}/{{totalFields}})",
     "courseChapters": "Course chapters",
     "sellYourCourse": "Sell your course",
-    "resourcesAndAttachments": "Resources and attachments"
+    "resourcesAndAttachments": "Resources and attachments",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+   "deleteCourse": "Delete course",
+   "deleteCourseConfirmation": "Are you sure you want to delete this course? \n\nThis action cannot be undone.",
+   "courseDeletedSuccessfully": "Course deleted successfully",
+   "courseDeletedError": "Error deleting course"
    }
 }

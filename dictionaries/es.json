@@ -112,11 +112,6 @@
    "chapterDeletedSuccessfully": "Capítulo eliminado con éxito",
    "chapterDeletedError": "Error al eliminar el capítulo"
 
-
-    },
-    "courseById": {
-      "publish": "Publicar",
-      "unpublish": "Despublicar"
     },
     "teacherCourseById": {
       "loading": "Cargando...",
@@ -129,6 +124,12 @@
       "completionText": "({{filledFields}}/{{totalFields}})",
       "courseChapters": "Capítulos del curso",
       "sellYourCourse": "Vende tu curso",
-      "resourcesAndAttachments": "Recursos y adjuntos"
+      "resourcesAndAttachments": "Recursos y adjuntos",
+      "publish": "Publicar",
+      "unpublish": "Despublicar",
+       "deleteCourse": "Eliminar curso",
+      "deleteCourseConfirmation": "¿Estás seguro de que quieres eliminar este curso? \n\nEsta acción es irreversible.",
+      "courseDeletedSuccessfully": "Curso eliminado con éxito",
+      "courseDeletedError": "Error al eliminar el curso"
     }
   }
