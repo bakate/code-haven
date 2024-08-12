@@ -404,6 +404,54 @@ const app = new Hono()
         data,
       } as const);
     }
+  )
+  .delete(
+    "/:id",
+    zValidator(
+      "param",
+      selectChapterSchema.pick({
+        id: true,
+      })
+    ),
+    zValidator(
+      "query",
+      selectChapterSchema.pick({
+        courseId: true,
+      })
+    ),
+    async (c) => {
+      const auth = c.get("authUser");
+      if (!auth.session?.user?.id) {
+        throw c.json({ error: "Unauthorized" } as const, 401);
+      }
+      const { id: chapterId } = c.req.valid("param");
+      const { courseId } = c.req.valid("query");
+      if (!chapterId) {
+        throw c.json({ error: "Missing required chapter ID" } as const, 422);
+      }
+      if (!courseId) {
+        throw c.json({ error: "Missing required course ID" } as const, 422);
+      }
+
+      const translations = await getTranslations("createOrEditCourseForm");
+      try {
+        await db
+          .delete(chapter)
+          .where(
+            and(eq(chapter.id, chapterId), eq(chapter.courseId, courseId))
+          );
+        return c.json({
+          status: "success",
+          message: translations("chapterDeletedSuccessfully"),
+          courseId,
+        } as const);
+      } catch (error) {
+        return c.json({
+          status: "error",
+          message: translations("chapterDeletedError"),
+        } as const);
+      }
+    }
   );
 
 export default app;

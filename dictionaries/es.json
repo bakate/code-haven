@@ -102,7 +102,16 @@
     "editVideo": "Editar video",
     "videoProcessing": "El video está en proceso. Por favor espera.",
     "uploadInstruction": "Sube el video de este capítulo. El tamaño máximo del archivo es de {size}GB",
-    "chapterVideo": "Video del capítulo"
+    "chapterVideo": "Video del capítulo",
+    "publish": "Publicar",
+    "unpublish": "Despublicar",
+    "delete": "Eliminar",
+    "deleteChapter": "Eliminar capítulo",
+   "deleteChapterConfirmation": "¿Estás seguro de que quieres eliminar este capítulo? \n\nEsta acción es irreversible.",
+   "continue": "Continuar",
+   "chapterDeletedSuccessfully": "Capítulo eliminado con éxito",
+   "chapterDeletedError": "Error al eliminar el capítulo"
+
 
     },
     "courseById": {

@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { LuArrowLeft, LuEye, LuLayoutDashboard, LuVideo } from "react-icons/lu";
 import { ChapterAccessSettingsForm } from "../components/chapter/chapter-access-settings-form";
+import { ChapterActions } from "../components/chapter/chapter-actions";
 import { ChapterDescriptionForm } from "../components/chapter/chapter-description-form";
 import { ChapterTitleForm } from "../components/chapter/chapter-title-form";
 import { ChapterVideoForm } from "../components/chapter/chapter-video-form";
@@ -49,6 +50,7 @@ export const EditChapterScreen = ({ params }: Props) => {
   const requiredFields = [
     chapterTranslation.title,
     chapterTranslation.description,
+    chapter.playbackId
   ];
 
   const totalFields = requiredFields.length;
@@ -79,7 +81,12 @@ export const EditChapterScreen = ({ params }: Props) => {
                   {t("completeAllFields")} {completionText}
                 </span>
               </div>
-              {/* TODO create ChapterActions  component */}
+              <ChapterActions
+                disabled={!isComplete || isFetching}
+                courseId={params.courseId}
+                chapterId={params.chapterId}
+                isPublished={chapter.isPublished}
+              />
             </div>
           </div>
         </div>

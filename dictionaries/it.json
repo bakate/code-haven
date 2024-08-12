@@ -103,7 +103,15 @@
     "editVideo": "Modifica video",
     "videoProcessing": "Il video è in elaborazione. Attendere prego.",
     "uploadInstruction": "Carica il video di questo capitolo. La dimensione massima del file è {size}GB",
-    "chapterVideo": "Video capitolo"
+    "chapterVideo": "Video capitolo",
+    "publish": "Pubblica",
+    "unpublish": "Rimuovi pubblicazione",
+    "delete": "Elimina",
+    "deleteChapter": "Elimina capitolo",
+   "deleteChapterConfirmation": "Sei sicuro di voler eliminare questo capitolo? \n\nQuesta azione è irreversibile.",
+   "continue": "Continua",
+   "chapterDeletedSuccessfully": "Capitolo eliminato con successo",
+   "chapterDeletedError": "Errore durante l'eliminazione del capitolo"
   },
   "courseById": {
     "publish": "Pubblica",

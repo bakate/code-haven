@@ -102,7 +102,15 @@
     "editVideo": "Video bearbeiten",
     "videoProcessing": "Das Video wird verarbeitet. Bitte warten.",
     "uploadInstruction": "Laden Sie das Video dieses Kapitels hoch. Die maximale Dateigröße beträgt {size} GB",
-    "chapterVideo": "Kapitelvideo"
+    "chapterVideo": "Kapitelvideo",
+    "publish": "Veröffentlichen",
+    "unpublish": "Veröffentlichung rückgängig machen",
+    "delete": "Löschen",
+    "deleteChapter": "Kapitel löschen",
+   "deleteChapterConfirmation": "Sind Sie sicher, dass Sie dieses Kapitel löschen möchten? \n\nDieser Vorgang kann nicht rückgängig gemacht werden.",
+   "continue": "Weiter",
+   "chapterDeletedSuccessfully": "Kapitel erfolgreich gelöscht",
+   "chapterDeletedError": "Fehler beim Löschen des Kapitels"
   },
   "courseById": {
     "publish": "Veröffentlichen",
