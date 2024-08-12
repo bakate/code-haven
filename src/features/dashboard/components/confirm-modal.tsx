@@ -1,7 +1,7 @@
 "use client";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import { LuArrowBigRight, LuArrowRight, LuBadgeCheck, LuCheckCheck, LuTrash, LuUndo } from "react-icons/lu";
+import { LuArrowRight, LuTrash, LuUndo } from "react-icons/lu";
 
 type Props = {
   title?: string;
@@ -14,7 +14,7 @@ export const ConfirmModal = ({ children, onConfirm, title }: Props) => {
   const t = useTranslations("createOrEditCourseForm");
   return (
     <>
-      <Button onPress={onOpen} color="danger" startContent={<LuTrash />} variant="flat">
+      <Button onPress={onOpen} color="danger" startContent={<LuTrash />} variant="flat" size="sm">
         {t("delete")}
 
       </Button>

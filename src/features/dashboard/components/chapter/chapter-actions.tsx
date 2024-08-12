@@ -1,6 +1,7 @@
 import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { LuCheck, LuSendHorizonal } from "react-icons/lu";
 import { useDeleteChapterById } from "../../data/chapter/use-delete-chapter";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { ConfirmModal } from "../confirm-modal";
@@ -33,7 +34,13 @@ export const ChapterActions = ({ chapterId, courseId, disabled, isPublished }: P
 
   return (
     <div className="flex items-center gap-x-2">
-      <Button onPress={handlePress} disabled={disabled || isPending} color="primary">
+      <Button onPress={handlePress} isDisabled={disabled || isPending}
+        startContent={
+          isPublished ? <LuCheck /> : (
+            <LuSendHorizonal />
+          )
+        }
+        color={isPublished ? "success" : "primary"} size="sm">
         {isPublished ? t("unpublish") : t("publish")}
       </Button>
       <ConfirmModal

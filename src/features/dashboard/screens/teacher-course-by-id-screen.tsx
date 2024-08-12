@@ -83,9 +83,9 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     translatedTitleAndDescription?.description,
     course.categoryId,
     course.imageUrl,
-    course.categoryId,
     course.price,
     course.attachments,
+    course.chapters.some((chapter) => chapter.isPublished),
   ];
 
   const totalFields = requiredFields.length;
@@ -105,7 +105,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
             </span>
           </div>
           <CourseActions
-            disabled={isLoading}
+            disabled={!isComplete}
             courseId={courseId}
             isPublished={course.isPublished}
           />
