@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPencil } from "react-icons/fa6";
-import { useEditTeacherCourseById } from "../data/use-edit-teacher-course";
+import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 import { CourseFormType, CreateCourseFormSchema } from "../types";
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const TitleForm = ({ initialData }: Props) => {
-  const { mutate, isPending } = useEditTeacherCourseById(initialData.courseId);
+  const { mutate, isPending } = useEditCourseByTeacher(initialData.courseId);
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");

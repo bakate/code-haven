@@ -1,9 +1,9 @@
 "use client";
 import { Link } from "@nextui-org/react";
-import { useGetTeacherCourses } from "../data/use-get-teacher-courses";
+import { useGetCoursesByTeacher } from "../data/use-get-courses-by-teacher";
 
 export const TeacherCoursesScreen = () => {
-  const { data, isError, isLoading, isFetched } = useGetTeacherCourses();
+  const { data, isError, isLoading, isFetched } = useGetCoursesByTeacher();
   if (isLoading || !isFetched) {
     return <div>Loading...</div>;
   }

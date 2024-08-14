@@ -24,7 +24,8 @@ import { ImageForm } from "../components/image-form";
 import { PriceForm } from "../components/price-form";
 import { TitleForm } from "../components/title-form";
 import { useGetCategories } from "../data/use-get-categories";
-import { useGetTeacherCourseById } from "../data/use-get-teacher-course-by-id";
+import { useGetSingleCourseByTeacher } from "../data/use-get-single-course-by-teacher";
+
 
 type Props = {
   courseId: string;
@@ -56,7 +57,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     data: course,
     isLoading,
     isError,
-  } = useGetTeacherCourseById(courseId);
+  } = useGetSingleCourseByTeacher(courseId);
 
   const translatedChapters = useCallback(() => {
     return (course?.chapters || []).filter((chapter) => {

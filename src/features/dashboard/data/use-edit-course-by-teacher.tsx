@@ -4,22 +4,22 @@ import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
 export type ResponseType = InferResponseType<
-  (typeof honoClient.api.teacher)[":courseId"]["$delete"]
+  (typeof honoClient.api.teacher)[":courseId"]["$patch"]
 >;
 
 export type RequestType = InferRequestType<
-  (typeof honoClient.api.teacher)[":courseId"]["$delete"]
->;
+  (typeof honoClient.api.teacher)[":courseId"]["$patch"]
+>["json"];
 
-export const useDeleteTeacherCourseById = (courseId: string) => {
+export const useEditCourseByTeacher = (courseId: string) => {
   const queryClient = useQueryClient();
   return useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async () => {
-      const response = await honoClient.api.teacher[":courseId"].$delete({
+    mutationFn: async (json) => {
+      const response = await honoClient.api.teacher[":courseId"].$patch({
         param: {
           courseId,
         },
-
+        json,
       });
       if (!response.ok) {
         throw new Error(response.statusText);

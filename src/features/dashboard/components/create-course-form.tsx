@@ -5,12 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Link } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import { useCreateTeacherCourse } from "../data/use-create-teacher-course";
+import { useCreateCourseByTeacher } from "../data/use-create-course-by-teacher";
 import { CourseFormType, CreateCourseFormSchema } from "../types";
 
 export const CreateCourseForm = () => {
   const t = useTranslations("createOrEditCourseForm");
-  const { mutate, isPending } = useCreateTeacherCourse();
+  const { mutate, isPending } = useCreateCourseByTeacher();
   const form = useForm<CourseFormType>({
     resolver: zodResolver(
       CreateCourseFormSchema({

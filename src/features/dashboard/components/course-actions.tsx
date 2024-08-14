@@ -4,8 +4,8 @@ import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LuCheck, LuSendHorizonal } from "react-icons/lu";
-import { useDeleteTeacherCourseById } from "../data/use-delete-teacher-course";
-import { useEditTeacherCourseById } from "../data/use-edit-teacher-course";
+import { useDeleteCourseByTeacher } from "../data/use-delete-course-by-teacher";
+import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 import { ConfirmModal } from "./confirm-modal";
 
 type ActionsProps = {
@@ -19,8 +19,8 @@ export const CourseActions = ({
   isPublished,
 }: ActionsProps) => {
   const t = useTranslations("teacherCourseById");
-  const { mutate, isPending } = useEditTeacherCourseById(courseId);
-  const { mutate: onDeleteCourseMutation } = useDeleteTeacherCourseById(courseId);
+  const { mutate, isPending } = useEditCourseByTeacher(courseId);
+  const { mutate: onDeleteCourseMutation } = useDeleteCourseByTeacher(courseId);
   const router = useRouter();
 
   return (

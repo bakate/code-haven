@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import NextImage from "next/image";
 import { useState } from "react";
 import { FaImage, FaPencil, FaPlus } from "react-icons/fa6";
-import { useEditTeacherCourseById } from "../data/use-edit-teacher-course";
+import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 import FileUpload from "./file-upload";
 
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const ImageForm = ({ initialData }: Props) => {
-  const { mutate, isPending } = useEditTeacherCourseById(initialData.courseId);
+  const { mutate, isPending } = useEditCourseByTeacher(initialData.courseId);
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
@@ -46,8 +46,8 @@ export const ImageForm = ({ initialData }: Props) => {
           {readOnlyWithoutImage
             ? t("addImage")
             : readOnlyWithImage
-            ? t("editImage")
-            : ""}
+              ? t("editImage")
+              : ""}
         </Button>
       </div>
       {readOnlyWithoutImage ? (

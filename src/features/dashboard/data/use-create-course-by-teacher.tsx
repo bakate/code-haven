@@ -10,7 +10,7 @@ type RequestType = InferRequestType<
   typeof honoClient.api.teacher.$post
 >["json"];
 
-export const useCreateTeacherCourse = () => {
+export const useCreateCourseByTeacher = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
