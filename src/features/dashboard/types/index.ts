@@ -96,3 +96,24 @@ export type ChapterFormTitleType = z.infer<
 >;
 
 export type selectChapterType = z.infer<typeof insertChapterSchema>;
+
+export type CourseType = {
+  id: string;
+  titles: { lang: string; title: string }[];
+  price: number;
+  isPublished: boolean;
+  categoryId: string;
+};
+
+export type StateType = {
+  filterValue: string;
+  selectedKeys: Set<string>;
+  statusFilter: string;
+  visibleColumns: Set<string>;
+  rowsPerPage: number;
+  sortDescriptor: {
+    column?: keyof CourseType;
+    direction: "ascending" | "descending";
+  };
+  page: number;
+};
