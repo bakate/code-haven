@@ -105,12 +105,26 @@
     "chapterVideo": "Video del capítulo",
     "publish": "Publicar",
     "unpublish": "Despublicar",
+    "unpublished": "No publicado",
     "delete": "Eliminar",
     "deleteChapter": "Eliminar capítulo",
    "deleteChapterConfirmation": "¿Estás seguro de que quieres eliminar este capítulo? \n\nEsta acción es irreversible.",
    "continue": "Continuar",
    "chapterDeletedSuccessfully": "Capítulo eliminado con éxito",
-   "chapterDeletedError": "Error al eliminar el capítulo"
+   "chapterDeletedError": "Error al eliminar el capítulo",
+   "view": "Ver",
+  "edit": "Editar",
+  "createdAt": "Creado el",
+   "allCoursesSelected": "Todos los cursos seleccionados",
+   "selectedCourses": "{count, plural, one {curso seleccionado} other {cursos seleccionados}} de {total}",
+   "rowsPerPage": "Filas por página",
+  "searchByCourseName": "Buscar por nombre de curso",
+  "previous": "Anterior",
+  "next": "Siguiente",
+  "noCoursesFound": "No se encontraron cursos",
+   "filterByStatus": "Filtrar por estado",
+   "actions": "Acciones",
+    "hideSomeColumns": "Ocultar algunas columnas"
 
     },
     "teacherCourseById": {

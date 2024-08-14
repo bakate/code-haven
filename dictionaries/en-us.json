@@ -105,12 +105,29 @@
   "chapterVideo": "Chapter video",
   "publish": "Publish",
   "unpublish": "Unpublish",
+  "unpublished": "Unpublished",
   "delete": "Delete",
   "deleteChapter": "Delete chapter",
   "deleteChapterConfirmation": "Are you sure you want to delete this chapter? \n\nThis action cannot be undone.",
   "continue": "Continue",
   "chapterDeletedSuccessfully": "Chapter deleted successfully",
-  "chapterDeletedError": "Error deleting chapter"
+  "chapterDeletedError": "Error deleting chapter",
+  "view": "View",
+  "edit": "Edit",
+  "createdAt": "Created at",
+  "allCoursesSelected": "All courses selected",
+  "selectedCourses": "{count, plural, one {# course} other {# courses}} of {total} selected",
+ "rowsPerPage": "Rows per page:",
+ "searchByCourseName": "Search by course name",
+ "previous": "Previous",
+ "next": "Next",
+ "noCoursesFound": "No courses found",
+ "filterByStatus": "Filter by status",
+ "actions": "Actions",
+ "hideSomeColumns": "Hide some columns"
+
+
+
 
    },
    "teacherCourseById": {
