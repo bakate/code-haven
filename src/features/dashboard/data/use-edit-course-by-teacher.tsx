@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
-export type ResponseType = InferResponseType<
+export type EditCourseResponseType = InferResponseType<
   (typeof honoClient.api.teacher)[":courseId"]["$patch"]
 >;
 
@@ -13,7 +13,7 @@ export type RequestType = InferRequestType<
 
 export const useEditCourseByTeacher = (courseId: string) => {
   const queryClient = useQueryClient();
-  return useMutation<ResponseType, Error, RequestType>({
+  return useMutation<EditCourseResponseType, Error, RequestType>({
     mutationFn: async (json) => {
       const response = await honoClient.api.teacher[":courseId"].$patch({
         param: {

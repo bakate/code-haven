@@ -1,12 +1,13 @@
 "use client";
 
+import { useConfetti } from "@/hooks/use-confetti";
 import { useConfirm } from "@/hooks/use-confirm";
 import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LuCheck, LuSendHorizonal, LuTrash } from "react-icons/lu";
 import { useDeleteCourseByTeacher } from "../data/use-delete-course-by-teacher";
-import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
+import { EditCourseResponseType, useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 
 type ActionsProps = {
   disabled: boolean;
@@ -26,6 +27,8 @@ export const CourseActions = ({
     message: t('deleteCourseConfirmation')
   })
 
+  const confetti = useConfetti();
+
   const handleCourseDeletion = async () => {
     const confirmed = await dialogResponse();
     if (confirmed) {
@@ -43,17 +46,27 @@ export const CourseActions = ({
     }
   }
 
+  const handlePublishCourse = () => {
+  const options = {
+		courseId,
+		isPublished: !isPublished,
+	};
+
+	const onSuccess = (data:EditCourseResponseType) => {
+		if (data.status === 'success') {
+			confetti.onOpen();
+		}
+	};
+
+	mutate(options, !isPublished ? { onSuccess } : undefined);
+  }
+
   const router = useRouter();
 
   return (
     <div className="flex items-center gap-x-2">
       <Button
-        onPress={() => {
-          mutate({
-            courseId,
-            isPublished: !isPublished
-          });
-        }}
+        onPress={handlePublishCourse}
         isDisabled={disabled || isPending}
         size="sm"
         startContent={
