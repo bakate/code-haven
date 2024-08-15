@@ -1,3 +1,4 @@
+import { protectServer } from "@/features/auth/utils/auth-utils";
 import { EditChapterScreen } from "@/features/dashboard/screens/edit-chapter-screen";
 
 type Props = {
@@ -6,7 +7,8 @@ type Props = {
     chapterId: string;
   };
 };
-const ChapterPage = ({ params }: Props) => {
+const ChapterPage = async ({ params }: Props) => {
+  await protectServer();
   return (
     <div>
       <EditChapterScreen params={params} />

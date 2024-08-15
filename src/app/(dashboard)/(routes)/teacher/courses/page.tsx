@@ -1,10 +1,11 @@
+import { protectServer } from "@/features/auth/utils/auth-utils";
 import { TeacherCoursesScreen } from "@/features/dashboard/screens/teacher-courses-screen";
 
-const CoursesPage = () => {
+const CoursesPage = async () => {
+  await protectServer();
   return (
     <div className="flex flex-col gap-4">
       <TeacherCoursesScreen />
-      {/* TODO display the courses list */}
     </div>
   );
 };
