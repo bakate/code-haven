@@ -18,7 +18,8 @@
     "logout": "Déconnexion",
     "signedInAs": "Connecté en tant que",
     "exit": "Quitter",
-    "teacher_mode": "Mode Enseignant"
+    "teacher_mode": "Mode Enseignant",
+     "leave_teacher_mode": "Quitter le mode enseignant"
   },
   "loginForm": {
     "title": "Code Haven",

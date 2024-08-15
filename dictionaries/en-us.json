@@ -18,7 +18,8 @@
     "logout": "Logout",
     "signedInAs": "Signed in as",
     "exit": "Exit",
-    "teacher_mode": "Teacher Mode"
+    "teacher_mode": "Teacher Mode",
+    "leave_teacher_mode": "Leave Teacher Mode"
    },
    "loginForm": {
     "title": "Code Haven",

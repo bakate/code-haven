@@ -1,6 +1,7 @@
 "use client";
 
-import useClientCheck from "@/features/auth/hooks/use-client-check";
+import useClientCheck from "@/hooks/use-client-check";
+
 import MuxPlayer from "@mux/mux-player-react";
 import { Button, CircularProgress } from "@nextui-org/react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -63,8 +64,6 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
 
   const isClient = useClientCheck();
 
-
-
   useEffect(() => {
     const { videoStatus, playbackId } = initialData;
     if (!videoStatus && playbackId) {
@@ -89,12 +88,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
       dispatch({ type: "SET_LOADING", payload: true });
       dispatch({ type: "SET_EDITING", payload: false });
     }
-  }, [
-    initialData,
-    state.playbackId,
-  ]);
-
-
+  }, [initialData, state.playbackId]);
 
   const t = useTranslations("createOrEditCourseForm");
 
@@ -137,11 +131,9 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
         {
           onSuccess(data) {
             if (data.status === "processing" && data.playbackId) {
-
               dispatch({
                 type: "SET_PLAYBACK_ID",
                 payload: data.playbackId,
-
               });
             }
           },
@@ -155,7 +147,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
   }
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md relative">
+    <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md relative dark:bg-slate-900 dark:border-slate-700">
       <div className="font-medium flex items-center justify-between">
         {t("chapterVideo")}
         <Button
@@ -172,21 +164,22 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
       </div>
 
       {state.isLoading ? (
-        <Loader withLabel={Boolean(initialData.videoStatus === "processing")} label={t("videoProcessing")} />
+        <Loader
+          withLabel={Boolean(initialData.videoStatus === "processing")}
+          label={t("videoProcessing")}
+        />
       ) : state.isEditing ? (
         <>
           <FileUpload endpoint="chapterVideo" onChange={handleFileUpload} />
-          <div className="text-small mt-4 text-slate-500">
+          <div className="text-small mt-4 text-slate-500 dark:text-slate-200">
             {t("uploadInstruction", { size: 512 })}
           </div>
         </>
       ) : (
         <VideoDisplay
           playbackId={state.playbackId}
-
           courseId={initialData.courseId}
           title={initialData.title}
-
         />
       )}
     </div>
@@ -197,14 +190,13 @@ type VideoDisplayProps = {
   playbackId: string | null;
   courseId: string;
   title: string;
-
 };
 
 const VideoDisplay = memo<VideoDisplayProps>(
   ({ playbackId, courseId, title }) => {
     if (!playbackId) {
       return (
-        <div className="flex items-center justify-center mt-4 h-60 bg-slate-200 rounded-md">
+        <div className="flex items-center justify-center mt-4 h-60 bg-slate-200 rounded-md dark:bg-slate-800">
           <FaVideo className="size-10 text-slate-500" />
         </div>
       );
@@ -212,7 +204,6 @@ const VideoDisplay = memo<VideoDisplayProps>(
 
     return (
       <div className="relative aspect-video mt-4">
-
         <MuxPlayer
           className="aspect-video mb-6 w-full"
           playbackId={playbackId}
@@ -230,11 +221,15 @@ const VideoDisplay = memo<VideoDisplayProps>(
 
 VideoDisplay.displayName = "VideoDisplay";
 
-const Loader = ({ withLabel = false, label }: { withLabel?: boolean, label?: string }) => (
+const Loader = ({
+  withLabel = false,
+  label,
+}: {
+  withLabel?: boolean;
+  label?: string;
+}) => (
   <div className="grid place-items-center gap-3">
     <CircularProgress color="primary" aria-label="Loading..." />
-    {withLabel ? (
-      <h2 className="text-slate-500">{label}</h2>
-    ) : null}
+    {withLabel ? <h2 className="text-slate-500">{label}</h2> : null}
   </div>
 );

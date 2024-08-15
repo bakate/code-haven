@@ -18,7 +18,8 @@
     "logout": "Cerrar sesión",
     "signedInAs": "Conectado como",
     "exit": "Salir",
-    "teacher_mode": "Modo Profesor"
+    "teacher_mode": "Modo Profesor",
+     "leave_teacher_mode": "Salir del modo profesor"
   },
   "loginForm": {
     "title": "Code Haven",

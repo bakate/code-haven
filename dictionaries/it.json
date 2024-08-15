@@ -19,7 +19,8 @@
     "logout": "Discontersi",
     "signedInAs": "Connesso come",
      "exit": "Esci",
-    "teacher_mode": "Modalità Insegnante"
+    "teacher_mode": "Modalità Insegnante",
+     "leave_teacher_mode": "Esci dalla modalità insegnante"
   },
   "loginForm": {
     "title": "Code Haven",

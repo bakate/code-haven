@@ -10,7 +10,10 @@ import { ChapterActions } from "../components/chapter/chapter-actions";
 import { ChapterDescriptionForm } from "../components/chapter/chapter-description-form";
 import { ChapterTitleForm } from "../components/chapter/chapter-title-form";
 import { ChapterVideoForm } from "../components/chapter/chapter-video-form";
-import { useGetChapterById, useVideoStatus } from "../data/use-get-chapter-by-id";
+import {
+  useGetChapterById,
+  useVideoStatus,
+} from "../data/use-get-chapter-by-id";
 
 type Props = {
   params: {
@@ -24,9 +27,7 @@ export const EditChapterScreen = ({ params }: Props) => {
     isError,
     isFetching,
   } = useGetChapterById(params.chapterId, params.courseId);
-  const { data: videoStatus } = useVideoStatus(
-    params.chapterId
-  );
+  const { data: videoStatus } = useVideoStatus(params.chapterId);
   const locale = useLocale();
   const t = useTranslations("createOrEditCourseForm");
   if (isError) {
@@ -50,7 +51,7 @@ export const EditChapterScreen = ({ params }: Props) => {
   const requiredFields = [
     chapterTranslation.title,
     chapterTranslation.description,
-    chapter.playbackId
+    chapter.playbackId,
   ];
 
   const totalFields = requiredFields.length;
@@ -77,7 +78,7 @@ export const EditChapterScreen = ({ params }: Props) => {
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col gap-y-2">
                 <h1 className="text-2xl font-medium">{t("chapterCreation")}</h1>
-                <span className="text-small text-slate-700">
+                <span className="text-small text-slate-700 dark:text-slate-200">
                   {t("completeAllFields")} {completionText}
                 </span>
               </div>
@@ -132,7 +133,7 @@ export const EditChapterScreen = ({ params }: Props) => {
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LuVideo} />
-              <h2 className="text-xl">{t('addVideo')}</h2>
+              <h2 className="text-xl">{t("addVideo")}</h2>
             </div>
             <ChapterVideoForm
               initialData={{

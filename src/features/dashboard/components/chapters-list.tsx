@@ -1,6 +1,6 @@
 "use client";
 
-import useClientCheck from "@/features/auth/hooks/use-client-check";
+import useClientCheck from "@/hooks/use-client-check";
 import { cn } from "@/lib/utils";
 import {
   DragDropContext,
@@ -73,7 +73,7 @@ export const ChaptersList = ({ items, onEdit, onReorder }: Props) => {
                 {(provided) => (
                   <div
                     className={cn(
-                      "flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm",
+                      "flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm dark:bg-slate-900  dark:border-slate-700 dark:text-slate-300",
                       chapter.isPublished &&
                         "bg-sky-100 border-sky-200 text-sky-700"
                     )}
@@ -82,7 +82,7 @@ export const ChaptersList = ({ items, onEdit, onReorder }: Props) => {
                   >
                     <div
                       className={cn(
-                        "relative px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition",
+                        "relative px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition dark:border-r-slate-700 hover:dark:bg-slate-800",
                         chapter.isPublished &&
                           "border-r-sky-200 hover:bg-sky-200"
                       )}

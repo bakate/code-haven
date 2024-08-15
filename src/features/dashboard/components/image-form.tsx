@@ -26,7 +26,7 @@ export const ImageForm = ({ initialData }: Props) => {
   const readOnlyWithImage = !isEditing && initialData.imageUrl;
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md">
+    <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md dark:bg-slate-900 dark:border-slate-700">
       <div className="font-medium flex items-center justify-between">
         {t("courseImage")}
         <Button
@@ -46,12 +46,12 @@ export const ImageForm = ({ initialData }: Props) => {
           {readOnlyWithoutImage
             ? t("addImage")
             : readOnlyWithImage
-              ? t("editImage")
-              : ""}
+            ? t("editImage")
+            : ""}
         </Button>
       </div>
       {readOnlyWithoutImage ? (
-        <div className="flex items-center justify-center mt-4 h-60 bg-slate-200 rounded-md">
+        <div className="flex items-center justify-center mt-4 h-60 bg-slate-200 rounded-md dark:bg-slate-700">
           <FaImage className="size-10 text-slate-500" />
         </div>
       ) : readOnlyWithImage ? (

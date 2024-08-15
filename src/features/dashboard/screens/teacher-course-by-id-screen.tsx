@@ -26,7 +26,6 @@ import { TitleForm } from "../components/title-form";
 import { useGetCategories } from "../data/use-get-categories";
 import { useGetSingleCourseByTeacher } from "../data/use-get-single-course-by-teacher";
 
-
 type Props = {
   courseId: string;
 };
@@ -101,7 +100,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">{t("courseSetup")}</h1>
-            <span className="text-sm text-slate-700">
+            <span className="text-sm text-slate-700 dark:text-slate-200">
               {t("completeAllFields")} {completionText}
             </span>
           </div>
