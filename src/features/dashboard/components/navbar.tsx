@@ -1,6 +1,7 @@
 "use client";
 
 import { LocalSwitcherSelect } from "@/components/local-switcher-select";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import { UserButton } from "@/features/auth/components/user-button";
 import {
   Button,
@@ -49,7 +50,7 @@ export default function NavbarComponent({
               variant="light"
               startContent={<FiLogOut />}
             >
-              {t("exit")}
+              {t("leave_teacher_mode")}
             </Button>
           </NavbarItem>
         ) : (
@@ -59,9 +60,9 @@ export default function NavbarComponent({
             </Link>
           </NavbarItem>
         )}
-
         <UserButton />
         <LocalSwitcherSelect />
+        <ThemeSwitcher />
       </NavbarContent>
       <NavbarMenu>
         {routes.map((route, index) => (
