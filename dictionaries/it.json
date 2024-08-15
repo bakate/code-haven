@@ -125,7 +125,10 @@
   "noCoursesFound": "Nessun corso trovato",
   "filterByStatus": "Filtra per stato",
   "actions": "Azioni",
-  "hideSomeColumns": "Nascondi alcune colonne"
+  "hideSomeColumns": "Nascondi alcune colonne",
+  "deleteCourse": "Elimina corso",
+  "deleteCourseConfirmation": "Sei sicuro di voler eliminare questo corso? \n\nQuesta azione è irreversibile.",
+  "newCourse": "Nuovo corso"
   },
   "teacherCourseById": {
     "loading": "Caricamento...",

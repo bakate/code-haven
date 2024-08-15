@@ -11,15 +11,14 @@ export type RequestType = InferRequestType<
   (typeof honoClient.api.teacher)[":courseId"]["$delete"]
 >;
 
-export const useDeleteCourseByTeacher = (courseId: string) => {
+export const useDeleteCourseByTeacher = () => {
   const queryClient = useQueryClient();
   return useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async () => {
+    mutationFn: async (json) => {
       const response = await honoClient.api.teacher[":courseId"].$delete({
         param: {
-          courseId,
-        },
-
+          courseId: json.param.courseId ? json.param.courseId : "",
+        }
       });
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -27,10 +26,13 @@ export const useDeleteCourseByTeacher = (courseId: string) => {
       return response.json();
     },
     onSuccess: (data) => {
-      toast.success(data.message);
-      queryClient.invalidateQueries({
-        queryKey: ["teacher", { courseId }],
-      });
+      if (data.status === "success") {
+        toast.success(data.message);
+        queryClient.invalidateQueries({
+          queryKey: ["teacher"],
+        });
+
+      }
     },
     onError: (error) => {
       toast.error(error.message);

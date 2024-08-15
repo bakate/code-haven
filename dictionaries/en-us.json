@@ -124,7 +124,10 @@
  "noCoursesFound": "No courses found",
  "filterByStatus": "Filter by status",
  "actions": "Actions",
- "hideSomeColumns": "Hide some columns"
+ "hideSomeColumns": "Hide some columns",
+ "deleteCourse": "Delete course",
+ "deleteCourseConfirmation": "Are you sure you want to delete this course? \n\nThis action cannot be undone.",
+ "newCourse": "New course"
 
 
 

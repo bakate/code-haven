@@ -34,6 +34,20 @@ export const TableBottomContent = ({ dispatch, pages, state, totalItems }: Props
         onChange={(page) => dispatch({ type: 'SET_PAGE', payload: page })}
       />
       <div className="hidden sm:flex w-[30%] justify-end gap-2">
+        <label className="sm:flex items-center text-default-400 text-small hidden">
+          {t('rowsPerPage')}
+          <select
+            className="bg-transparent outline-none text-default-400 text-small"
+            onChange={(e) => {
+              dispatch({ type: 'SET_ROWS_PER_PAGE', payload: parseInt(e.target.value) });
+              dispatch({ type: 'SET_PAGE', payload: 1 });
+            }}
+          >
+            <option value="5" key="5">5</option>
+            <option value="10" key="10">10</option>
+            <option value="15" key="15">15</option>
+          </select>
+        </label>
         <Button
           isDisabled={pages === 1}
           size="sm"

@@ -124,7 +124,10 @@
     "noCoursesFound": "Aucun cours trouvé",
      "filterByStatus": "Filtrer par statut",
      "actions": "Actions",
-     "hideSomeColumns": "Cacher certaines colonnes"
+     "hideSomeColumns": "Cacher certaines colonnes",
+     "deleteCourse": "Supprimer le cours",
+     "deleteCourseConfirmation": "Êtes-vous sûr de vouloir supprimer ce cours ? \n\nCette action est irréversible.",
+     "newCourse": "Nouveau cours"
     },
     "teacherCourseById": {
       "loading": "Chargement...",

@@ -124,7 +124,10 @@
   "noCoursesFound": "Keine Kurse gefunden",
    "filterByStatus": "Nach Status filtern",
    "actions": "Aktionen",
-    "hideSomeColumns": "Einige Spalten ausblenden"
+  "hideSomeColumns": "Einige Spalten ausblenden",
+  "deleteCourse": "Kurs löschen",
+  "deleteCourseConfirmation": "Sind Sie sicher, dass Sie diesen Kurs löschen möchten? \n\nDieser Vorgang kann nicht rückgängig gemacht werden.",
+  "newCourse": "Neuer Kurs"
   },
   "teacherCourseById": {
     "loading": "Lädt...",

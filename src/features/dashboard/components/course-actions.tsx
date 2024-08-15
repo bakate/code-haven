@@ -1,12 +1,12 @@
 "use client";
 
+import { useConfirm } from "@/hooks/use-confirm";
 import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { LuCheck, LuSendHorizonal } from "react-icons/lu";
+import { LuCheck, LuSendHorizonal, LuTrash } from "react-icons/lu";
 import { useDeleteCourseByTeacher } from "../data/use-delete-course-by-teacher";
 import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
-import { ConfirmModal } from "./confirm-modal";
 
 type ActionsProps = {
   disabled: boolean;
@@ -18,9 +18,31 @@ export const CourseActions = ({
   disabled,
   isPublished,
 }: ActionsProps) => {
-  const t = useTranslations("teacherCourseById");
+  const t = useTranslations("createOrEditCourseForm");
   const { mutate, isPending } = useEditCourseByTeacher(courseId);
-  const { mutate: onDeleteCourseMutation } = useDeleteCourseByTeacher(courseId);
+  const { mutate: onDeleteCourseMutation } = useDeleteCourseByTeacher();
+  const { ConfirmationDialog, dialogResponse } = useConfirm({
+    title: t('deleteCourse'),
+    message: t('deleteCourseConfirmation')
+  })
+
+  const handleCourseDeletion = async () => {
+    const confirmed = await dialogResponse();
+    if (confirmed) {
+      onDeleteCourseMutation({
+        param: {
+          courseId: courseId
+        }
+      }, {
+        onSuccess: (data) => {
+          if (data.status === "success") {
+            router.push(`/teacher/courses`)
+          }
+        }
+      });
+    }
+  }
+
   const router = useRouter();
 
   return (
@@ -43,24 +65,11 @@ export const CourseActions = ({
       >
         {isPublished ? t("unpublish") : t("publish")}
       </Button>
-      <ConfirmModal
-        title={t("deleteCourse")}
-        onConfirm={() => {
-          onDeleteCourseMutation({
-            param: {
-              courseId
-            }
-          }, {
-            onSuccess: (data) => {
-              if (data.status === "success") {
-                router.push(`/teacher/courses`)
-              }
-            }
-          })
+      <Button onPress={handleCourseDeletion} color="danger" startContent={<LuTrash />} variant="flat" size="sm">
+        {t("delete")}
 
-        }}>
-        {t('deleteCourseConfirmation')}
-      </ConfirmModal>
+      </Button>
+      <ConfirmationDialog />
     </div>
   );
 };
