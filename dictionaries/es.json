@@ -125,10 +125,11 @@
   "noCoursesFound": "No se encontraron cursos",
    "filterByStatus": "Filtrar por estado",
    "actions": "Acciones",
-    "hideSomeColumns": "Ocultar algunas columnas",
+  "hideSomeColumns": "Ocultar algunas columnas",
     "deleteCourse": "Eliminar curso",
     "deleteCourseConfirmation": "¿Estás seguro de que quieres eliminar este curso? \n\nEsta acción es irreversible.",
-    "newCourse": "Nuevo curso"
+    "newCourse": "Nuevo curso",
+    "youHaveNotCreatedAnyCourse": "Aún no has creado ningún curso"
 
     },
     "teacherCourseById": {
@@ -149,5 +150,10 @@
       "deleteCourseConfirmation": "¿Estás seguro de que quieres eliminar este curso? \n\nEsta acción es irreversible.",
       "courseDeletedSuccessfully": "Curso eliminado con éxito",
       "courseDeletedError": "Error al eliminar el curso"
-    }
+    },
+    "notFound": {
+      "title": "Página no encontrada",
+      "description": "La página que estás buscando no existe. Es posible que haya sido eliminada o que no esté disponible temporalmente.",
+      "backToHome": "Volver a la página de inicio"
+     }
   }

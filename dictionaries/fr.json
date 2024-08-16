@@ -128,7 +128,8 @@
      "hideSomeColumns": "Cacher certaines colonnes",
      "deleteCourse": "Supprimer le cours",
      "deleteCourseConfirmation": "Êtes-vous sûr de vouloir supprimer ce cours ? \n\nCette action est irréversible.",
-     "newCourse": "Nouveau cours"
+     "newCourse": "Nouveau cours",
+      "youHaveNotCreatedAnyCourse": "Tu n'as pas encore créé de cours."
     },
     "teacherCourseById": {
       "loading": "Chargement...",
@@ -148,5 +149,10 @@
       "deleteCourseConfirmation": "Êtes-vous sûr de vouloir supprimer ce cours ? \n\nCette action est irréversible.",
       "courseDeletedSuccessfully": "Cours supprimé avec succès",
       "courseDeletedError": "Erreur lors de la suppression du cours"
-    }
+    },
+    "notFound": {
+      "title": "Page non trouvée",
+      "description": "La page que vous recherchez n'existe pas.",
+      "backToHome": "Retour à l'accueil"
+     }
   }

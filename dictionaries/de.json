@@ -128,7 +128,8 @@
   "hideSomeColumns": "Einige Spalten ausblenden",
   "deleteCourse": "Kurs löschen",
   "deleteCourseConfirmation": "Sind Sie sicher, dass Sie diesen Kurs löschen möchten? \n\nDieser Vorgang kann nicht rückgängig gemacht werden.",
-  "newCourse": "Neuer Kurs"
+  "newCourse": "Neuer Kurs",
+  "youHaveNotCreatedAnyCourse": "Sie haben noch keinen Kurs erstellt"
   },
   "teacherCourseById": {
     "loading": "Lädt...",
@@ -145,8 +146,13 @@
     "publish": "Veröffentlichen",
     "unpublish": "Veröffentlichung rückgängig machen",
      "deleteCourse": "Kurs löschen",
-      "deleteCourseConfirmation": "Sind Sie sicher, dass Sie diesen Kurs löschen möchten? \n\nDieser Vorgang kann nicht rückgängig gemacht werden.",
-      "courseDeletedSuccessfully": "Kurs erfolgreich gelöscht",
-      "courseDeletedError": "Fehler beim Löschen des Kurses"
-  }
+    "deleteCourseConfirmation": "Sind Sie sicher, dass Sie diesen Kurs löschen möchten? \n\nDieser Vorgang kann nicht rückgängig gemacht werden.",
+    "courseDeletedSuccessfully": "Kurs erfolgreich gelöscht",
+    "courseDeletedError": "Fehler beim Löschen des Kurses"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Die von Ihnen angeforderte Seite konnte nicht gefunden werden.",
+    "backToHome": "Zurück zur Startseite"
+   }
 }
