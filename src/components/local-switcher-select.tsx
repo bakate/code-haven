@@ -29,7 +29,7 @@ export const LocalSwitcherSelect = () => {
 
   return (
     <Select
-      className="hidden md:max-w-52 md:block"
+      className="hidden md:max-w-52 md:block pl-2"
       label={t("label")}
       selectedKeys={[value]}
       onChange={onChange}

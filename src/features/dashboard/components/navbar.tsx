@@ -1,5 +1,7 @@
 "use client";
 
+import { useMedia } from "react-use";
+
 import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { UserButton } from "@/features/auth/components/user-button";
@@ -27,6 +29,7 @@ export default function NavbarComponent({
   isTeacherOrPlayerPage,
 }: Props) {
   const t = useTranslations("Navigation");
+  const isTablet = useMedia("(min-width: 640px)", false);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -50,7 +53,7 @@ export default function NavbarComponent({
               variant="light"
               startContent={<FiLogOut />}
             >
-              {t("leave_teacher_mode")}
+              {isTablet ? t("leave_teacher_mode") : t("exit")}
             </Button>
           </NavbarItem>
         ) : (
@@ -61,10 +64,9 @@ export default function NavbarComponent({
           </NavbarItem>
         )}
         <UserButton />
-        <LocalSwitcherSelect />
         <ThemeSwitcher />
       </NavbarContent>
-      <NavbarMenu>
+      <NavbarMenu className="dark:bg-slate-900">
         {routes.map((route, index) => (
           <NavbarMenuItem key={`${route}-${index}`}>
             <Button

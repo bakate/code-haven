@@ -40,14 +40,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const routes = isTeacherPage ? teacherRoutes : guestRoutes;
   return (
-    <div className="h-full">
+    <div className="h-screen overflow-clip">
       <div className=" fixed inset-y-0 w-full">
         <NavbarComponent
           routes={routes}
           isTeacherOrPlayerPage={isTeacherPage || isPlayerPage}
         />
       </div>
-      <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50 bg-slate-50  dark:bg-slate-900">
+      <div className="hidden md:grid w-56 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
         <Sidebar routes={routes} />
       </div>
       <main className="md:pl-60 pt-[80px] h-full pr-6">{children}</main>

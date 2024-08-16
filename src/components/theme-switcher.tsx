@@ -1,4 +1,3 @@
-// app/components/ThemeSwitcher.tsx
 "use client";
 
 import useClientCheck from "@/hooks/use-client-check";
@@ -15,7 +14,7 @@ export const ThemeSwitcher = () => {
   return (
     <Switch
       defaultSelected
-      size="lg"
+
       value={theme}
       onValueChange={(e) => setTheme(e ? "dark" : "light")}
       thumbIcon={({ isSelected, className }) =>

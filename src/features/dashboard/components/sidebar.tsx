@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { CourseRoutes } from "../types";
 import { Logo } from "./logo";
+import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 
 type Props = {
   routes: CourseRoutes;
@@ -15,13 +16,13 @@ export const Sidebar = ({ routes }: Props) => {
     return null;
   }
   return (
-    <div className="mt-4">
+    <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-2">
       <Link color="foreground" href="/" isBlock className="w-full">
         <Logo />
         <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
       </Link>
 
-      <div className="flex flex-col gap-4 items-start mt-4">
+      <div className="mt-4">
         {routes.map((route) => (
           <Button
             as={Link}
@@ -40,6 +41,8 @@ export const Sidebar = ({ routes }: Props) => {
           </Button>
         ))}
       </div>
+
+      <LocalSwitcherSelect />
     </div>
   );
 };

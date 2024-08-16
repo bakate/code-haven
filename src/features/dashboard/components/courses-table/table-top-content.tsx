@@ -5,6 +5,7 @@ import { CourseTableAction } from "./reducer";
 
 import { useTranslations } from "next-intl";
 import { StateType } from "../../types";
+import { useMedia } from "react-use";
 
 type Props = {
   statusOptions: {
@@ -22,6 +23,7 @@ type Props = {
 }
 export const TableTopContent = ({ dispatch, headerColumns, state, statusOptions }: Props) => {
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
   return (
     <div className="flex justify-between gap-3 items-center">
       <Input
@@ -45,7 +47,7 @@ export const TableTopContent = ({ dispatch, headerColumns, state, statusOptions 
       />
       <div className="flex gap-3">
         <Dropdown>
-          <DropdownTrigger className="hidden sm:flex">
+          <DropdownTrigger className="hidden md:flex">
             <Button endContent={<LuChevronDown className="text-small" />} variant="flat">
               {t('filterByStatus')}
             </Button>
@@ -72,7 +74,7 @@ export const TableTopContent = ({ dispatch, headerColumns, state, statusOptions 
         </Dropdown>
 
         <Dropdown>
-          <DropdownTrigger className="hidden sm:flex">
+          <DropdownTrigger className="hidden md:flex">
             <Button endContent={<LuChevronDown className="text-small" />} variant="flat">
               {t("hideSomeColumns")}
             </Button>
@@ -98,8 +100,8 @@ export const TableTopContent = ({ dispatch, headerColumns, state, statusOptions 
             ))}
           </DropdownMenu>
         </Dropdown>
-        <Button color="primary" href="/teacher/create" as={Link} startContent={<LuPlus />}>
-          {t("newCourse")}
+        <Button color="primary" href="/teacher/create" as={Link} startContent={<LuPlus />} isIconOnly={!isTablet}>
+          {isTablet ? t("newCourse"):""}
         </Button>
       </div>
     </div>

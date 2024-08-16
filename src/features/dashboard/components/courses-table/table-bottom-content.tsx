@@ -1,5 +1,5 @@
 
-import { Button, Pagination } from "@nextui-org/react";
+import { Button, divider, Pagination } from "@nextui-org/react";
 import { Dispatch } from "react";
 import { CourseTableAction } from "./reducer";
 
@@ -18,12 +18,13 @@ export const TableBottomContent = ({ dispatch, pages, state, totalItems }: Props
   const t = useTranslations("createOrEditCourseForm");
   return (
     <div className="p-2 flex justify-between items-center">
-      {state.selectedKeys.size ? <span className="w-[30%] text-small text-default-400">
+      {state.selectedKeys.size ? <span className="text-small text-default-400">
         {state.selectedKeys.has("all")
           ? t('allCoursesSelected')
           : t('selectedCourses', { count: state.selectedKeys.size, total: totalItems })}
 
-      </span> : <span className="w-[30%]"></span>}
+
+      </span> : <span></span>}
       <Pagination
         isCompact
         showControls
@@ -33,8 +34,8 @@ export const TableBottomContent = ({ dispatch, pages, state, totalItems }: Props
         total={pages}
         onChange={(page) => dispatch({ type: 'SET_PAGE', payload: page })}
       />
-      <div className="hidden sm:flex w-[30%] justify-end gap-2">
-        <label className="sm:flex items-center text-default-400 text-small hidden">
+      <div className="hidden md:flex justify-end gap-2">
+        <label className="flex items-center text-default-400 text-small">
           {t('rowsPerPage')}
           <select
             className="bg-transparent outline-none text-default-400 text-small"
