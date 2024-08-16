@@ -40,7 +40,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const routes = isTeacherPage ? teacherRoutes : guestRoutes;
   return (
-    <div className="h-screen overflow-clip">
+    <div className="h-[100dvh]">
       <div className=" fixed inset-y-0 w-full">
         <NavbarComponent
           routes={routes}

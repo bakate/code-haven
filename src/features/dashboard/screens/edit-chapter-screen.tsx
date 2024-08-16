@@ -1,10 +1,18 @@
 "use client";
 import { Banner } from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
-import { Link } from "@nextui-org/react";
+import { Link, Skeleton } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import { LuArrowLeft, LuEye, LuLayoutDashboard, LuVideo } from "react-icons/lu";
+import {
+  LuArrowLeft,
+  LuEuro,
+  LuEye,
+  LuFile,
+  LuLayoutDashboard,
+  LuListChecks,
+  LuVideo,
+} from "react-icons/lu";
 import { ChapterAccessSettingsForm } from "../components/chapter/chapter-access-settings-form";
 import { ChapterActions } from "../components/chapter/chapter-actions";
 import { ChapterDescriptionForm } from "../components/chapter/chapter-description-form";
@@ -14,6 +22,10 @@ import {
   useGetChapterById,
   useVideoStatus,
 } from "../data/use-get-chapter-by-id";
+import {
+  FullWidthSkeleton,
+  SkeletonWithIcon,
+} from "../components/custom-skeletons";
 
 type Props = {
   params: {
@@ -34,7 +46,7 @@ export const EditChapterScreen = ({ params }: Props) => {
     return <div>Error</div>;
   }
   if (isFetching) {
-    return <div>Loading...</div>;
+    return <ChapterSkeleton />;
   }
   if (!chapter) {
     return redirect("/");
@@ -150,3 +162,37 @@ export const EditChapterScreen = ({ params }: Props) => {
     </>
   );
 };
+
+const ChapterSkeleton = () => (
+  <div className="p-6">
+    <FullWidthSkeleton />
+    <div className="flex items-center justify-between mt-6">
+      <div className="flex flex-col gap-y-2">
+        <Skeleton className="h-16 rounded-lg w-[300px] md:w-[400px]" />
+        <Skeleton className="h-12 rounded-lg w-[300px] md:w-[550px]" />
+      </div>
+      <div className="flex items-center gap-x-2">
+        <Skeleton className="w-24 h-10 rounded-lg" />
+        <Skeleton className="w-24 h-10 rounded-lg" />
+      </div>
+    </div>
+    <div className="grid md:grid-cols-2 gap-6 mt-16">
+      <div className="space-y-6">
+        <SkeletonWithIcon icon={LuLayoutDashboard} />
+        <FullWidthSkeleton height="h-12" />
+        {[1, 2].map((index) => (
+          <FullWidthSkeleton key={index} height={"h-32"} />
+        ))}
+      </div>
+
+      <div className="space-y-6">
+        {[{ icon: LuVideo }].map(({ icon }, index) => (
+          <div key={index} className="space-y-6">
+            <SkeletonWithIcon icon={icon} />
+            <FullWidthSkeleton height={"h-[350px]"} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
