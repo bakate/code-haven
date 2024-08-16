@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { FaPencil } from "react-icons/fa6";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { CourseFormType, CreateCourseFormSchema } from "../../types";
+import { FormContainer } from "../form-container";
 
 type Props = {
   initialData: {
@@ -47,7 +48,7 @@ export const ChapterTitleForm = ({ initialData }: Props) => {
     });
   };
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md dark:bg-slate-900 dark:border-slate-700">
+    <FormContainer>
       <div className="font-medium flex items-center justify-between">
         {t("courseTitle")}
         <Button
@@ -97,6 +98,6 @@ export const ChapterTitleForm = ({ initialData }: Props) => {
           </form>
         </Form>
       ) : null}
-    </div>
+    </FormContainer>
   );
 };

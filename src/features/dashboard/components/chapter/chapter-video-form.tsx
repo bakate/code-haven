@@ -11,6 +11,7 @@ import { FaPencil, FaPlus, FaVideo } from "react-icons/fa6";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { SelectMuxDataType } from "../../types/mux.type";
 import FileUpload from "../file-upload";
+import { FormContainer } from "../form-container";
 
 type Props = {
   initialData: {
@@ -147,7 +148,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
   }
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md relative dark:bg-slate-900 dark:border-slate-700">
+    <FormContainer>
       <div className="font-medium flex items-center justify-between">
         {t("chapterVideo")}
         <Button
@@ -182,7 +183,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
           title={initialData.title}
         />
       )}
-    </div>
+    </FormContainer>
   );
 };
 

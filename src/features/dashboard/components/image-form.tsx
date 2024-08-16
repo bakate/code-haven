@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FaImage, FaPencil, FaPlus } from "react-icons/fa6";
 import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 import FileUpload from "./file-upload";
+import { FormContainer } from "./form-container";
 
 type Props = {
   initialData: {
@@ -26,7 +27,7 @@ export const ImageForm = ({ initialData }: Props) => {
   const readOnlyWithImage = !isEditing && initialData.imageUrl;
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4 shadow-md dark:bg-slate-900 dark:border-slate-700">
+    <FormContainer>
       <div className="font-medium flex items-center justify-between">
         {t("courseImage")}
         <Button
@@ -86,6 +87,6 @@ export const ImageForm = ({ initialData }: Props) => {
           }}
         />
       ) : null}
-    </div>
+    </FormContainer>
   );
 };
