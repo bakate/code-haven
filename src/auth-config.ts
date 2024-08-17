@@ -6,15 +6,17 @@ import { db } from "@/db/drizzle";
 import Google from "@auth/core/providers/google";
 import Github from "next-auth/providers/github";
 import Resend from "next-auth/providers/resend";
-import Twitter from "next-auth/providers/twitter";
 
 const providers: Provider[] = [
-  Google,
+  Google({
+    allowDangerousEmailAccountLinking: true,
+  }),
   Resend({
     from: process.env.RESEND_FROM_EMAIL,
   }),
-  Twitter,
-  Github,
+  Github({
+    allowDangerousEmailAccountLinking: true,
+  }),
 ];
 
 export const providerMap = providers.map((provider) => {
@@ -29,7 +31,7 @@ export const providerMap = providers.map((provider) => {
 export const nextAuthConfiguration = {
   adapter: DrizzleAdapter(db),
   secret: process.env.AUTH_SECRET,
-  providers,
+  providers: [...providers],
   pages: {
     // we override the default pages
     signIn: "/sign-in", // /api/auth/signin ==> /sign-in
