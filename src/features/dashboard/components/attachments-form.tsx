@@ -4,11 +4,13 @@ import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { FaPencil, FaPlus } from "react-icons/fa6";
-import { LuFile, LuLoader2, LuX } from "react-icons/lu";
+import { LuFile, LuLoader2, LuPencil, LuPlus, LuX } from "react-icons/lu";
 import { useCreateAttachment } from "../data/use-create-attachment";
 import { useDeleteAttachmentById } from "../data/use-delete-attachment";
 import FileUpload from "./file-upload";
 import { FormContainer } from "./form-container";
+import { useMedia } from "react-use";
+import { ImCancelCircle } from "react-icons/im";
 
 type Props = {
   initialData: {
@@ -31,6 +33,7 @@ export const AttachmentsForm = ({ initialData }: Props) => {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
 
   const readOnlyWithoutImage = !isEditing && !initialData.imageUrl;
   const readOnlyWithImage = !isEditing && initialData.imageUrl;
@@ -72,16 +75,18 @@ export const AttachmentsForm = ({ initialData }: Props) => {
           color="primary"
           onPress={toggleEditing}
           disabled={isPending || isDeleting}
+          isIconOnly={!isTablet}
           startContent={
             readOnlyWithImage ? (
-              <FaPencil />
+              <LuPencil />
             ) : readOnlyWithoutImage ? (
-              <FaPlus />
-            ) : null
+              <LuPlus />
+            ) : (
+              <ImCancelCircle />
+            )
           }
         >
-          {isEditing ? t("cancel") : null}
-          {!isEditing ? t("addFile") : ""}
+          {!isTablet ? "" : isEditing ? t("cancel") : t("addFile")}
         </Button>
       </div>
       {!isEditing ? (
@@ -95,7 +100,7 @@ export const AttachmentsForm = ({ initialData }: Props) => {
             <div className="space-y-2 mt-4">
               {initialData.attachments.map((attachment) => (
                 <div
-                  className="flex items-center p-3 w-full bg-sky-100 border-sky-200 border text-sky-700 rounded-md"
+                  className="flex items-center p-3 w-full bg-sky-100 border-sky-200 border text-sky-700 rounded-md dark:border-sky-700 dark:bg-sky-900 dark:text-sky-200"
                   key={attachment.id}
                 >
                   <LuFile className="flex-shrink-0 mr-2 size-4" />

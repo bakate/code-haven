@@ -51,6 +51,7 @@
       "courseTitle": "Título del curso",
       "editTitle": "Editar título",
       "courseDescription": "Descripción del curso",
+      "noDescription": "Sin descripción",
       "editDescription": "Editar descripción",
       "courseImage": "Imagen del curso",
       "addImage": "Añadir imagen",

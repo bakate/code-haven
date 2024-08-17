@@ -1,5 +1,7 @@
+import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { IconType } from "react-icons/lib";
+import { useMedia } from "react-use";
 
 const backgroundVariants = cva(
   "rounded-full flex items-center justify-center",
@@ -28,8 +30,8 @@ const iconVariants = cva("", {
       success: "text-emerald-700",
     },
     size: {
-      default: "h-8 w-8",
-      sm: "h-4 w-4",
+      default: "size-8",
+      sm: "size-4",
     },
   },
   defaultVariants: {
@@ -46,10 +48,16 @@ type iconBadgeProps = BackgroundVariantsProps &
     icon: IconType;
   };
 
-export const IconBadge = ({ icon: Icon, ...props }: iconBadgeProps) => {
+export const IconBadge = ({ icon: Icon, size, ...props }: iconBadgeProps) => {
+  const isTablet = useMedia("(min-width: 640px)", false);
   return (
     <div className={backgroundVariants(props)}>
-      <Icon className={iconVariants(props)} />
+      <Icon
+        className={`${iconVariants({
+          ...props,
+          size: !isTablet ? "sm" : size,
+        })}`}
+      />
     </div>
   );
 };

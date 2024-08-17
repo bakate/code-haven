@@ -5,17 +5,24 @@ import { useRouter } from "next/navigation";
 import { LuCheck, LuSendHorizonal, LuTrash } from "react-icons/lu";
 import { useDeleteChapterById } from "../../data/chapter/use-delete-chapter";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
+import { useMedia } from "react-use";
 
 type Props = {
   isPublished: boolean;
   chapterId: string;
   courseId: string;
   disabled: boolean;
-}
-export const ChapterActions = ({ chapterId, courseId, disabled, isPublished }: Props) => {
+};
+export const ChapterActions = ({
+  chapterId,
+  courseId,
+  disabled,
+  isPublished,
+}: Props) => {
   const { mutate, isPending } = useEditChapterById(chapterId);
   const { mutate: onDeleteChapterMutation } = useDeleteChapterById(chapterId);
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
   const router = useRouter();
 
   const { ConfirmationDialog, dialogResponse } = useConfirm({
@@ -67,20 +74,23 @@ export const ChapterActions = ({ chapterId, courseId, disabled, isPublished }: P
         isDisabled={disabled || isPending}
         startContent={isPublished ? <LuCheck /> : <LuSendHorizonal />}
         color={isPublished ? "success" : "primary"}
+        isIconOnly={!isTablet}
         size="sm"
       >
-        {isPublished ? t("unpublish") : t("publish")}
+        {!isTablet ? "" : isPublished ? t("unpublish") : t("publish")}
       </Button>
       <Button
-       onPress={handleChapterDeletion}
+        onPress={handleChapterDeletion}
         color="danger"
+        isIconOnly={!isTablet}
         startContent={<LuTrash />}
         variant="flat"
+        title={t("deleteChapter")}
         size="sm"
       >
-        {t("delete")}
+        {!isTablet ? "" : t("delete")}
       </Button>
       <ConfirmationDialog />
     </div>
-  )
+  );
 };

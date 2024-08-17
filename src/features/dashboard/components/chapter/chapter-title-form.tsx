@@ -7,10 +7,12 @@ import { Button, CircularProgress, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaPencil } from "react-icons/fa6";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { CourseFormType, CreateCourseFormSchema } from "../../types";
 import { FormContainer } from "../form-container";
+import { useMedia } from "react-use";
+import { LuPencil } from "react-icons/lu";
+import { ImCancelCircle } from "react-icons/im";
 
 type Props = {
   initialData: {
@@ -25,6 +27,7 @@ export const ChapterTitleForm = ({ initialData }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
 
   const form = useForm<CourseFormType>({
     resolver: zodResolver(
@@ -55,9 +58,10 @@ export const ChapterTitleForm = ({ initialData }: Props) => {
           variant="ghost"
           color="primary"
           onPress={toggleEditing}
-          startContent={!isEditing ? <FaPencil /> : null}
+          isIconOnly={!isTablet}
+          startContent={!isEditing ? <LuPencil /> : <ImCancelCircle />}
         >
-          {isEditing ? t("cancel") : t("editTitle")}
+          {!isTablet ? "" : isEditing ? t("cancel") : t("editTitle")}
         </Button>
       </div>
       {!isEditing ? (

@@ -13,7 +13,9 @@ import {
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaPencil } from "react-icons/fa6";
+import { useMedia } from "react-use";
+import { LuPencil } from "react-icons/lu";
+import { ImCancelCircle } from "react-icons/im";
 
 import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 import { CourseFormType, CreateCourseFormSchema } from "../types";
@@ -33,6 +35,7 @@ export const CategoryForm = ({ initialData, options }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
 
   const selectedOption = options?.find(
     (option) => option.value === initialData.categoryId
@@ -72,9 +75,10 @@ export const CategoryForm = ({ initialData, options }: Props) => {
           variant="ghost"
           color="primary"
           onPress={toggleEditing}
-          startContent={!isEditing ? <FaPencil /> : null}
+          isIconOnly={!isTablet}
+          startContent={!isEditing ? <LuPencil /> : <ImCancelCircle />}
         >
-          {isEditing ? t("cancel") : t("editCategory")}
+          {!isTablet ? "" : isEditing ? t("cancel") : t("editCategory")}
         </Button>
       </div>
       {!isEditing ? (

@@ -11,6 +11,9 @@ import { useForm } from "react-hook-form";
 
 import { useRouter } from "next/navigation";
 import { FiPlus } from "react-icons/fi";
+import { useMedia } from "react-use";
+import { LuFilePlus, LuPencil } from "react-icons/lu";
+import { ImCancelCircle } from "react-icons/im";
 import { useCreateChapter } from "../data/use-create-chapter";
 import { useReorderChapters } from "../data/use-reorder-chapters";
 import {
@@ -34,6 +37,7 @@ export const ChaptersForm = ({ initialData }: Props) => {
   const [isCreating, setIsCreating] = useState(false);
   const toggleCreating = () => setIsCreating((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
   const router = useRouter();
 
   const form = useForm<ChapterFormTitleType>({
@@ -85,9 +89,10 @@ export const ChaptersForm = ({ initialData }: Props) => {
           variant="ghost"
           color="primary"
           onPress={toggleCreating}
-          startContent={!isCreating ? <FiPlus /> : null}
+          isIconOnly={!isTablet}
+          startContent={!isCreating ? <FiPlus /> : <ImCancelCircle />}
         >
-          {isCreating ? t("cancel") : t("addChapterTitle")}
+          {!isTablet ? "" : isCreating ? t("cancel") : t("addChapterTitle")}
         </Button>
       </div>
 

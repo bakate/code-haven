@@ -7,7 +7,11 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LuCheck, LuSendHorizonal, LuTrash } from "react-icons/lu";
 import { useDeleteCourseByTeacher } from "../data/use-delete-course-by-teacher";
-import { EditCourseResponseType, useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
+import {
+  EditCourseResponseType,
+  useEditCourseByTeacher,
+} from "../data/use-edit-course-by-teacher";
+import { useMedia } from "react-use";
 
 type ActionsProps = {
   disabled: boolean;
@@ -23,43 +27,47 @@ export const CourseActions = ({
   const { mutate, isPending } = useEditCourseByTeacher(courseId);
   const { mutate: onDeleteCourseMutation } = useDeleteCourseByTeacher();
   const { ConfirmationDialog, dialogResponse } = useConfirm({
-    title: t('deleteCourse'),
-    message: t('deleteCourseConfirmation')
-  })
+    title: t("deleteCourse"),
+    message: t("deleteCourseConfirmation"),
+  });
+  const isTablet = useMedia("(min-width: 640px)", false);
 
   const confetti = useConfetti();
 
   const handleCourseDeletion = async () => {
     const confirmed = await dialogResponse();
     if (confirmed) {
-      onDeleteCourseMutation({
-        param: {
-          courseId: courseId
+      onDeleteCourseMutation(
+        {
+          param: {
+            courseId: courseId,
+          },
+        },
+        {
+          onSuccess: (data) => {
+            if (data.status === "success") {
+              router.push(`/teacher/courses`);
+            }
+          },
         }
-      }, {
-        onSuccess: (data) => {
-          if (data.status === "success") {
-            router.push(`/teacher/courses`)
-          }
-        }
-      });
+      );
     }
-  }
+  };
 
   const handlePublishCourse = () => {
-  const options = {
-		courseId,
-		isPublished: !isPublished,
-	};
+    const options = {
+      courseId,
+      isPublished: !isPublished,
+    };
 
-	const onSuccess = (data:EditCourseResponseType) => {
-		if (data.status === 'success') {
-			confetti.onOpen();
-		}
-	};
+    const onSuccess = (data: EditCourseResponseType) => {
+      if (data.status === "success") {
+        confetti.onOpen();
+      }
+    };
 
-	mutate(options, !isPublished ? { onSuccess } : undefined);
-  }
+    mutate(options, !isPublished ? { onSuccess } : undefined);
+  };
 
   const router = useRouter();
 
@@ -69,18 +77,23 @@ export const CourseActions = ({
         onPress={handlePublishCourse}
         isDisabled={disabled || isPending}
         size="sm"
-        startContent={
-          isPublished ? <LuCheck /> : (
-            <LuSendHorizonal />
-          )
-        }
+        isIconOnly={!isTablet}
+        title={isPublished ? t("unpublish") : t("publish")}
+        startContent={isPublished ? <LuCheck /> : <LuSendHorizonal />}
         color={isPublished ? "success" : "primary"}
       >
-        {isPublished ? t("unpublish") : t("publish")}
+        {!isTablet ? "" : isPublished ? t("unpublish") : t("publish")}
       </Button>
-      <Button onPress={handleCourseDeletion} color="danger" startContent={<LuTrash />} variant="flat" size="sm">
-        {t("delete")}
-
+      <Button
+        onPress={handleCourseDeletion}
+        color="danger"
+        isIconOnly={!isTablet}
+        title={t("deleteCourse")}
+        startContent={<LuTrash />}
+        variant="flat"
+        size="sm"
+      >
+        {!isTablet ? "" : t("delete")}
       </Button>
       <ConfirmationDialog />
     </div>

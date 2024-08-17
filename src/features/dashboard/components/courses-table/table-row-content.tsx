@@ -8,13 +8,22 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Tooltip,
 } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { Key } from "react";
-import { LuEye, LuMoreVertical, LuPencil, LuTrash } from "react-icons/lu";
+import {
+  LuEye,
+  LuMoreVertical,
+  LuPencil,
+  LuTrash,
+  LuTrash2,
+} from "react-icons/lu";
 import { useDeleteCourseByTeacher } from "../../data/use-delete-course-by-teacher";
 import { CategoriesType } from "../../data/use-get-categories";
 import { CoursesType } from "../../data/use-get-courses-by-teacher";
+import { useMedia } from "react-use";
+import Link from "next/link";
 
 type Props = {
   course: CoursesType[number];
@@ -28,6 +37,7 @@ export const TableRowContent = ({
 }: Props) => {
   const locale = useLocale();
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
   const { mutate: onDeleteCourseMutation } = useDeleteCourseByTeacher();
   const { ConfirmationDialog, dialogResponse } = useConfirm({
     title: t("deleteCourse"),
@@ -65,6 +75,42 @@ export const TableRowContent = ({
       );
 
     case "actions":
+      if (!isTablet) {
+        return (
+          <div className="relative flex items-center gap-2">
+            <Tooltip content="Details">
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <LuEye />
+              </span>
+            </Tooltip>
+            <Tooltip content="Edit user">
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <Link href={`/teacher/courses/${course.id}`}>
+                  <LuPencil />
+                </Link>
+              </span>
+            </Tooltip>
+            <Tooltip color="danger" content="Delete user">
+              <span
+                className="text-lg text-danger cursor-pointer active:opacity-50"
+                onClick={async () => {
+                  const confirmed = await dialogResponse();
+                  if (confirmed) {
+                    onDeleteCourseMutation({
+                      param: {
+                        courseId: course.id,
+                      },
+                    });
+                  }
+                }}
+              >
+                <LuTrash2 />
+              </span>
+            </Tooltip>
+            <ConfirmationDialog />
+          </div>
+        );
+      }
       return (
         <div className="relative flex items-center gap-2">
           <Dropdown>

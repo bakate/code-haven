@@ -55,6 +55,7 @@
     "editDescription": "Modifica descrizione",
     "descriptionLabel": "Descrizione",
     "descriptionPlaceholder": "es. 'Questo corso è su...'",
+    "noDescription": "Nessuna descrizione",
     "courseImage": "Immagine del corso",
     "addImage": "Aggiungi immagine",
     "editImage": "Modifica immagine",

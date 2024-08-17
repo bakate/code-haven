@@ -8,10 +8,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { memo, useEffect, useReducer } from "react";
 import { FaPencil, FaPlus, FaVideo } from "react-icons/fa6";
+import { LuPencil, LuPlus } from "react-icons/lu";
+import { ImCancelCircle } from "react-icons/im";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { SelectMuxDataType } from "../../types/mux.type";
 import FileUpload from "../file-upload";
 import { FormContainer } from "../form-container";
+import { useMedia } from "react-use";
 
 type Props = {
   initialData: {
@@ -62,7 +65,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useEditChapterById(initialData.chapterId);
   const [state, dispatch] = useReducer(chapterVideoReducer, initialState);
-
+  const isTablet = useMedia("(min-width: 640px)", false);
   const isClient = useClientCheck();
 
   useEffect(() => {
@@ -93,15 +96,19 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
 
   const t = useTranslations("createOrEditCourseForm");
 
-  const getButtonContent = (isEditing: boolean, playbackId: string | null) => {
+  const getButtonContent = (
+    isEditing: boolean,
+    playbackId: string | null,
+    isTabletMode: boolean
+  ) => {
     if (isEditing) {
-      return t("cancel");
+      return !isTabletMode ? "" : t("cancel");
     }
     if (!isEditing && !playbackId) {
-      return t("addVideo");
+      return !isTabletMode ? "" : t("addVideo");
     }
     if (!isEditing && playbackId) {
-      return t("editVideo");
+      return !isTabletMode ? "" : t("editVideo");
     }
     return "";
   };
@@ -111,10 +118,13 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
     playbackId: string | null
   ) => {
     if (!isEditing && playbackId) {
-      return <FaPencil />;
+      return <LuPencil />;
     }
     if (!isEditing && !playbackId) {
-      return <FaPlus />;
+      return <LuPlus />;
+    }
+    if (isEditing) {
+      return <ImCancelCircle />;
     }
     return null;
   };
@@ -154,13 +164,14 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
         <Button
           variant="ghost"
           color="primary"
+          isIconOnly={!isTablet}
           onPress={() =>
             dispatch({ type: "SET_EDITING", payload: !state.isEditing })
           }
           disabled={state.isLoading || isPending}
           startContent={getButtonStartIcon(state.isEditing, state.playbackId)}
         >
-          {getButtonContent(state.isEditing, state.playbackId)}
+          {getButtonContent(state.isEditing, state.playbackId, isTablet)}
         </Button>
       </div>
 

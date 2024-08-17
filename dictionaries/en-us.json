@@ -54,6 +54,7 @@
     "editDescription": "Edit description",
     "descriptionLabel": "Description",
     "descriptionPlaceholder": "e.g. 'This course is about...'",
+    "noDescription": "No description",
     "cancel": "Cancel",
     "saveChange": "Save changes",
    "courseUpdatedSuccessfully": "Course updated successfully",

@@ -4,6 +4,9 @@ import { Button, Image } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import NextImage from "next/image";
 import { useState } from "react";
+import { useMedia } from "react-use";
+import { LuPencil } from "react-icons/lu";
+import { ImCancelCircle } from "react-icons/im";
 import { FaImage, FaPencil, FaPlus } from "react-icons/fa6";
 import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 import FileUpload from "./file-upload";
@@ -22,6 +25,7 @@ export const ImageForm = ({ initialData }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
 
   const readOnlyWithoutImage = !isEditing && !initialData.imageUrl;
   const readOnlyWithImage = !isEditing && initialData.imageUrl;
@@ -33,6 +37,7 @@ export const ImageForm = ({ initialData }: Props) => {
         <Button
           variant="ghost"
           color="primary"
+          isIconOnly={!isTablet}
           onPress={toggleEditing}
           disabled={isPending}
           startContent={
@@ -40,15 +45,18 @@ export const ImageForm = ({ initialData }: Props) => {
               <FaPencil />
             ) : readOnlyWithoutImage ? (
               <FaPlus />
-            ) : null
+            ) : (
+              <ImCancelCircle />
+            )
           }
         >
-          {isEditing ? t("cancel") : null}
-          {readOnlyWithoutImage
+          {!isTablet
+            ? ""
+            : isEditing
+            ? t("cancel")
+            : readOnlyWithoutImage
             ? t("addImage")
-            : readOnlyWithImage
-            ? t("editImage")
-            : ""}
+            : t("editImage")}
         </Button>
       </div>
       {readOnlyWithoutImage ? (

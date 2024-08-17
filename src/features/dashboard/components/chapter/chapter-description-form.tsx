@@ -12,6 +12,9 @@ import { FaPencil } from "react-icons/fa6";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { CourseFormType, CreateCourseFormSchema } from "../../types";
 import { FormContainer } from "../form-container";
+import { ImCancelCircle } from "react-icons/im";
+import { LuPencil } from "react-icons/lu";
+import { useMedia } from "react-use";
 
 type Props = {
   initialData: {
@@ -27,6 +30,7 @@ export const ChapterDescriptionForm = ({ initialData }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
+  const isTablet = useMedia("(min-width: 640px)", false);
 
   const form = useForm<CourseFormType>({
     resolver: zodResolver(
@@ -38,7 +42,7 @@ export const ChapterDescriptionForm = ({ initialData }: Props) => {
       })
     ),
     defaultValues: {
-      description: initialData.description,
+      description: initialData.description ?? "",
       title: initialData.title,
     },
     mode: "onBlur",
@@ -58,9 +62,10 @@ export const ChapterDescriptionForm = ({ initialData }: Props) => {
           variant="ghost"
           color="primary"
           onPress={toggleEditing}
-          startContent={!isEditing ? <FaPencil /> : null}
+          isIconOnly={!isTablet}
+          startContent={!isEditing ? <LuPencil /> : <ImCancelCircle />}
         >
-          {isEditing ? t("cancel") : t("editDescription")}
+          {!isTablet ? "" : isEditing ? t("cancel") : t("editDescription")}
         </Button>
       </div>
       {!isEditing ? (
@@ -70,7 +75,7 @@ export const ChapterDescriptionForm = ({ initialData }: Props) => {
             !initialData.description && "text-slate-500 italic"
           )}
         >
-          {initialData.description ?? "No description"}
+          {initialData.description ?? t("noDescription")}
         </p>
       ) : null}
       {isEditing ? (
