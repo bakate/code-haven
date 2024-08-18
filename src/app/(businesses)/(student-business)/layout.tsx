@@ -50,7 +50,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="hidden md:grid w-56 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
         <Sidebar routes={routes} />
       </div>
-      <main className="md:pl-60 pt-[80px] h-full pr-6">{children}</main>
+      <main className="md:pl-60 pt-[80px] h-full max-w-6xl mx-auto">
+        {children}
+      </main>
     </div>
   );
 };
