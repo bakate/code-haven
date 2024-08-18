@@ -21,6 +21,8 @@ export const LocalSwitcherSelect = () => {
   const renderSelectItem = (key: Locale, alt: string, src: string) => (
     <SelectItem
       key={key}
+      color="primary"
+      variant="flat"
       startContent={<Avatar alt={alt} className="w-6 h-6" src={src} />}
     >
       {t(key)}
@@ -31,6 +33,8 @@ export const LocalSwitcherSelect = () => {
     <Select
       className="hidden md:max-w-52 md:block pl-2"
       label={t("label")}
+      color="primary"
+      variant="flat"
       selectedKeys={[value]}
       onChange={onChange}
       disabled={isPending}

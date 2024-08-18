@@ -1,5 +1,5 @@
 import { protectServer } from "@/features/auth/utils/auth-utils";
-import { EditChapterScreen } from "@/features/dashboard/screens/edit-chapter-screen";
+import { EditChapterScreen } from "@/features/teacher/screens/edit-chapter-screen";
 
 type Props = {
   params: {

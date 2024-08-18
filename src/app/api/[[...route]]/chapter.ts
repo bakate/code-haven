@@ -4,11 +4,11 @@ import { ENV } from "@/env";
 import {
   insertChapterSchema,
   selectChapterSchema,
-} from "@/features/dashboard/types/chapter.type";
+} from "@/features/teacher/types/chapter.type";
 import {
   remainingLocales,
   translateText,
-} from "@/features/dashboard/utils/translation";
+} from "@/features/teacher/utils/translation";
 import { Locale } from "@/i18n-config";
 import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";

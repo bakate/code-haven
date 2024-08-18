@@ -1,6 +1,6 @@
 "use client";
-import NavbarComponent from "@/features/dashboard/components/navbar";
-import { Sidebar } from "@/features/dashboard/components/sidebar";
+import NavbarComponent from "@/features/teacher/components/navbar";
+import { Sidebar } from "@/features/teacher/components/sidebar";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { FiBarChart2, FiCompass, FiLayout, FiList } from "react-icons/fi";

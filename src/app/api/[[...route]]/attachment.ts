@@ -3,7 +3,7 @@ import { attachment } from "@/db/schema";
 import {
   insertAttachmentSchema,
   selectAttachmentSchema,
-} from "@/features/dashboard/types/attachment.type";
+} from "@/features/teacher/types/attachment.type";
 
 import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";

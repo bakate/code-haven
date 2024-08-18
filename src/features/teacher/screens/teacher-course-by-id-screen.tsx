@@ -99,7 +99,9 @@ export const TeacherCourseById = ({ courseId }: Props) => {
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
-            <h1 className="text-2xl font-medium">{t("courseSetup")}</h1>
+            <h1 className="text-xl md:text-2xl font-medium">
+              {t("courseSetup")}
+            </h1>
             <span className="text-sm text-slate-700 dark:text-slate-200">
               {t("completeAllFields")} {completionText}
             </span>
@@ -115,7 +117,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LuLayoutDashboard} />
-              <h2 className="text-xl">{t("customizeYourCourse")}</h2>
+              <h2 className="md:text-xl text-lg">{t("customizeYourCourse")}</h2>
             </div>
             <TitleForm
               initialData={{
@@ -151,7 +153,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LuListChecks} />
-                <h2 className="text-xl">{t("courseChapters")}</h2>
+                <h2 className="md:text-xl text-lg">{t("courseChapters")}</h2>
               </div>
               <ChaptersForm
                 initialData={{
@@ -163,7 +165,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
 
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LuEuro} />
-              <h2 className="text-xl">{t("sellYourCourse")}</h2>
+              <h2 className="md:text-xl text-lg">{t("sellYourCourse")}</h2>
             </div>
             <PriceForm
               initialData={{
@@ -175,7 +177,9 @@ export const TeacherCourseById = ({ courseId }: Props) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LuFile} />
-                <h2 className="text-xl">{t("resourcesAndAttachments")}</h2>
+                <h2 className="md:text-xl text-lg">
+                  {t("resourcesAndAttachments")}
+                </h2>
               </div>
               <AttachmentsForm
                 initialData={{

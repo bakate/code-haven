@@ -2,7 +2,6 @@
 
 import { useMedia } from "react-use";
 
-import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { UserButton } from "@/features/auth/components/user-button";
 import {

@@ -7,7 +7,6 @@ import attachment from "./attachment";
 import category from "./category";
 import chapter from "./chapter";
 import teacher from "./teacher";
-import user from "./user";
 
 export const runtime = "edge";
 
@@ -21,7 +20,6 @@ app.use("*", initAuthConfig(getAuthConfig));
 app.use("/auth/*", authHandler());
 
 const routes = app
-  .route("/users", user)
   .route("/teacher", teacher)
   .route("/categories", category)
   .route("/attachments", attachment)

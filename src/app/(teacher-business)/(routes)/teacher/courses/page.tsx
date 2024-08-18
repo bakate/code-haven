@@ -1,5 +1,5 @@
 import { protectServer } from "@/features/auth/utils/auth-utils";
-import { TeacherCoursesScreen } from "@/features/dashboard/screens/teacher-courses-screen";
+import { TeacherCoursesScreen } from "@/features/teacher/screens/teacher-courses-screen";
 
 const CoursesPage = async () => {
   await protectServer();

@@ -4,28 +4,20 @@ import { IconBadge } from "@/components/icon-badge";
 import { Link, Skeleton } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import {
-  LuArrowLeft,
-  LuEuro,
-  LuEye,
-  LuFile,
-  LuLayoutDashboard,
-  LuListChecks,
-  LuVideo,
-} from "react-icons/lu";
+import { LuArrowLeft, LuEye, LuLayoutDashboard, LuVideo } from "react-icons/lu";
 import { ChapterAccessSettingsForm } from "../components/chapter/chapter-access-settings-form";
 import { ChapterActions } from "../components/chapter/chapter-actions";
 import { ChapterDescriptionForm } from "../components/chapter/chapter-description-form";
 import { ChapterTitleForm } from "../components/chapter/chapter-title-form";
 import { ChapterVideoForm } from "../components/chapter/chapter-video-form";
 import {
-  useGetChapterById,
-  useVideoStatus,
-} from "../data/use-get-chapter-by-id";
-import {
   FullWidthSkeleton,
   SkeletonWithIcon,
 } from "../components/custom-skeletons";
+import {
+  useGetChapterById,
+  useVideoStatus,
+} from "../data/use-get-chapter-by-id";
 
 type Props = {
   params: {
@@ -89,7 +81,9 @@ export const EditChapterScreen = ({ params }: Props) => {
             </Link>
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col gap-y-2">
-                <h1 className="text-2xl font-medium">{t("chapterCreation")}</h1>
+                <h1 className="text-xl md:text-2xl font-medium">
+                  {t("chapterCreation")}
+                </h1>
                 <span className="text-small text-slate-700 dark:text-slate-200">
                   {t("completeAllFields")} {completionText}
                 </span>
@@ -109,7 +103,9 @@ export const EditChapterScreen = ({ params }: Props) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LuLayoutDashboard} />
-                <h2 className="text-xl">{t("customizeYourChapter")}</h2>
+                <h2 className="md:text-xl text-lg">
+                  {t("customizeYourChapter")}
+                </h2>
               </div>
               <ChapterTitleForm
                 initialData={{
@@ -130,7 +126,7 @@ export const EditChapterScreen = ({ params }: Props) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LuEye} />
-                <h2 className="text-xl">{t("accessSettings")}</h2>
+                <h2 className="md:text-xl text-lg">{t("accessSettings")}</h2>
               </div>
               <ChapterAccessSettingsForm
                 initialData={{
@@ -145,7 +141,7 @@ export const EditChapterScreen = ({ params }: Props) => {
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LuVideo} />
-              <h2 className="text-xl">{t("addVideo")}</h2>
+              <h2 className="md:text-xl text-lg">{t("addVideo")}</h2>
             </div>
             <ChapterVideoForm
               initialData={{
