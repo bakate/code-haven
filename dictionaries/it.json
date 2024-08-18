@@ -21,7 +21,8 @@
      "exit": "Esci",
     "teacher_mode": "Modalità Insegnante",
      "leave_teacher_mode": "Esci dalla modalità insegnante",
-    "search_placeholder": "Cerca corsi"
+    "search_placeholder": "Cerca corsi",
+    "noCoursesFoundMessage": "Nessun corso trovato. Prova a cercare con altre parole chiave."
   },
   "loginForm": {
     "title": "Code Haven",
