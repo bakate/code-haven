@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
 import { Key } from "react";
 import {
   LuEye,
@@ -19,11 +20,10 @@ import {
   LuTrash,
   LuTrash2,
 } from "react-icons/lu";
+import { useMedia } from "react-use";
 import { useDeleteCourseByTeacher } from "../../data/use-delete-course-by-teacher";
 import { CategoriesType } from "../../data/use-get-categories";
 import { CoursesType } from "../../data/use-get-courses-by-teacher";
-import { useMedia } from "react-use";
-import Link from "next/link";
 
 type Props = {
   course: CoursesType[number];
@@ -62,9 +62,9 @@ export const TableRowContent = ({
         </Chip>
       );
     case "categoryId":
-      const category = (allCategories ?? [])
-        ?.find((c) => c.id === course.categoryId)
-        ?.names.find((n) => n.lang === locale)?.name;
+      const category =
+        (allCategories ?? [])?.find((c) => c.id === course.categoryId)?.name ??
+        "";
 
       return category ? (
         <Chip variant="flat" size="sm">

@@ -14,6 +14,7 @@ import {
 } from "@nextui-org/react";
 import { useGetCategories } from "../data/use-get-categories";
 import { StateType } from "../types";
+import { CourseTableSkeleton } from "./courses-table/course-table-skeleton";
 import {
   coursesTableReducer,
   initialCourseTableState,
@@ -21,7 +22,6 @@ import {
 import { TableBottomContent } from "./courses-table/table-bottom-content";
 import { TableRowContent } from "./courses-table/table-row-content";
 import { TableTopContent } from "./courses-table/table-top-content";
-import { CourseTableSkeleton } from "./courses-table/course-table-skeleton";
 
 export const CoursesTable = () => {
   const t = useTranslations("createOrEditCourseForm");
@@ -43,7 +43,7 @@ export const CoursesTable = () => {
   const statusOptions = useMemo(
     () => [
       { name: t("published"), uid: "published" },
-      { name: t("unpublished"), uid: "unpublished" },
+      { name: t("draft"), uid: "draft" },
     ],
     [t]
   );
@@ -81,7 +81,7 @@ export const CoursesTable = () => {
     ) {
       filteredCourses = filteredCourses.filter((course) =>
         Array.from(state.statusFilter).includes(
-          course.isPublished ? "published" : "unpublished"
+          course.isPublished ? "published" : "draft"
         )
       );
     }
@@ -120,14 +120,10 @@ export const CoursesTable = () => {
           : first.localeCompare(second);
       }
       if (state.sortDescriptor.column === "categoryId") {
-        const first =
-          (allCategories
-            ?.find((c) => c.id === a.categoryId)
-            ?.names.find((n) => n.lang === locale)?.name as string) ?? "";
-        const second =
-          (allCategories
-            ?.find((c) => c.id === b.categoryId)
-            ?.names.find((n) => n.lang === locale)?.name as string) ?? "";
+        const first = (allCategories?.find((c) => c.id === a.categoryId)
+          ?.name ?? "") as string;
+        const second = (allCategories?.find((c) => c.id === b.categoryId)
+          ?.name ?? "") as string;
         console.log(first, second);
 
         return state.sortDescriptor.direction === "descending"

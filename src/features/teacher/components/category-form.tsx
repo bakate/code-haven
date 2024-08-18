@@ -94,7 +94,10 @@ export const CategoryForm = ({ initialData, options }: Props) => {
           >
             {isPending ? (
               <div className="flex justify-center items-center">
-                <CircularProgress color="primary" />
+                <CircularProgress
+                  color="primary"
+                  aria-label="loading categories"
+                />
               </div>
             ) : (
               <FormField
@@ -105,13 +108,19 @@ export const CategoryForm = ({ initialData, options }: Props) => {
                     <Autocomplete
                       defaultItems={options ?? []}
                       label={t("category")}
+                      color="primary"
                       placeholder={t("searchCategory")}
+                      {...field}
                       className="max-w-xs"
                       selectedKey={field.value}
                       onSelectionChange={field.onChange}
                     >
                       {(option) => (
-                        <AutocompleteItem key={option.value}>
+                        <AutocompleteItem
+                          key={option.value}
+                          color="primary"
+                          variant="flat"
+                        >
                           {option.label}
                         </AutocompleteItem>
                       )}

@@ -34,23 +34,12 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   const locale = useLocale();
   const categoriesQuery = useGetCategories();
 
-  const categoriesTranslated = useCallback(() => {
-    return categoriesQuery.data?.map((category) => {
-      const translatedCategory = category.names.find(
-        (name) => name.lang === locale
-      );
-      if (translatedCategory) {
-        return {
-          value: category.id,
-          label: translatedCategory.name,
-        };
-      }
-      return {
-        value: category.id,
-        label: category.id,
-      };
-    });
-  }, [locale, categoriesQuery.data]);
+  const transformedCategories = useCallback(() => {
+    return categoriesQuery.data?.map((category) => ({
+      label: category.name,
+      value: category.id,
+    }));
+  }, [categoriesQuery.data]);
 
   const {
     data: course,
@@ -146,7 +135,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
                 categoryId: course.categoryId ?? "",
                 title: translatedTitleAndDescription?.title ?? "",
               }}
-              options={categoriesTranslated ? categoriesTranslated() : []}
+              options={transformedCategories ? transformedCategories() : []}
             />
           </div>
           <div className="space-y-6">
