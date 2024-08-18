@@ -5,7 +5,6 @@ import { Key, useCallback, useMemo, useReducer } from "react";
 import { useGetCoursesByTeacher } from "../data/use-get-courses-by-teacher";
 
 import {
-  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -109,10 +108,37 @@ export const CoursesTable = () => {
     return [...items].sort((a, b) => {
       const first = a[state.sortDescriptor.column as keyof typeof a] as number;
       const second = b[state.sortDescriptor.column as keyof typeof b] as number;
+      if (state.sortDescriptor.column === "titles") {
+        const first = a.titles
+          .find((t) => t.lang === locale)
+          ?.title?.toLowerCase() as string;
+        const second = b.titles
+          .find((t) => t.lang === locale)
+          ?.title?.toLowerCase() as string;
+        return state.sortDescriptor.direction === "descending"
+          ? second.localeCompare(first)
+          : first.localeCompare(second);
+      }
+      if (state.sortDescriptor.column === "categoryId") {
+        const first =
+          (allCategories
+            ?.find((c) => c.id === a.categoryId)
+            ?.names.find((n) => n.lang === locale)?.name as string) ?? "";
+        const second =
+          (allCategories
+            ?.find((c) => c.id === b.categoryId)
+            ?.names.find((n) => n.lang === locale)?.name as string) ?? "";
+        console.log(first, second);
+
+        return state.sortDescriptor.direction === "descending"
+          ? second?.localeCompare(first)
+          : first?.localeCompare(second);
+      }
+
       const cmp = first < second ? -1 : first > second ? 1 : 0;
       return state.sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
-  }, [items, state.sortDescriptor]);
+  }, [items, state.sortDescriptor, locale, allCategories]);
 
   const handleSelectionChange = useCallback(
     (keys: "all" | Set<Key>) => {
