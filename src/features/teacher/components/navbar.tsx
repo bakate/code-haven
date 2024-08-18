@@ -2,6 +2,7 @@
 
 import { useMedia } from "react-use";
 
+import { SearchInput } from "@/components/search-input";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { UserButton } from "@/features/auth/components/user-button";
 import {
@@ -44,6 +45,7 @@ export default function NavbarComponent({
       />
 
       <NavbarContent as="div" justify="end">
+        <SearchInput />
         {isTeacherOrPlayerPage ? (
           <NavbarItem>
             <Button
@@ -56,7 +58,7 @@ export default function NavbarComponent({
             </Button>
           </NavbarItem>
         ) : (
-          <NavbarItem>
+          <NavbarItem className="hidden md:block">
             <Link href="/teacher/courses" color="primary" isBlock>
               {t("teacher_mode")}
             </Link>

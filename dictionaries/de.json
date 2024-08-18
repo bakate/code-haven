@@ -19,7 +19,8 @@
     "signedInAs": "Angemeldet als",
     "exit": "Beenden",
     "teacher_mode": "Lehrermodus",
-     "leave_teacher_mode": "Lehrermodus verlassen"
+    "leave_teacher_mode": "Lehrermodus verlassen",
+    "search_placeholder": "Suche nach Kursen"
   },
   "loginForm": {
     "title": "Code Haven",

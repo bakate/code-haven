@@ -19,7 +19,8 @@
     "signedInAs": "Conectado como",
     "exit": "Salir",
     "teacher_mode": "Modo Profesor",
-     "leave_teacher_mode": "Salir del modo profesor"
+    "leave_teacher_mode": "Salir del modo profesor",
+    "search_placeholder": "Buscar cursos"
   },
   "loginForm": {
     "title": "Code Haven",

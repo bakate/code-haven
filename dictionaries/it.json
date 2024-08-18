@@ -20,7 +20,8 @@
     "signedInAs": "Connesso come",
      "exit": "Esci",
     "teacher_mode": "Modalità Insegnante",
-     "leave_teacher_mode": "Esci dalla modalità insegnante"
+     "leave_teacher_mode": "Esci dalla modalità insegnante",
+    "search_placeholder": "Cerca corsi"
   },
   "loginForm": {
     "title": "Code Haven",
