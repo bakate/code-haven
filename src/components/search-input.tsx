@@ -33,10 +33,10 @@ export const SearchInput = ({}: Props) => {
   useEffect(() => {
     const url = qs.stringifyUrl(
       {
-        url: pathname,
+        url: pathname === "/" ? "/search" : pathname,
         query: {
           categoryId: currentCategoryId,
-          title: debouncedValue,
+          title: !debouncedValue ? null : debouncedValue,
         },
       },
       { skipEmptyString: true, skipNull: true }
@@ -45,11 +45,11 @@ export const SearchInput = ({}: Props) => {
   }, [debouncedValue, pathname, currentCategoryId, router]);
 
   const handleChange = (value: string) => {
-    if (!value.trim()?.length) {
+    const newValue = value.trim();
+    if (!newValue) {
       setSearch("");
-      return;
     }
-    setSearch(value);
+    setSearch(newValue);
   };
 
   if (!isClient) return null;
