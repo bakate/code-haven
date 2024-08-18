@@ -51,12 +51,7 @@ const app = new Hono()
       .from(course)
       .innerJoin(courseTranslation, eq(course.id, courseTranslation.courseId))
       .leftJoin(attachment, eq(course.id, attachment.courseId))
-      .where(
-        and(
-          // eq(courseTranslation.lang, locale as Locale),
-          eq(course.userId, auth.session.user.id)
-        )
-      )
+      .where(and(eq(course.userId, auth.session.user.id)))
 
       .orderBy(desc(course.createdAt))
       .groupBy(course.id);

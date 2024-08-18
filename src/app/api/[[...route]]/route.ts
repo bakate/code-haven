@@ -7,6 +7,7 @@ import attachment from "./attachment";
 import category from "./category";
 import chapter from "./chapter";
 import teacher from "./teacher";
+import student from "./student";
 
 export const runtime = "edge";
 
@@ -23,7 +24,8 @@ const routes = app
   .route("/teacher", teacher)
   .route("/categories", category)
   .route("/attachments", attachment)
-  .route("/chapters", chapter);
+  .route("/chapters", chapter)
+  .route("/student", student);
 export const GET = handle(app);
 export const POST = handle(app);
 export const PATCH = handle(app);
