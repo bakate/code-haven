@@ -10,9 +10,7 @@ import { useForm } from "react-hook-form";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { CourseFormType, CreateCourseFormSchema } from "../../types";
 import { FormContainer } from "../form-container";
-import { useMedia } from "react-use";
-import { LuPencil } from "react-icons/lu";
-import { ImCancelCircle } from "react-icons/im";
+import { ToggleButton } from "../toggle-button";
 
 type Props = {
   initialData: {
@@ -27,7 +25,6 @@ export const ChapterTitleForm = ({ initialData }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
-  const isTablet = useMedia("(min-width: 640px)", false);
 
   const form = useForm<CourseFormType>({
     resolver: zodResolver(
@@ -54,15 +51,14 @@ export const ChapterTitleForm = ({ initialData }: Props) => {
     <FormContainer>
       <div className="font-medium flex items-center justify-between">
         {t("courseTitle")}
-        <Button
-          variant="ghost"
-          color="primary"
-          onPress={toggleEditing}
-          isIconOnly={!isTablet}
-          startContent={!isEditing ? <LuPencil /> : <ImCancelCircle />}
-        >
-          {!isTablet ? "" : isEditing ? t("cancel") : t("editTitle")}
-        </Button>
+
+        <ToggleButton
+          isEditing={isEditing}
+          toggleEditing={toggleEditing}
+          isPending={isPending}
+          editingContent={t("cancel")}
+          readonlyContent={t("editTitle")}
+        />
       </div>
       {!isEditing ? (
         <p className="text-small mt-2">{initialData.title}</p>

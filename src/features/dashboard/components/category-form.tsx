@@ -13,13 +13,11 @@ import {
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMedia } from "react-use";
-import { LuPencil } from "react-icons/lu";
-import { ImCancelCircle } from "react-icons/im";
 
 import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 import { CourseFormType, CreateCourseFormSchema } from "../types";
 import { FormContainer } from "./form-container";
+import { ToggleButton } from "./toggle-button";
 
 type Props = {
   initialData: {
@@ -35,7 +33,6 @@ export const CategoryForm = ({ initialData, options }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
-  const isTablet = useMedia("(min-width: 640px)", false);
 
   const selectedOption = options?.find(
     (option) => option.value === initialData.categoryId
@@ -71,15 +68,13 @@ export const CategoryForm = ({ initialData, options }: Props) => {
     <FormContainer>
       <div className="font-medium flex items-center justify-between">
         {t("courseCategory")}
-        <Button
-          variant="ghost"
-          color="primary"
-          onPress={toggleEditing}
-          isIconOnly={!isTablet}
-          startContent={!isEditing ? <LuPencil /> : <ImCancelCircle />}
-        >
-          {!isTablet ? "" : isEditing ? t("cancel") : t("editCategory")}
-        </Button>
+        <ToggleButton
+          isEditing={isEditing}
+          toggleEditing={toggleEditing}
+          isPending={isPending}
+          editingContent={t("cancel")}
+          readonlyContent={t("editCategory")}
+        />
       </div>
       {!isEditing ? (
         <p

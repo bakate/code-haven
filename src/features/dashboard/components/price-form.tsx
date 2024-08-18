@@ -7,12 +7,10 @@ import { Button, CircularProgress, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { LuPencil } from "react-icons/lu";
-import { ImCancelCircle } from "react-icons/im";
 import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";
 import { CourseFormType, CreateCourseFormSchema } from "../types";
 import { FormContainer } from "./form-container";
-import { useMedia } from "react-use";
+import { ToggleButton } from "./toggle-button";
 
 type Props = {
   initialData: Partial<CourseFormType> & {
@@ -25,7 +23,6 @@ export const PriceForm = ({ initialData }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((prev) => !prev);
   const t = useTranslations("createOrEditCourseForm");
-  const isTablet = useMedia("(min-width: 640px)", false);
 
   const form = useForm<CourseFormType>({
     resolver: zodResolver(
@@ -64,15 +61,13 @@ export const PriceForm = ({ initialData }: Props) => {
     <FormContainer>
       <div className="font-medium flex items-center justify-between">
         {t("coursePrice")}
-        <Button
-          variant="ghost"
-          color="primary"
-          isIconOnly={!isTablet}
-          onPress={toggleEditing}
-          startContent={!isEditing ? <LuPencil /> : <ImCancelCircle />}
-        >
-          {!isTablet ? "" : isEditing ? t("cancel") : t("editPrice")}
-        </Button>
+        <ToggleButton
+          editingContent={t("cancel")}
+          readonlyContent={t("editPrice")}
+          isEditing={isEditing}
+          toggleEditing={toggleEditing}
+          isPending={isPending}
+        />
       </div>
       {!isEditing ? (
         <p className="text-small mt-2">
