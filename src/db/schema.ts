@@ -141,30 +141,10 @@ export const category = pgTable("category", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
 });
-
-// Define the category translation table
-export const categoryTranslation = pgTable(
-  "category_translation",
-  {
-    id: text("id")
-      .primaryKey()
-      .$defaultFn(() => crypto.randomUUID()),
-    categoryId: text("category_id")
-      .notNull()
-      .references(() => category.id, {
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      }),
-    lang: text("lang", { enum: languageEnum }).notNull(),
-    name: text("name").notNull(),
-  },
-  (table) => ({
-    nameLangUnique: uniqueIndex("name_lang_unique").on(table.name, table.lang),
-  })
-);
 
 // Define relations for category
 export const categoryRelations = relations(category, ({ many }) => ({

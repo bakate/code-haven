@@ -1,11 +1,6 @@
 import { config } from "dotenv";
 
-import { category, categoryTranslation } from "@/db/schema";
-import {
-  remainingLocales,
-  translateText,
-} from "@/features/dashboard/utils/translation";
-import { Locale } from "@/i18n-config";
+import { category } from "@/db/schema";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 
@@ -16,76 +11,60 @@ config({
 const sql = neon(process.env.NEON_DATABASE_URL!);
 const db = drizzle(sql);
 
-// seed categoryTranslations
 const main = async () => {
   try {
     // remove all the existing categories
     await db.delete(category);
-    const categoryTitles = [
+    const categories = [
       {
-        lang: "en",
-        title: "Learn JavaScript",
+        name: "React.js",
       },
       {
-        lang: "en",
-        title: "Learn React.js",
+        name: "Next.js",
       },
       {
-        lang: "en",
-        title: "Learn CSS Grid",
+        name: "Tailwind CSS",
       },
       {
-        lang: "en",
-        title: "Learn flexbox",
+        name: "Node.js",
       },
       {
-        lang: "en",
-        title: "Learn typeScript",
+        name: "MongoDB",
+      },
+      {
+        name: "MySQL",
+      },
+
+      {
+        name: "Prisma",
+      },
+      {
+        name: "Drizzle",
+      },
+      {
+        name: "Hono",
+      },
+      {
+        name: "Jest",
+      },
+      {
+        name: "React Testing Library",
+      },
+      {
+        name: "TanStack Query (React Query)",
+      },
+      {
+        name: "Angular",
       },
     ];
 
-    const categoryWithTranslations = await Promise.all(
-      categoryTitles.map(async ({ lang, title }) => {
-        const [{ id: categoryId }] = await db
-          .insert(category)
-          .values({})
-          .returning({ id: category.id });
+    // insert categories
+    await db.insert(category).values(categories);
 
-        const [titleTranslation] = (await translateText({
-          from: lang,
-          texts: [title],
-          to: remainingLocales(lang),
-        })) ?? [{ translations: [] }];
-
-        const translations = titleTranslation.translations.map(
-          ({ to, text }) => ({
-            lang: to,
-            name: text,
-          })
-        );
-        return {
-          categoryId,
-          translations,
-        };
-      })
-    );
-
-    // Insert translations into the database
-
-    for await (const { categoryId, translations } of categoryWithTranslations) {
-      await db.insert(categoryTranslation).values(
-        translations.map(({ lang, name }) => ({
-          categoryId,
-          lang: lang === "en" ? "en-us" : (lang as Locale),
-          name,
-        }))
-      );
-    }
-
-    console.log("Categories and categories translations inserted successfully");
+    console.log("Categories  inserted successfully");
     process.exit(0);
   } catch (error) {
-    console.error("Error seeding category translations", error);
+    console.error("Error seeding category", error);
     process.exit(1);
   }
 };
