@@ -1,28 +1,43 @@
 "use client";
 import NavbarComponent from "@/features/teacher/components/navbar";
 import { Sidebar } from "@/features/teacher/components/sidebar";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { FiBarChart2, FiCompass, FiLayout, FiList } from "react-icons/fi";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  const session = useSession();
+
+  const t = useTranslations("Navigation");
+  if (session?.status === "loading") {
+    return "";
+  }
 
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isPlayerPage = pathname?.includes("/player");
-
-  const t = useTranslations("Navigation");
+  const isGuestPage = session?.status === "unauthenticated";
 
   const guestRoutes = [
     {
-      label: t("dashboard"),
+      label: t("browse"),
       href: "/",
-      icon: FiLayout,
+      icon: FiCompass,
     },
+  ];
+
+  // TODO to rework
+  const studentRoutes = [
     {
       label: t("browse"),
-      href: "/search",
+      href: "/",
       icon: FiCompass,
+    },
+    {
+      label: t("my_courses"),
+      href: "/courses",
+      icon: FiList,
     },
   ];
   const teacherRoutes = [
@@ -38,7 +53,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     },
   ];
 
-  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
+  const routes = isTeacherPage
+    ? teacherRoutes
+    : isGuestPage
+    ? guestRoutes
+    : studentRoutes;
   return (
     <div className="h-[100dvh]">
       <div className=" fixed inset-y-0 w-full">
