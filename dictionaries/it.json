@@ -158,5 +158,10 @@
     "title": "Pagina non trovata",
     "description": "La pagina che stai cercando non esiste.",
     "backToHome": "Torna alla home"
-   }
+   },
+   "coursesList": {
+    "totalChapters": "{count, plural, one {capitolo} other {capitoli}}",
+     "free":"Gratuito",
+      "pro": "Pro"
+ }
 }

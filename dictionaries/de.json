@@ -157,5 +157,10 @@
     "title": "Seite nicht gefunden",
     "description": "Die von Ihnen angeforderte Seite konnte nicht gefunden werden.",
     "backToHome": "Zurück zur Startseite"
-   }
+   },
+   "coursesList": {
+    "totalChapters": "{count, plural, =0 {Keine Kapitel} one {1 Kapitel} other {# Kapitel}}",
+     "free":"Kostenlos",
+      "pro": "Pro"
+ }
 }

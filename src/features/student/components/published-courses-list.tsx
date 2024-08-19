@@ -4,15 +4,20 @@ import { useTranslations } from "next-intl";
 import { useGetPublishedCourses } from "../data/use-get-published-courses";
 import { CourseCard } from "./course-card";
 import { CourseCardSkeleton } from "./course-card-skeleton";
+import {
+  CategoriesType,
+  useGetCategories,
+} from "@/features/teacher/data/use-get-categories";
 
 type Props = {};
 export const PublishedCoursesList = ({}: Props) => {
   const { data, isLoading } = useGetPublishedCourses();
+  const { data: categories, isLoading: loadingCategories } = useGetCategories();
   const t = useTranslations("Navigation");
 
-  if (isLoading) {
+  if (isLoading || loadingCategories) {
     return (
-      <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3 mt-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-6 p-3">
         {Array.from({ length: 8 }).map((_, index) => {
           return <CourseCardSkeleton key={index} />;
         })}
@@ -21,6 +26,9 @@ export const PublishedCoursesList = ({}: Props) => {
   }
   if (!data) {
     return <div>No data</div>;
+  }
+  if (!categories) {
+    return <div>No categories</div>;
   }
   if (data.length === 0) {
     return (
@@ -36,9 +44,11 @@ export const PublishedCoursesList = ({}: Props) => {
   }
 
   return (
-    <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3 mt-6">
+    <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-6 p-3">
       {data.map((course) => {
-        return <CourseCard key={course.id} course={course} />;
+        return (
+          <CourseCard key={course.id} course={course} categories={categories} />
+        );
       })}
     </div>
   );

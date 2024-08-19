@@ -158,5 +158,10 @@
       "title": "Página no encontrada",
       "description": "La página que estás buscando no existe. Es posible que haya sido eliminada o que no esté disponible temporalmente.",
       "backToHome": "Volver a la página de inicio"
-     }
+     },
+     "coursesList": {
+      "totalChapters": "{count, plural, one {capítulo} other {capítulos}}",
+       "free":"Gratis",
+      "pro": "Pro"
+   }
   }

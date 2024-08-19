@@ -157,5 +157,10 @@
       "title": "Page non trouvée",
       "description": "La page que vous recherchez n'existe pas.",
       "backToHome": "Retour à l'accueil"
-     }
+     },
+     "coursesList": {
+      "totalChapters": "{count, plural, one {1 chapitre} other {# chapitres}}",
+       "free":"Gratuit",
+      "pro": "Pro"
+   }
   }
