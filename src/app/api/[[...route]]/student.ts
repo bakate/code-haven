@@ -8,7 +8,7 @@ import { Hono } from "hono";
 import { getLocale } from "next-intl/server";
 
 const app = new Hono().get(
-  "/search",
+  "/",
   zValidator(
     "query",
     selectCourseSchema

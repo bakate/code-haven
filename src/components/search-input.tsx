@@ -33,7 +33,7 @@ export const SearchInput = ({}: Props) => {
   useEffect(() => {
     const url = qs.stringifyUrl(
       {
-        url: pathname === "/" ? "/search" : pathname,
+        url: pathname,
         query: {
           categoryId: currentCategoryId,
           title: !debouncedValue ? null : debouncedValue,

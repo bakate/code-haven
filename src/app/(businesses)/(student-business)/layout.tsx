@@ -4,7 +4,7 @@ import { Sidebar } from "@/features/teacher/components/sidebar";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { FiBarChart2, FiCompass, FiLayout, FiList } from "react-icons/fi";
+import { FiBarChart2, FiCompass, FiList } from "react-icons/fi";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -17,7 +17,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isPlayerPage = pathname?.includes("/player");
-  const isGuestPage = session?.status === "unauthenticated";
+  const isStudentPage = session?.status === "authenticated";
 
   const guestRoutes = [
     {
@@ -55,9 +55,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const routes = isTeacherPage
     ? teacherRoutes
-    : isGuestPage
-    ? guestRoutes
-    : studentRoutes;
+    : isStudentPage
+    ? studentRoutes
+    : guestRoutes;
   return (
     <div className="h-[100dvh]">
       <div className=" fixed inset-y-0 w-full">

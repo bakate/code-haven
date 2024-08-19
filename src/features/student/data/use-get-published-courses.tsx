@@ -4,7 +4,7 @@ import { InferResponseType } from "hono";
 import { useSearchParams } from "next/navigation";
 
 export type PublishedCourseType = InferResponseType<
-  (typeof honoClient.api.student)["search"]["$get"],
+  (typeof honoClient.api.student)["$get"],
   200
 >["data"];
 
@@ -16,7 +16,7 @@ export const useGetPublishedCourses = () => {
   const query = useQuery({
     queryKey: ["student", { categoryId, title }],
     queryFn: async () => {
-      const response = await honoClient.api.student["search"].$get({
+      const response = await honoClient.api.student.$get({
         query: {
           categoryId,
           title,
