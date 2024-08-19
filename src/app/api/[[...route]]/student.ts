@@ -3,7 +3,7 @@ import { attachment, chapter, course, courseTranslation } from "@/db/schema";
 import { zValidator } from "@hono/zod-validator";
 import { selectCourseSchema } from "@/features/teacher/types/course.type";
 
-import { and, desc, eq, like, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, like, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { getLocale } from "next-intl/server";
 
@@ -22,10 +22,6 @@ const app = new Hono().get(
   async (c) => {
     const values = c.req.valid("query");
     const { categoryId = "", title = "" } = values || {};
-
-    const locale = await getLocale();
-
-    console.log({ categoryId, title });
 
     const publishedCourses = await db
       .select({
@@ -51,7 +47,7 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
         and(
           eq(course.isPublished, true),
           categoryId ? eq(course.categoryId, categoryId) : undefined,
-          title ? like(courseTranslation.title, `%${title}%`) : undefined
+          title ? ilike(courseTranslation.title, `%${title}%`) : undefined
         )
       )
       .innerJoin(courseTranslation, eq(course.id, courseTranslation.courseId))

@@ -45,7 +45,7 @@ export const SearchInput = ({}: Props) => {
   }, [debouncedValue, pathname, currentCategoryId, router]);
 
   const handleChange = (value: string) => {
-    const newValue = value.trim();
+    const newValue = value.trim().toLowerCase();
     if (!newValue) {
       setSearch("");
     }
