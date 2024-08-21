@@ -121,6 +121,7 @@ export const courseRelations = relations(course, ({ one, many }) => ({
   }),
   attachments: many(attachment),
   chapters: many(chapter),
+  courseTranslations: many(courseTranslation),
 }));
 
 // Define the course translation table
@@ -135,6 +136,16 @@ export const courseTranslation = pgTable("course_translation", {
   title: text("title").notNull(),
   description: text("description"),
 });
+
+export const courseTranslationRelations = relations(
+  courseTranslation,
+  ({ one }) => ({
+    course: one(course, {
+      fields: [courseTranslation.courseId],
+      references: [course.id],
+    }),
+  })
+);
 
 // Define the category table
 export const category = pgTable("category", {
