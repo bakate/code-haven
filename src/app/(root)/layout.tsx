@@ -16,7 +16,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   const isTeacherPage = pathname?.startsWith("/teacher");
-  const isPlayerPage = pathname?.includes("/player");
+  const coursesPage = pathname?.startsWith("/courses");
   const isStudentPage = session?.status === "authenticated";
 
   const guestRoutes = [
@@ -61,10 +61,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-[100dvh]">
       <div className=" fixed inset-y-0 w-full">
-        <NavbarComponent
-          routes={routes}
-          isTeacherOrPlayerPage={isTeacherPage || isPlayerPage}
-        />
+        <NavbarComponent routes={routes} isTeacherPage={isTeacherPage} />
       </div>
       <div className="hidden md:grid w-56 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
         <Sidebar routes={routes} />
