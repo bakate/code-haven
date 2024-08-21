@@ -45,7 +45,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <div className=" fixed inset-y-0 w-full">
         <NavbarComponent
           routes={routes}
-          isTeacherOrPlayerPage={isTeacherPage || isPlayerPage}
+          isTeacherPage={isTeacherPage || isPlayerPage}
         />
       </div>
       <div className="hidden md:grid w-56 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">

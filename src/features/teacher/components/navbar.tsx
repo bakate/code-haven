@@ -22,11 +22,13 @@ import { CourseRoutes } from "../types";
 
 type Props = {
   routes: CourseRoutes;
-  isTeacherOrPlayerPage: boolean;
+  isTeacherPage: boolean;
+  isLearning?: boolean;
 };
 export default function NavbarComponent({
   routes,
-  isTeacherOrPlayerPage,
+  isTeacherPage,
+  isLearning = false,
 }: Props) {
   const t = useTranslations("Navigation");
   const isTablet = useMedia("(min-width: 640px)", false);
@@ -53,17 +55,19 @@ export default function NavbarComponent({
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent
-        as="div"
-        justify="center"
-        className=" sm:flex gap-4 flex-1"
-      >
-        <NavbarItem className="flex-1">
-          <SearchInput />
-        </NavbarItem>
-      </NavbarContent>
+      {!isLearning ? (
+        <NavbarContent
+          as="div"
+          justify="center"
+          className=" sm:flex gap-4 flex-1"
+        >
+          <NavbarItem className="flex-1">
+            <SearchInput />
+          </NavbarItem>
+        </NavbarContent>
+      ) : null}
       <NavbarContent as="div" justify="end">
-        {isTeacherOrPlayerPage ? (
+        {isTeacherPage ? (
           <NavbarItem>
             <Button
               href="/"
@@ -74,7 +78,7 @@ export default function NavbarComponent({
               {isTablet ? t("leave_teacher_mode") : t("exit")}
             </Button>
           </NavbarItem>
-        ) : (
+        ) : isLearning ? null : (
           <NavbarItem className="hidden md:block">
             <Link href="/teacher/courses" color="primary" isBlock>
               {t("teacher_mode")}
