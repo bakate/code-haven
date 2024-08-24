@@ -1,0 +1,1 @@
+ALTER TABLE "chapter" ALTER COLUMN "is_free" SET DEFAULT true;

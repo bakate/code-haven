@@ -191,7 +191,7 @@ export const chapter = pgTable("chapter", {
     .notNull()
     .references(() => course.id, { onDelete: "cascade", onUpdate: "cascade" }),
   isPublished: boolean("is_published").default(false).notNull(),
-  isFree: boolean("is_free").default(false).notNull(),
+  isFree: boolean("is_free").default(true).notNull(),
   position: integer("position").notNull(),
   muxDataId: text("mux_data_id"),
   videoUrl: text("video_url"),
