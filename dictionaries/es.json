@@ -163,6 +163,10 @@
      "coursesList": {
       "totalChapters": "{count, plural, one {capítulo} other {capítulos}}",
        "free":"Gratis",
-      "pro": "Pro"
+      "pro": "Pro",
+      "readyToStart": "¿Listo para empezar?",
+      "trackYourProgress": "sigue tu progreso, aprende a tu ritmo y más",
+      "more": "más",
+      "startWatching": "empezar a ver"
    }
   }

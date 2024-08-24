@@ -162,6 +162,9 @@
    "coursesList": {
       "totalChapters": "{count, plural, one {# chapter} other {# chapters}}",
       "free":"Free",
-      "pro": "Pro"
+      "pro": "Pro",
+      "readyToStart": "Ready to start?",
+      "trackYourProgress": "track your progress, learn at your own pace and more",
+      "startWatching": "start watching"
    }
 }
