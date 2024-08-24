@@ -4,7 +4,7 @@ import { Button, Link } from "@nextui-org/react";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { CourseRoutes } from "../types";
-import { Logo } from "./logo";
+import { Logo } from "@/components/logo";
 import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 
 type Props = {

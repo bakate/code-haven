@@ -1,7 +1,8 @@
 "use client";
 
+import { Logo } from "@/components/logo";
 import { useGetCategories } from "@/features/teacher/data/use-get-categories";
-import { Button } from "@nextui-org/react";
+import { Link } from "@nextui-org/react";
 import { useLocale } from "next-intl";
 import {
   SingleCourse,
@@ -50,6 +51,7 @@ const getCourseWithTranslations = (
   };
   return courseWithTranslations;
 };
+
 export const CourseSidebar = ({ courseId }: Props) => {
   const { data: course, isLoading } = useGetSingleCourse(courseId);
   const { data: categories, isLoading: categoriesLoading } = useGetCategories();
@@ -65,11 +67,16 @@ export const CourseSidebar = ({ courseId }: Props) => {
   );
 
   return (
-    <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-2 px-2">
-      <div className="w-full pb-4 pt-6">
-        <h1 className="font-semibold">{courseWithTranslations.title}</h1>
-      </div>
-      <div className="space-y-3">
+    <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-2">
+      <Link color="foreground" href="/" isBlock className="w-full">
+        <Logo />
+        <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
+      </Link>
+
+      <div className="space-y-3 pt-4">
+        <h1 className="font-semibold pb-3 px-2">
+          {courseWithTranslations.title}
+        </h1>
         {courseWithTranslations.chapters.map((chapter, i) => (
           <CourseSidebarItem
             courseId={courseWithTranslations.id}
@@ -80,18 +87,6 @@ export const CourseSidebar = ({ courseId }: Props) => {
             key={i}
           />
         ))}
-      </div>
-
-      <div className="mt-4">
-        <Button
-          href="/"
-          variant="light"
-          radius="none"
-          className="w-full justify-start"
-          color="default"
-        >
-          Add lesson
-        </Button>
       </div>
     </div>
   );
