@@ -18,9 +18,9 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { z } from "zod";
 
 const app = new Hono()
-  .use("*", verifyAuth())
   .post(
     "/",
+    verifyAuth(),
     zValidator(
       "json",
       insertChapterSchema.pick({
@@ -103,6 +103,7 @@ const app = new Hono()
   )
   .patch(
     "/reorder",
+    verifyAuth(),
     zValidator(
       "json",
       z.array(
@@ -164,6 +165,7 @@ const app = new Hono()
   )
   .patch(
     "/:id",
+    verifyAuth(),
     zValidator(
       "param",
       selectChapterSchema.pick({
@@ -306,6 +308,7 @@ const app = new Hono()
   )
   .get(
     "/video-status",
+    verifyAuth(),
     zValidator(
       "query",
       selectChapterSchema.pick({
@@ -349,10 +352,6 @@ const app = new Hono()
     ),
 
     async (c) => {
-      const auth = c.get("authUser");
-      if (!auth.session?.user?.id) {
-        throw c.json({ error: "Unauthorized" } as const, 401);
-      }
       const { id: chapterId } = c.req.valid("param");
       const { courseId } = c.req.valid("query");
 
@@ -407,6 +406,7 @@ const app = new Hono()
   )
   .delete(
     "/:id",
+    verifyAuth(),
     zValidator(
       "param",
       selectChapterSchema.pick({
