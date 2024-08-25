@@ -61,6 +61,7 @@ export const VideoPlayer = ({
           onEnded={onEnd}
           title={title}
           className="aspect-video w-full"
+          primaryColor="#006FEE"
         />
       )}
     </div>

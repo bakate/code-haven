@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import { LuCheckCircle, LuLock, LuPlayCircle } from "react-icons/lu";
@@ -10,6 +11,7 @@ type Props = {
   isCompleted: boolean;
   courseId: string;
   isLocked: boolean;
+  duration: string;
 };
 export const CourseSidebarItem = ({
   courseId,
@@ -17,12 +19,13 @@ export const CourseSidebarItem = ({
   isCompleted,
   isLocked,
   label,
+  duration,
 }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
 
   const Icon = isLocked ? LuLock : isCompleted ? LuCheckCircle : LuPlayCircle;
-  const isActive = pathname.includes(id);
+  const isActive = pathname?.includes(id);
 
   const onPress = () => {
     router.push(`/courses/${courseId}/chapters/${id}`);
@@ -31,15 +34,18 @@ export const CourseSidebarItem = ({
     <Button
       variant="light"
       radius="none"
-      className={`
+      className={cn(
+        `
         w-full justify-start
-        ${isActive ? "border-r-primary-500 border-r-3" : ""}
-      `}
+      `,
+        isActive ? "border-r-3 border-r-primary-500 text-primary-500" : ""
+      )}
       color={isActive ? "primary" : "default"}
       startContent={<Icon />}
       onPress={onPress}
     >
-      {label}
+      <span className="text-sm">{label}</span>
+      <p className="text-xs text-right flex-1">{duration}</p>
     </Button>
   );
 };

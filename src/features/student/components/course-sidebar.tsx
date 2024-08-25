@@ -10,6 +10,7 @@ import {
 } from "../data/use-get-single-course-by-id";
 import { Category } from "../types/category.type";
 import { CourseSidebarItem } from "./course-sidebar-item";
+import { formatSeconds } from "../utils/format-seconds";
 
 type Props = {
   courseId: string;
@@ -47,6 +48,7 @@ const getCourseWithTranslations = (
         )?.description ?? "",
       isFree: chapter.isFree,
       isCompleted: false,
+      duration: chapter.muxData?.duration ?? 0,
     })),
   };
   return courseWithTranslations;
@@ -84,6 +86,7 @@ export const CourseSidebar = ({ courseId }: Props) => {
             isCompleted={chapter.isCompleted}
             isLocked={!chapter.isFree}
             label={chapter.title}
+            duration={formatSeconds(Number(chapter.duration))}
             key={i}
           />
         ))}

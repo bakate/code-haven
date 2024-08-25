@@ -116,6 +116,11 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
                   description: true,
                 },
               },
+              muxData: {
+                columns: {
+                  duration: true,
+                },
+              },
             },
           },
         },
