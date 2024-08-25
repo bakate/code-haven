@@ -1,10 +1,12 @@
 "use client";
 import {
   Avatar,
+  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Link,
 } from "@nextui-org/react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -16,6 +18,7 @@ import {
   FiSettings,
 } from "react-icons/fi";
 import { IconType } from "react-icons/lib";
+import { LuLogIn } from "react-icons/lu";
 
 type ItemProps = {
   label: string;
@@ -33,7 +36,18 @@ export const UserButton = () => {
   }
 
   if (session?.status === "unauthenticated" || !session.data) {
-    return null;
+    return (
+      <div>
+        <Button
+          as={Link}
+          href="/sign-in"
+          variant="light"
+          startContent={<LuLogIn />}
+        >
+          {t("sign_in")}
+        </Button>
+      </div>
+    );
   }
 
   const { email = "", image = "", name = "" } = session.data?.user ?? {};
