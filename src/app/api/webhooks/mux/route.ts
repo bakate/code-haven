@@ -30,6 +30,7 @@ export async function POST(request: Request) {
       .update(muxData)
       .set({
         status: "ready",
+        duration: data.duration,
         updatedAt: new Date(),
       })
       .where(eq(muxData.assetId, data.id));

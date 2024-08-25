@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, decimal } from "drizzle-orm/pg-core";
 import { chapter } from "./chapter.schema";
 
 export const muxData = pgTable("mux_data", {
@@ -17,6 +17,7 @@ export const muxData = pgTable("mux_data", {
   status: text("status", { enum: ["ready", "processing", "failed"] })
     .default("processing")
     .notNull(),
+  duration: decimal("duration"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
 });
