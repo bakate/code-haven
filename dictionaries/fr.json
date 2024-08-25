@@ -167,5 +167,12 @@
     "readyToStart": "Prêt à commencer ?",
     "trackYourProgress": "suivez votre progression, apprenez à votre rythme et plus encore",
     "startWatching": "commencer à regarder"
+  },
+  "studentCourseById": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "noData": "Pas de données",
+    "lockedChapterLabel": "Vous devez acheter ce cours pour accéder à ce chapitre",
+    "chapterCompleted": "Chapitre terminé"
   }
 }
