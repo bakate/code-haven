@@ -47,7 +47,7 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
         (
           SELECT COUNT(DISTINCT ${chapter.id})
           FROM ${chapter}
-          WHERE ${chapter.courseId} = ${course.id}
+          WHERE ${chapter.courseId} = ${course.id} AND ${chapter.isPublished} = true
         )
       `,
         })
