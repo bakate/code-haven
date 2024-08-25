@@ -68,7 +68,7 @@ export const CourseSidebar = ({ courseId }: Props) => {
 
   return (
     <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-2">
-      <Link color="foreground" href="/" isBlock className="w-full">
+      <Link color="foreground" href="/" isBlock className="w-full h-16">
         <Logo />
         <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
       </Link>

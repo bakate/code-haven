@@ -1,11 +1,11 @@
 "use client";
 import { Button, Link } from "@nextui-org/react";
 
+import { LocalSwitcherSelect } from "@/components/local-switcher-select";
+import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { CourseRoutes } from "../types";
-import { Logo } from "@/components/logo";
-import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 
 type Props = {
   routes: CourseRoutes;
@@ -17,7 +17,7 @@ export const Sidebar = ({ routes }: Props) => {
   }
   return (
     <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-2">
-      <Link color="foreground" href="/" isBlock className="w-full">
+      <Link color="foreground" href="/" isBlock className="w-full h-16">
         <Logo />
         <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
       </Link>

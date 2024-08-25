@@ -64,7 +64,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <div className=" fixed inset-y-0 w-full">
         <NavbarComponent
           routes={routes}
-          isTeacherPage={isTeacherPage}
+          isTeacherPage={isTeacherPage ?? false}
           isAuthenticated={isAuthenticated}
         />
       </div>
