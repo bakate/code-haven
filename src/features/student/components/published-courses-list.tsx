@@ -1,13 +1,10 @@
 "use client";
+import { useGetCategories } from "@/features/teacher/data/use-get-categories";
 import { Card, CardBody } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useGetPublishedCourses } from "../data/use-get-published-courses";
 import { CourseCard } from "./course-card";
 import { CourseCardSkeleton } from "./course-card-skeleton";
-import {
-  CategoriesType,
-  useGetCategories,
-} from "@/features/teacher/data/use-get-categories";
 
 type Props = {};
 export const PublishedCoursesList = ({}: Props) => {

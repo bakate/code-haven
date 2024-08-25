@@ -2,17 +2,17 @@ import { honoClient } from "@/lib/hono";
 import { useQuery } from "@tanstack/react-query";
 import { InferResponseType } from "hono";
 
-export type SingleCourse = InferResponseType<
-  (typeof honoClient.api.courses)[":id"]["$get"],
+export type SinglePreviewCourse = InferResponseType<
+  (typeof honoClient.api.preview)[":id"]["$get"],
   200
 >["data"];
 
-export const useGetSingleCourse = (courseId: string) => {
+export const useGetSinglePreviewCourse = (courseId: string) => {
   const query = useQuery({
     enabled: !!courseId,
     queryKey: ["learn", { courseId }],
     queryFn: async () => {
-      const response = await honoClient.api.courses[":id"].$get({
+      const response = await honoClient.api.preview[":id"].$get({
         param: {
           id: courseId,
         },

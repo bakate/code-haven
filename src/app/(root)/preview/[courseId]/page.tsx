@@ -3,7 +3,7 @@
 import { CallToAction } from "@/components/call-to-action";
 import { IconBadge } from "@/components/icon-badge";
 import { VideoPlayer } from "@/features/student/components/video-player";
-import { useGetSingleCourse } from "@/features/student/data/use-get-single-course-by-id";
+import { useGetSinglePreviewCourse } from "@/features/student/data/use-get-single-preview-course-by-id";
 
 import { Divider } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
@@ -16,7 +16,7 @@ type Props = {
   };
 };
 const CoursePreviewPage = ({ params: { courseId } }: Props) => {
-  const { data: course, isLoading } = useGetSingleCourse(courseId);
+  const { data: course, isLoading } = useGetSinglePreviewCourse(courseId);
   const t = useTranslations("coursesList");
 
   if (isLoading) return <Loading />;

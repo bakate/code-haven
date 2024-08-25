@@ -27,7 +27,7 @@ export const CourseCard = ({ course, categories }: Props) => {
       shadow="md"
       className="group"
       isPressable
-      onPress={() => router.push(`/courses/${course.id}`)}
+      onPress={() => router.push(`/preview/${course.id}`)}
     >
       <CardBody className="overflow-visible p-0">
         <Image
