@@ -6,7 +6,7 @@ import { Link } from "@nextui-org/react";
 import { useLocale } from "next-intl";
 import {
   SingleCourse,
-  useGetSingleCourse,
+  useGetSingleCourseById,
 } from "../data/use-get-single-course-by-id";
 import { Category } from "../types/category.type";
 import { CourseSidebarItem } from "./course-sidebar-item";
@@ -53,7 +53,7 @@ const getCourseWithTranslations = (
 };
 
 export const CourseSidebar = ({ courseId }: Props) => {
-  const { data: course, isLoading } = useGetSingleCourse(courseId);
+  const { data: course, isLoading } = useGetSingleCourseById(courseId);
   const { data: categories, isLoading: categoriesLoading } = useGetCategories();
   const locale = useLocale();
 
