@@ -28,7 +28,12 @@ const DashboardLayout = ({
   return (
     <div className="h-[100dvh]">
       <div className=" fixed inset-y-0 w-full">
-        <NavbarComponent routes={[]} isTeacherPage={false} isLearning={true} />
+        <NavbarComponent
+          routes={[]}
+          isTeacherPage={false}
+          isLearning={true}
+          isAuthenticated={isAuthenticatedStudent}
+        />
       </div>
       <div className="hidden md:grid w-80 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
         <CourseSidebar courseId={courseId} />

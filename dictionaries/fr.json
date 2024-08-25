@@ -22,7 +22,8 @@
      "leave_teacher_mode": "Quitter le mode enseignant",
     "search_placeholder": "Rechercher des cours",
     "noCoursesFoundMessage": "Aucun cours trouvé. Essaye avec d'autres mots-clés.",
-    "my_courses": "Mes cours"
+    "my_courses": "Mes cours",
+    "sign_in": "Se connecter"
   },
   "loginForm": {
     "title": "Code Haven",

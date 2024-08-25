@@ -24,11 +24,13 @@ type Props = {
   routes: CourseRoutes;
   isTeacherPage: boolean;
   isLearning?: boolean;
+  isAuthenticated?: boolean;
 };
 export default function NavbarComponent({
   routes,
   isTeacherPage,
   isLearning = false,
+  isAuthenticated = false,
 }: Props) {
   const t = useTranslations("Navigation");
   const isTablet = useMedia("(min-width: 640px)", false);
@@ -78,13 +80,13 @@ export default function NavbarComponent({
               {isTablet ? t("leave_teacher_mode") : t("exit")}
             </Button>
           </NavbarItem>
-        ) : isLearning ? null : (
+        ) : isLearning ? null : isAuthenticated ? (
           <NavbarItem className="hidden md:block">
             <Link href="/teacher/courses" color="primary" isBlock>
               {t("teacher_mode")}
             </Link>
           </NavbarItem>
-        )}
+        ) : null}
         <UserButton />
         <ThemeSwitcher />
       </NavbarContent>

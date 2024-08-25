@@ -1,6 +1,7 @@
 "use client";
 import NavbarComponent from "@/features/teacher/components/navbar";
 import { Sidebar } from "@/features/teacher/components/sidebar";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { FiBarChart2, FiCompass, FiLayout, FiList } from "react-icons/fi";
@@ -11,6 +12,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isPlayerPage = pathname?.includes("/player");
   const isSearchPage = pathname === "/search";
+  const session = useSession();
+  const isAuthenticated = session.status === "authenticated";
 
   const t = useTranslations("Navigation");
 
@@ -46,6 +49,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <NavbarComponent
           routes={routes}
           isTeacherPage={isTeacherPage || isPlayerPage}
+          isAuthenticated={isAuthenticated}
         />
       </div>
       <div className="hidden md:grid w-56 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
