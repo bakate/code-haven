@@ -1,6 +1,7 @@
 "use client";
 
 import { Form, FormField } from "@/components/ui/form";
+import { useAuthStore } from "@/hooks/use-auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, CardBody, Divider, Input } from "@nextui-org/react";
 import { signIn as SocialSignIn } from "next-auth/react";
@@ -13,9 +14,11 @@ import { FcGoogle } from "react-icons/fc";
 import { FiArrowRight } from "react-icons/fi";
 import { magicLinkAction } from "../actions/sign-in.action";
 import { MagicLinkSchema, MagicLinkValues } from "../types";
+
 export function LoginForm() {
   const t = useTranslations("loginForm");
   const [isPending, startTransition] = useTransition();
+  const callbackUrl = useAuthStore((state) => state.callbackUrl);
 
   const magicLinkForm = useForm<MagicLinkValues>({
     resolver: zodResolver(MagicLinkSchema),
@@ -33,10 +36,8 @@ export function LoginForm() {
     });
   }
 
-  const signInProvider = (
-    provider: "google" | "resend" | "twitter" | "github"
-  ) => {
-    SocialSignIn(provider);
+  const signInProvider = (provider: "google" | "github") => {
+    SocialSignIn(provider, { callbackUrl: callbackUrl || undefined });
   };
 
   const CTAButtons = () => {
@@ -48,6 +49,7 @@ export function LoginForm() {
           color="primary"
           type="submit"
           endContent={<FiArrowRight />}
+          isDisabled={isPending}
         >
           {t("emailButton")}
         </Button>
@@ -62,6 +64,7 @@ export function LoginForm() {
           type="button"
           startContent={<FcGoogle />}
           onClick={() => signInProvider("google")}
+          isDisabled={isPending}
         >
           {t("continueWithGoogle")}
         </Button>
@@ -71,6 +74,7 @@ export function LoginForm() {
           type="button"
           startContent={<FaGithub />}
           onClick={() => signInProvider("github")}
+          isDisabled={isPending}
         >
           {t("continueWithGithub")}
         </Button>
