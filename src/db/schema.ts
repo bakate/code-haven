@@ -20,6 +20,12 @@ import {
   chapterTranslationRelations,
 } from "./schemas/chapter.schema";
 import { muxData } from "./schemas/mux.schema";
+import {
+  lessonProgression,
+  courseProgression,
+  lessonProgressionRelations,
+  courseProgressionRelations,
+} from "./schemas/progression.schema";
 
 export {
   course,
@@ -39,4 +45,8 @@ export {
   sessions,
   users,
   verificationTokens,
+  lessonProgression,
+  courseProgression,
+  lessonProgressionRelations,
+  courseProgressionRelations,
 };

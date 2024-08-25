@@ -10,6 +10,7 @@ import { users } from "./user.schema";
 import { category } from "./category.schema";
 import { attachment } from "./attachment.schema";
 import { chapter } from "./chapter.schema";
+import { courseProgression } from "./progression.schema";
 
 const languageEnum = ["en-us", "fr", "es", "de", "it"] as const;
 
@@ -45,6 +46,7 @@ export const courseRelations = relations(course, ({ one, many }) => ({
   attachments: many(attachment),
   chapters: many(chapter),
   courseTranslations: many(courseTranslation),
+  courseProgressions: many(courseProgression),
 }));
 
 // Define the course translation table

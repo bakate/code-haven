@@ -8,6 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { course } from "./course.schema";
 import { muxData } from "./mux.schema";
+import { lessonProgression } from "./progression.schema";
 
 const languageEnum = ["en-us", "fr", "es", "de", "it"] as const;
 
@@ -37,6 +38,7 @@ export const chapterRelations = relations(chapter, ({ one, many }) => ({
     fields: [chapter.muxDataId],
     references: [muxData.id],
   }),
+  lessonProgressions: many(lessonProgression),
 }));
 
 export const chapterTranslation = pgTable("chapter_translation", {
