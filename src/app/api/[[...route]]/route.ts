@@ -8,6 +8,7 @@ import category from "./category";
 import chapter from "./chapter";
 import teacher from "./teacher";
 import course from "./course";
+import preview from "./preview";
 
 export const runtime = "edge";
 
@@ -25,7 +26,8 @@ const routes = app
   .route("/categories", category)
   .route("/attachments", attachment)
   .route("/chapters", chapter)
-  .route("/courses", course);
+  .route("/courses", course)
+  .route("/preview", preview);
 export const GET = handle(app);
 export const POST = handle(app);
 export const PATCH = handle(app);

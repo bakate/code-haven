@@ -10,7 +10,7 @@ export type SinglePreviewCourse = InferResponseType<
 export const useGetSinglePreviewCourse = (courseId: string) => {
   const query = useQuery({
     enabled: !!courseId,
-    queryKey: ["learn", { courseId }],
+    queryKey: ["preview", { courseId }],
     queryFn: async () => {
       const response = await honoClient.api.preview[":id"].$get({
         param: {
