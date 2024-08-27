@@ -22,9 +22,7 @@ import {
 import { muxData } from "./schemas/mux.schema";
 import {
   lessonProgression,
-  courseProgression,
   lessonProgressionRelations,
-  courseProgressionRelations,
 } from "./schemas/progression.schema";
 
 export {
@@ -46,7 +44,5 @@ export {
   users,
   verificationTokens,
   lessonProgression,
-  courseProgression,
   lessonProgressionRelations,
-  courseProgressionRelations,
 };
