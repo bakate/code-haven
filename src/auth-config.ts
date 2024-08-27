@@ -32,6 +32,17 @@ export const nextAuthConfiguration = {
   adapter: DrizzleAdapter(db),
   secret: process.env.AUTH_SECRET,
   providers: [...providers],
+  callbacks: {
+    async session({ session, user }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+        },
+      };
+    },
+  },
   pages: {
     // we override the default pages
     signIn: "/sign-in", // /api/auth/signin ==> /sign-in

@@ -18,7 +18,7 @@ export const SearchInput = ({}: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const currentCategoryId = searchParams.get("categoryId");
+  const currentCategoryId = searchParams?.get("categoryId");
 
   const [search, setSearch] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
@@ -33,7 +33,7 @@ export const SearchInput = ({}: Props) => {
   useEffect(() => {
     const url = qs.stringifyUrl(
       {
-        url: pathname,
+        url: pathname ?? "",
         query: {
           categoryId: currentCategoryId,
           title: !debouncedValue ? null : debouncedValue,
