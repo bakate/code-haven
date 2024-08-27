@@ -1,5 +1,10 @@
 import { db } from "@/db/drizzle";
-import { chapter, chapterTranslation, muxData } from "@/db/schema";
+import {
+  chapter,
+  chapterTranslation,
+  lessonProgression,
+  muxData,
+} from "@/db/schema";
 import { ENV } from "@/env";
 import {
   insertChapterSchema,
@@ -338,6 +343,7 @@ const app = new Hono()
   )
   .get(
     "/:id",
+    verifyAuth(),
     zValidator(
       "param",
       selectChapterSchema.pick({
@@ -352,6 +358,11 @@ const app = new Hono()
     ),
 
     async (c) => {
+      const auth = c.get("authUser");
+      if (!auth.session?.user?.id) {
+        throw c.json({ error: "Unauthorized" } as const, 401);
+      }
+      const userId = auth.session.user.id;
       const { id: chapterId } = c.req.valid("param");
       const { courseId } = c.req.valid("query");
 
@@ -370,6 +381,8 @@ const app = new Hono()
           isFree: chapter.isFree,
           playbackId: muxData?.playbackId,
           videoStatus: muxData?.status,
+          videoPlaybackPosition: lessonProgression.videoPlaybackPosition,
+          isCompleted: lessonProgression.isCompleted,
           titlesAndDescriptions: sql<
             Array<{
               title: string;
@@ -392,8 +405,21 @@ const app = new Hono()
           eq(chapter.id, chapterTranslation.chapterId)
         )
         .leftJoin(muxData, eq(muxData.chapterId, chapterId))
+        .leftJoin(
+          lessonProgression,
+          and(
+            eq(lessonProgression.userId, userId),
+            eq(lessonProgression.chapterId, chapterId)
+          )
+        )
         .where(and(eq(chapter.id, chapterId), eq(chapter.courseId, courseId)))
-        .groupBy(chapter.id, muxData.playbackId, muxData.status);
+        .groupBy(
+          chapter.id,
+          muxData.playbackId,
+          muxData.status,
+          lessonProgression.videoPlaybackPosition,
+          lessonProgression.isCompleted
+        );
 
       if (!chapter) {
         throw c.json({ error: "Chapter not found" } as const, 404);
