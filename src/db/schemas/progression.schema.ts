@@ -30,7 +30,9 @@ export const lessonProgression = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    lastPosition: doublePrecision("last_position").notNull().default(0),
+    videoPlaybackPosition: doublePrecision("video_playback_position")
+      .notNull()
+      .default(0),
     isCompleted: boolean("is_completed").notNull().default(false),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
     updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),

@@ -1,0 +1,2 @@
+ALTER TABLE "lesson_progression" ADD COLUMN "video_playback_position" double precision DEFAULT 0 NOT NULL;--> statement-breakpoint
+ALTER TABLE "lesson_progression" DROP COLUMN IF EXISTS "last_position";
