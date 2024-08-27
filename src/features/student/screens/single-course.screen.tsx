@@ -39,6 +39,8 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
             title={chapterTranslation?.title!}
             isLocked={isLocked}
             completeOnEnd={false}
+            lastVideoPosition={chapter.videoPlaybackPosition}
+            isCompleted={chapter.isCompleted}
             courseId={courseId}
             chapterId={chapterId}
             nextChapterId={""}
