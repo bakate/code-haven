@@ -398,6 +398,14 @@ const app = new Hono()
             )
           )
           `,
+          nextChapterId: sql<string | null>`
+          (SELECT id FROM ${chapter} AS next
+          WHERE next.course_id = ${chapter.courseId}
+            AND next.position > ${chapter.position}
+            AND next.is_published = true
+          ORDER BY next.position ASC
+          LIMIT 1)
+    `,
         })
         .from(chapter)
         .leftJoin(
@@ -415,6 +423,10 @@ const app = new Hono()
         .where(and(eq(chapter.id, chapterId), eq(chapter.courseId, courseId)))
         .groupBy(
           chapter.id,
+          chapter.courseId,
+          chapter.position,
+          chapter.isPublished,
+          chapter.isFree,
           muxData.playbackId,
           muxData.status,
           lessonProgression.videoPlaybackPosition,
