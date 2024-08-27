@@ -1,0 +1,1 @@
+ALTER TABLE "lesson_progression" ALTER COLUMN "last_position" SET DATA TYPE double precision;
