@@ -174,6 +174,8 @@
     "error": "Error",
     "noData": "Sin datos",
     "lockedChapterLabel": "Necesitas comprar este curso para acceder a este capítulo",
-    "chapterCompleted": "Capítulo completado"
+    "courseCompleted": "Curso completado. ¡Felicitaciones! 🎉🎉🎉",
+    "chapterCompleted": "Capítulo completado",
+    "completeAndContinue": "Completar y continuar"
   }
 }

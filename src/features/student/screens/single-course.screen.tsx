@@ -23,7 +23,6 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
   const chapterTranslation = chapter.titlesAndDescriptions.find(
     (translation) => translation.lang === locale
   );
-
   const isLocked = !chapter.isFree;
 
   return (
@@ -38,12 +37,11 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
             playbackId={chapter.playbackId!}
             title={chapterTranslation?.title!}
             isLocked={isLocked}
-            completeOnEnd={false}
             lastVideoPosition={chapter.videoPlaybackPosition}
             isCompleted={chapter.isCompleted}
             courseId={courseId}
             chapterId={chapterId}
-            nextChapterId={""}
+            nextChapterId={chapter.nextChapterId}
           />
         </div>
         <div className="p-4 flex flex-cols md:flex-row items-center justify-between">

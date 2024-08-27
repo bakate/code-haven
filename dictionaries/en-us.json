@@ -173,6 +173,8 @@
     "error": "Error",
     "noData": "No data",
     "lockedChapterLabel": "You need to buy this course to access this chapter",
-    "chapterCompleted": "Chapter completed"
+    "courseCompleted": "Course completed. Congrats 🎉🎉🎉",
+    "chapterCompleted": "Chapter completed",
+    "completeAndContinue": "Complete and continue"
   }
 }

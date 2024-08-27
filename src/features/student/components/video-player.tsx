@@ -1,6 +1,7 @@
 "use client";
 
 import { useConfetti } from "@/hooks/use-confetti";
+import type MuxPlayerElement from "@mux/mux-player";
 import MuxPlayer from "@mux/mux-player-react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -8,7 +9,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LuLoader2, LuLock } from "react-icons/lu";
 import { useDebounce } from "react-use";
-import { toast } from "sonner";
 import { useCreateUserProgression } from "../data/use-create-user-progression";
 import { useEditUserProgression } from "../data/use-edit-user-progression";
 
@@ -16,7 +16,6 @@ type Props = {
   playbackId: string;
   title: string;
   isLocked: boolean;
-  completeOnEnd: boolean;
   courseId: string;
   chapterId: string;
   nextChapterId: string | null;
@@ -27,7 +26,6 @@ export const VideoPlayer = ({
   playbackId,
   title,
   isLocked,
-  completeOnEnd,
   courseId,
   chapterId,
   nextChapterId,
@@ -49,7 +47,8 @@ export const VideoPlayer = ({
   const coursesPage = pathname?.startsWith("/courses");
 
   useEffect(() => {
-    if (lastVideoPosition === null || !videoElement) return;
+    if (!lastVideoPosition || !videoElement) return;
+
     videoElement.currentTime = lastVideoPosition;
   }, [videoElement, lastVideoPosition]);
 
@@ -84,21 +83,23 @@ export const VideoPlayer = ({
     }
   };
 
-  const handleTimeUpdate = (event: any) => {
-    const video = event.target as HTMLVideoElement;
-    setCurrentTime(video.currentTime);
+  const handleTimeUpdate = (event: Event) => {
+    const video = event.target as MuxPlayerElement;
+    setCurrentTime(video?.currentTime);
   };
 
   const onEnd = () => {
-    if (completeOnEnd) {
-      if (!nextChapterId) {
-        confetti.onOpen();
-      }
-      toast.success(t("chapterCompleted"));
+    editUserProgression({
+      videoPlaybackPosition: currentTime,
+      isCompleted: true,
+      chapterId: chapterId,
+    });
 
-      if (nextChapterId) {
-        router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
-      }
+    if (!nextChapterId) {
+      confetti.onOpen();
+      //   toast.success(t("chapterCompleted"));
+    } else {
+      router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
     }
   };
 
@@ -138,9 +139,6 @@ export const VideoPlayer = ({
             createOrUpdateUserProgression();
           }}
           onPause={() => {
-            createOrUpdateUserProgression();
-          }}
-          onStalled={() => {
             createOrUpdateUserProgression();
           }}
           onTimeUpdate={handleTimeUpdate}
