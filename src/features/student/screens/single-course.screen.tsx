@@ -46,7 +46,7 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
 
   const handleCompleteAndContinue = () => {
     videoPlayerRef.current?.seekToEnd();
-    // adjustUserProgression(Number(chapter.duration), true);
+    router.push(`/courses/${courseId}/chapters/${chapter.nextChapterId}`);
   };
 
   // get chapter with translations
@@ -80,20 +80,23 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
               adjustUserProgression(currentTime, isCompleted)
             }
             ref={videoPlayerRef}
+            areOtherChaptersCompleted={chapter.allPreviousChaptersCompleted}
           />
         </div>
         <div className="p-4 flex flex-cols md:flex-row items-center justify-between">
           <h2 className="text-2xl font-bold pb-2">
             {chapterTranslation?.title}
           </h2>
-          <Button
-            variant="flat"
-            color="primary"
-            onPress={handleCompleteAndContinue}
-            startContent={<LuArrowRight />}
-          >
-            {t("completeAndContinue")}
-          </Button>
+          {chapter.nextChapterId ? (
+            <Button
+              variant="flat"
+              color="primary"
+              onPress={handleCompleteAndContinue}
+              startContent={<LuArrowRight />}
+            >
+              {t("completeAndContinue")}
+            </Button>
+          ) : null}
         </div>
         <Divider />
       </div>

@@ -23,6 +23,7 @@ type Props = {
   onEnd?: (currentTime: number, isCompleted: boolean) => void;
   onStart?: () => void;
   onPause?: (currentTime: number, isCompleted: boolean) => void;
+  areOtherChaptersCompleted: boolean;
 };
 export const VideoPlayer = forwardRef<{ seekToEnd: () => void }, Props>(
   (
@@ -37,6 +38,7 @@ export const VideoPlayer = forwardRef<{ seekToEnd: () => void }, Props>(
       onEnd,
       onStart,
       onPause,
+      areOtherChaptersCompleted,
     },
     ref
   ) => {
@@ -86,8 +88,12 @@ export const VideoPlayer = forwardRef<{ seekToEnd: () => void }, Props>(
         onEnd(videoElement?.duration || 0, true);
       }
       if (!nextChapterId) {
-        confetti.onOpen();
-        toast.success(t("courseCompleted"));
+        if (areOtherChaptersCompleted) {
+          confetti.onOpen();
+          toast.success(t("courseCompleted"));
+        } else {
+          toast.success(t("completeOtherChapters"));
+        }
       }
     };
 
