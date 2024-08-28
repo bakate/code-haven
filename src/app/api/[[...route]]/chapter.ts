@@ -381,6 +381,7 @@ const app = new Hono()
           isFree: chapter.isFree,
           playbackId: muxData?.playbackId,
           videoStatus: muxData?.status,
+          duration: muxData?.duration,
           videoPlaybackPosition: lessonProgression.videoPlaybackPosition,
           isCompleted: lessonProgression.isCompleted,
           titlesAndDescriptions: sql<
@@ -429,6 +430,7 @@ const app = new Hono()
           chapter.isFree,
           muxData.playbackId,
           muxData.status,
+          muxData.duration,
           lessonProgression.videoPlaybackPosition,
           lessonProgression.isCompleted
         );
