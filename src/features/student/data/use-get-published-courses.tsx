@@ -10,8 +10,8 @@ export type PublishedCourseType = InferResponseType<
 
 export const useGetPublishedCourses = () => {
   const params = useSearchParams();
-  const categoryId = params.get("categoryId") || "";
-  const title = params.get("title") || "";
+  const categoryId = params?.get("categoryId") || "";
+  const title = params?.get("title") || "";
 
   const query = useQuery({
     queryKey: ["student", { categoryId, title }],

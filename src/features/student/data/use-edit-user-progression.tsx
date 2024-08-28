@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 
 import { honoClient } from "@/lib/hono";
@@ -12,6 +12,7 @@ type RequestType = InferRequestType<
 >["json"];
 
 export const useEditUserProgression = (courseId: string) => {
+  const queryClient = useQueryClient();
   return useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
       const response = await honoClient.api.courses[":id"]["progression"][
@@ -31,5 +32,12 @@ export const useEditUserProgression = (courseId: string) => {
     onError: (error) => {
       toast.error(error.message);
     },
+    onSuccess: (response) => {
+      queryClient.invalidateQueries({
+        queryKey: ["chapter", { chapterId: response.chapterId }],
+      });
+    },
   });
 };
+
+// "chapter", { chapterId }

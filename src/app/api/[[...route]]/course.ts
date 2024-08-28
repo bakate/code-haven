@@ -250,7 +250,8 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
         );
 
       return c.json({
-        data: "lesson progression updated",
+        chapterId,
+        status: "success",
       });
     }
   );
