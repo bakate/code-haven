@@ -406,7 +406,20 @@ const app = new Hono()
             AND next.is_published = true
           ORDER BY next.position ASC
           LIMIT 1)
+
     `,
+          allPreviousChaptersCompleted: sql<boolean>`
+    CASE WHEN (
+      SELECT COUNT(*)
+      FROM ${chapter} AS prevChapter
+      LEFT JOIN ${lessonProgression} AS lessonProgression
+        ON prevChapter.id = lessonProgression.chapter_id AND lessonProgression.user_id = ${userId}
+      WHERE prevChapter.course_id = ${courseId}
+        AND prevChapter.position < ${chapter.position}
+        AND prevChapter.is_published = true
+        AND (lessonProgression.is_completed IS NULL)
+    ) = 0 THEN true ELSE false END
+  `,
         })
         .from(chapter)
         .leftJoin(

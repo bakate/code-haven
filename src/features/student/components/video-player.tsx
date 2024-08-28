@@ -34,7 +34,6 @@ export const VideoPlayer = forwardRef<{ seekToEnd: () => void }, Props>(
       chapterId,
       nextChapterId,
       lastVideoPosition,
-      isCompleted,
       onEnd,
       onStart,
       onPause,
