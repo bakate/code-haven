@@ -3,6 +3,7 @@ import {
   attachment,
   chapter,
   course,
+  courseProgression,
   courseTranslation,
   lessonProgression,
 } from "@/db/schema";
@@ -170,6 +171,7 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
       if (!auth.session?.user?.id) {
         throw c.json({ error: "Unauthorized" } as const, 401);
       }
+      const userId = auth.session.user.id;
 
       const { id: courseId } = c.req.valid("param");
       const { chapterId } = c.req.valid("query");
@@ -185,11 +187,19 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
         throw c.json({ error: "Course not found" } as const, 404);
       }
 
+      // insert the course progression
+      await db
+        .insert(courseProgression)
+        .values({
+          userId,
+          courseId,
+        })
+        .onConflictDoNothing();
       // insert the lesson progression
       await db
         .insert(lessonProgression)
         .values({
-          userId: auth.session.user.id,
+          userId,
           chapterId,
         })
         .onConflictDoNothing();
@@ -224,7 +234,7 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
         throw c.json({ error: "Unauthorized" } as const, 401);
       }
       const userId = auth.session.user.id;
-      const { id } = c.req.valid("param");
+      const { id: courseId } = c.req.valid("param");
       const { chapterId, isCompleted, videoPlaybackPosition } =
         c.req.valid("json");
       if (!chapterId) {
@@ -249,8 +259,42 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
           )
         );
 
+      // update the course progression
+      // get all the lessons of the course
+      const courseChapters = await db.query.chapter.findMany({
+        where: eq(chapter.courseId, courseId),
+        with: {
+          lessonProgressions: {
+            where: eq(lessonProgression.userId, userId),
+          },
+        },
+      });
+
+      // Calculate the progression percentage
+      const totalChapters = courseChapters.length;
+      const completedChapters = courseChapters.filter((chapter) =>
+        chapter.lessonProgressions.some(
+          (progression) => progression.isCompleted
+        )
+      ).length;
+      const progressPercentage = (completedChapters / totalChapters) * 100;
+
+      await db
+        .update(courseProgression)
+        .set({
+          progressPercentage,
+          completedChapters,
+          totalChapters,
+          isCompleted: progressPercentage === 100,
+        })
+        .where(eq(courseProgression.userId, userId));
+
       return c.json({
         chapterId,
+        progressPercentage,
+        completedChapters,
+        totalChapters,
+        courseId,
         status: "success",
       });
     }
