@@ -42,7 +42,9 @@ export const UserButton = () => {
           as={Link}
           href="/sign-in"
           variant="light"
+          color="primary"
           startContent={<LuLogIn />}
+          title={t("sign_in")}
         >
           {t("sign_in")}
         </Button>

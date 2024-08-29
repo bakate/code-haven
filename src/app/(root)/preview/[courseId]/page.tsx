@@ -27,13 +27,13 @@ const CoursePreviewPage = ({ params: { courseId } }: Props) => {
       <div className="flex flex-col gap-4 lg:col-span-3 col-span-1">
         <div className="w-full rounded-lg">
           <VideoPlayer
+            lastVideoPosition={0}
+            areOtherChaptersCompleted={false}
             playbackId={course.chapters[0].playbackId!}
             title={course.courseTranslation.title ?? ""}
             isLocked={!course.chapters[0].isFree}
-            completeOnEnd={false}
             courseId={courseId}
             chapterId={course.chapters[0].id}
-            nextChapterId={null}
           />
         </div>
 

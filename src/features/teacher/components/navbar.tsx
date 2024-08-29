@@ -17,6 +17,7 @@ import {
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { FaChalkboardTeacher } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { CourseRoutes } from "../types";
 
@@ -60,7 +61,7 @@ export default function NavbarComponent({
       {!isLearning ? (
         <NavbarContent
           as="div"
-          justify="center"
+          justify="start"
           className=" sm:flex gap-4 flex-1"
         >
           <NavbarItem className="flex-1">
@@ -82,12 +83,20 @@ export default function NavbarComponent({
           </NavbarItem>
         ) : isLearning ? null : isAuthenticated ? (
           <NavbarItem className="hidden md:block">
-            <Link href="/teacher/courses" color="primary" isBlock>
+            <Button
+              as={Link}
+              href="/teacher/courses"
+              color="primary"
+              variant="ghost"
+              startContent={<FaChalkboardTeacher />}
+            >
               {t("teacher_mode")}
-            </Link>
+            </Button>
           </NavbarItem>
-        ) : null}
-        <UserButton />
+        ) : (
+          <UserButton />
+        )}
+        {!isTablet ? <UserButton /> : null}
         <ThemeSwitcher />
       </NavbarContent>
       <NavbarMenu className="dark:bg-slate-900">

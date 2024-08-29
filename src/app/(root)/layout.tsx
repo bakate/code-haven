@@ -69,7 +69,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         />
       </div>
       <div className="hidden md:grid w-56 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
-        <Sidebar routes={routes} />
+        <Sidebar routes={routes} isAuthenticated={isAuthenticated} />
       </div>
       <main
         className={cn(

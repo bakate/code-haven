@@ -3,6 +3,7 @@ import { setUserLocale } from "@/services/locale";
 import { Avatar, Select, SelectItem } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChangeEvent, useState, useTransition } from "react";
+import { LuGlobe } from "react-icons/lu";
 
 export const LocalSwitcherSelect = () => {
   const locale = useLocale();
@@ -31,13 +32,15 @@ export const LocalSwitcherSelect = () => {
 
   return (
     <Select
-      className="hidden md:max-w-52 md:block pl-2"
-      label={t("label")}
+      className="hidden md:max-w-40 md:block"
       color="primary"
       variant="flat"
       selectedKeys={[value]}
       onChange={onChange}
       disabled={isPending}
+      title={t("label")}
+      aria-label={t("label")}
+      startContent={<LuGlobe />}
     >
       {renderSelectItem("en-us", "United States", "https://flagcdn.com/us.svg")}
       {renderSelectItem("de", "Germany", "https://flagcdn.com/de.svg")}
