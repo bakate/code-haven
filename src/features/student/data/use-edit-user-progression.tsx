@@ -39,6 +39,9 @@ export const useEditUserProgression = (courseId: string) => {
       queryClient.invalidateQueries({
         queryKey: ["learn", { courseId }],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["student"],
+      });
     },
   });
 };

@@ -12,7 +12,7 @@ import { selectCourseSchema } from "@/features/teacher/types/course.type";
 
 import { and, asc, desc, eq, ilike, sql } from "drizzle-orm";
 import { Hono } from "hono";
-import { verifyAuth } from "@hono/auth-js";
+import { verifyAuth, getAuthUser } from "@hono/auth-js";
 import { z } from "zod";
 import { selectLessonProgressionSchema } from "@/features/student/types/lesson-pogression.type";
 
@@ -30,6 +30,9 @@ const app = new Hono()
     ),
 
     async (c) => {
+      const session = await getAuthUser(c);
+      const userId = session?.user?.id;
+
       const values = c.req.valid("query");
       const { categoryId = "", title = "" } = values || {};
 
@@ -51,6 +54,17 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
           WHERE ${chapter.courseId} = ${course.id} AND ${chapter.isPublished} = true
         )
       `,
+          ...(userId
+            ? {
+                userProgress: sql<number | null>`
+            (
+              SELECT ${courseProgression.progressPercentage}
+              FROM ${courseProgression}
+              WHERE ${courseProgression.userId} = ${userId} AND ${courseProgression.courseId} = ${course.id}
+            )
+          `,
+              }
+            : {}),
         })
         .from(course)
         .where(
@@ -138,6 +152,15 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
                   chapterId: true,
                 },
               },
+            },
+          },
+          courseProgressions: {
+            where: and(
+              eq(courseProgression.userId, auth.session.user.id),
+              eq(courseProgression.courseId, courseId)
+            ),
+            columns: {
+              progressPercentage: true,
             },
           },
         },
@@ -262,7 +285,10 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
       // update the course progression
       // get all the lessons of the course
       const courseChapters = await db.query.chapter.findMany({
-        where: eq(chapter.courseId, courseId),
+        where: and(
+          eq(chapter.courseId, courseId),
+          eq(chapter.isPublished, true)
+        ),
         with: {
           lessonProgressions: {
             where: eq(lessonProgression.userId, userId),
@@ -287,7 +313,12 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
           totalChapters,
           isCompleted: progressPercentage === 100,
         })
-        .where(eq(courseProgression.userId, userId));
+        .where(
+          and(
+            eq(courseProgression.userId, userId),
+            eq(courseProgression.courseId, courseId)
+          )
+        );
 
       return c.json({
         chapterId,
