@@ -127,6 +127,27 @@
       "when": 1724756864324,
       "tag": "0017_hard_wither",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1724912926019,
+      "tag": "0018_brief_puff_adder",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1724916793012,
+      "tag": "0019_wet_alex_wilder",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1724916849850,
+      "tag": "0020_bizarre_bloodstorm",
+      "breakpoints": true
     }
   ]
 }
