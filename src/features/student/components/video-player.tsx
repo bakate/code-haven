@@ -17,9 +17,7 @@ type Props = {
   isLocked: boolean;
   courseId: string;
   chapterId: string;
-  nextChapterId: string | null;
   lastVideoPosition: number | null;
-  isCompleted: boolean | null;
   onEnd?: (currentTime: number, isCompleted: boolean) => void;
   onStart?: () => void;
   onPause?: (currentTime: number, isCompleted: boolean) => void;
@@ -33,7 +31,6 @@ export const VideoPlayer = forwardRef<{ seekToEnd: () => void }, Props>(
       isLocked,
       courseId,
       chapterId,
-      nextChapterId,
       lastVideoPosition,
       onEnd,
       onStart,
@@ -84,16 +81,15 @@ export const VideoPlayer = forwardRef<{ seekToEnd: () => void }, Props>(
     };
 
     const handleOnEnd = () => {
-      if (onEnd) {
-        onEnd(videoElement?.duration || 0, true);
-      }
-      if (!nextChapterId) {
-        if (areOtherChaptersCompleted) {
-          confetti.onOpen();
-          toast.success(t("courseCompleted"));
-        } else {
-          toast.success(t("completeOtherChapters"));
-        }
+      if (!coursesPage || !isAuthenticated) return;
+      const duration = videoElement?.duration || 0;
+      onEnd?.(duration, true);
+
+      if (areOtherChaptersCompleted) {
+        confetti.onOpen();
+        toast.success(t("courseCompleted"));
+      } else {
+        toast.success(t("chapterCompleted"));
       }
     };
 

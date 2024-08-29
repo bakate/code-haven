@@ -39,5 +39,3 @@ export const useEditUserProgression = (courseId: string) => {
     },
   });
 };
-
-// "chapter", { chapterId }

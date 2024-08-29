@@ -68,10 +68,8 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
             title={chapterTranslation?.title!}
             isLocked={isLocked}
             lastVideoPosition={chapter.videoPlaybackPosition}
-            isCompleted={chapter.isCompleted}
             courseId={courseId}
             chapterId={chapterId}
-            nextChapterId={chapter.nextChapterId}
             onEnd={(currentTime, isCompleted) =>
               adjustUserProgression(currentTime, isCompleted)
             }
@@ -80,7 +78,7 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
               adjustUserProgression(currentTime, isCompleted)
             }
             ref={videoPlayerRef}
-            areOtherChaptersCompleted={chapter.allPreviousChaptersCompleted}
+            areOtherChaptersCompleted={chapter.allOtherChaptersCompleted}
           />
         </div>
         <div className="p-4 flex flex-cols md:flex-row items-center justify-between">

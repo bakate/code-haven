@@ -408,18 +408,18 @@ const app = new Hono()
           LIMIT 1)
 
     `,
-          allPreviousChaptersCompleted: sql<boolean>`
+          allOtherChaptersCompleted: sql<boolean>`
     CASE WHEN (
       SELECT COUNT(*)
-      FROM ${chapter} AS prevChapter
-      LEFT JOIN ${lessonProgression} AS lessonProgression
-        ON prevChapter.id = lessonProgression.chapter_id AND lessonProgression.user_id = ${userId}
-      WHERE prevChapter.course_id = ${courseId}
-        AND prevChapter.position < ${chapter.position}
-        AND prevChapter.is_published = true
-        AND (lessonProgression.is_completed IS NULL)
+      FROM ${chapter} AS otherChapter
+      LEFT JOIN ${lessonProgression} AS otherProgression
+        ON otherChapter.id = otherProgression.chapter_id AND otherProgression.user_id = ${userId}
+      WHERE otherChapter.course_id = ${courseId}
+        AND otherChapter.is_published = true
+        AND otherChapter.id != ${chapterId}
+        AND (otherProgression.id IS NULL OR otherProgression.is_completed = FALSE)
     ) = 0 THEN true ELSE false END
-  `,
+         `,
         })
         .from(chapter)
         .leftJoin(
