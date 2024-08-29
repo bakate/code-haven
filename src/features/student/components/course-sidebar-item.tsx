@@ -38,9 +38,10 @@ export const CourseSidebarItem = ({
         `
         w-full justify-start
       `,
-        isActive ? "border-r-3 border-r-primary-500 text-primary-500" : ""
+        isActive ? "border-r-3 border-r-primary-500 text-primary-500" : "",
+        isCompleted ? "text-success-500 border-r-3 border-r-success-500" : ""
       )}
-      color={isActive ? "primary" : "default"}
+      color={isCompleted ? "success" : isActive ? "primary" : "default"}
       startContent={<Icon />}
       onPress={onPress}
     >

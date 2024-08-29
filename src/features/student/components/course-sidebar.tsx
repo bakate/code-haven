@@ -9,8 +9,8 @@ import {
   useGetSingleCourseById,
 } from "../data/use-get-single-course-by-id";
 import { Category } from "../types/category.type";
-import { CourseSidebarItem } from "./course-sidebar-item";
 import { formatSeconds } from "../utils/format-seconds";
+import { CourseSidebarItem } from "./course-sidebar-item";
 
 type Props = {
   courseId: string;
@@ -47,7 +47,10 @@ const getCourseWithTranslations = (
           (translation) => translation.lang === lang
         )?.description ?? "",
       isFree: chapter.isFree,
-      isCompleted: false,
+      isCompleted:
+        chapter.lessonProgressions.find(
+          (progression) => progression.chapterId === chapter.id
+        )?.isCompleted ?? false,
       duration: chapter.muxData?.duration ?? 0,
     })),
   };
