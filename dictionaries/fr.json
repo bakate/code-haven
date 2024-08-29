@@ -176,6 +176,7 @@
     "courseCompleted": "Cours terminé. Félicitations 🎉🎉🎉",
     "chapterCompleted": "Chapitre terminé 💪",
     "completeAndContinue": "Terminer et continuer",
-    "completeCourse": "Terminer le cours"
+    "completeCourse": "Terminer le cours",
+    "courseProgress": "Progression du cours"
   }
 }

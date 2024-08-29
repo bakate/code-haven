@@ -38,7 +38,6 @@ export const LocalSwitcherSelect = () => {
       selectedKeys={[value]}
       onChange={onChange}
       disabled={isPending}
-      title={t("label")}
       aria-label={t("label")}
       startContent={<LuGlobe />}
     >

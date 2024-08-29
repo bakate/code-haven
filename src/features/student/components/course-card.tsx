@@ -1,7 +1,14 @@
 import { Currency } from "@/components/currency";
 import { IconBadge } from "@/components/icon-badge";
 import { CategoriesType } from "@/features/teacher/data/use-get-categories";
-import { Card, CardBody, CardFooter, Chip, Image } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Chip,
+  Image,
+  Progress,
+} from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LuBookOpen } from "react-icons/lu";
@@ -40,7 +47,7 @@ export const CourseCard = ({ course, categories }: Props) => {
           src={course.imageUrl ?? ""}
         />
       </CardBody>
-      <CardFooter className="text-small flex flex-col gap-2 items-start">
+      <CardFooter className="text-small flex flex-col gap-2 items-start h-full justify-between">
         <div
           title={translatedTitle}
           className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-1"
@@ -60,6 +67,16 @@ export const CourseCard = ({ course, categories }: Props) => {
           <IconBadge size="sm" icon={LuBookOpen} />
           <span>{t("totalChapters", { count: course.totalChapters })}</span>
         </div>
+        {course.userProgress ? (
+          <Progress
+            aria-label="course progress"
+            size="sm"
+            showValueLabel={true}
+            value={course.userProgress}
+            color={course.userProgress === 100 ? "success" : "primary"}
+            className="max-w-md"
+          />
+        ) : null}
       </CardFooter>
     </Card>
   );

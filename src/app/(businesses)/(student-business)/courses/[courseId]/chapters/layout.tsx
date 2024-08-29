@@ -36,7 +36,10 @@ const DashboardLayout = ({
         />
       </div>
       <div className="hidden md:grid w-80 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
-        <CourseSidebar courseId={courseId} />
+        <CourseSidebar
+          courseId={courseId}
+          isAuthenticated={isAuthenticatedStudent}
+        />
       </div>
       <main className="md:pl-80 pt-[80px] h-full max-w-6xl mx-auto">
         {children}

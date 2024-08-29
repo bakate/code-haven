@@ -1,9 +1,11 @@
 "use client";
 
+import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 import { Logo } from "@/components/logo";
+import { UserButton } from "@/features/auth/components/user-button";
 import { useGetCategories } from "@/features/teacher/data/use-get-categories";
-import { Link } from "@nextui-org/react";
-import { useLocale } from "next-intl";
+import { Link, Progress } from "@nextui-org/react";
+import { useLocale, useTranslations } from "next-intl";
 import {
   SingleCourse,
   useGetSingleCourseById,
@@ -14,6 +16,7 @@ import { CourseSidebarItem } from "./course-sidebar-item";
 
 type Props = {
   courseId: string;
+  isAuthenticated: boolean;
 };
 
 const getCourseWithTranslations = (
@@ -53,17 +56,19 @@ const getCourseWithTranslations = (
         )?.isCompleted ?? false,
       duration: chapter.muxData?.duration ?? 0,
     })),
+    userProgress: course.courseProgressions[0]?.progressPercentage ?? 0,
   };
   return courseWithTranslations;
 };
 
-export const CourseSidebar = ({ courseId }: Props) => {
+export const CourseSidebar = ({ courseId, isAuthenticated }: Props) => {
   const { data: course, isLoading } = useGetSingleCourseById(courseId);
   const { data: categories, isLoading: categoriesLoading } = useGetCategories();
   const locale = useLocale();
+  const t = useTranslations("studentCourseById");
 
-  if (isLoading || categoriesLoading) return <div>Loading...</div>;
-  if (!course || !categories) return <div>No data</div>;
+  if (isLoading || categoriesLoading) return <div>{t("loading")}</div>;
+  if (!course || !categories) return <div>{t("noData")}</div>;
 
   const courseWithTranslations = getCourseWithTranslations(
     course,
@@ -78,10 +83,27 @@ export const CourseSidebar = ({ courseId }: Props) => {
         <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
       </Link>
 
-      <div className="space-y-3 pt-4">
-        <h1 className="font-semibold pb-3 px-2">
+      <div className="pt-4">
+        <h1 className="font-semibold pt-3 pb-4 px-2">
           {courseWithTranslations.title}
         </h1>
+
+        {courseWithTranslations.userProgress > 0 ? (
+          <Progress
+            aria-label={t("courseProgress")}
+            size="sm"
+            label={t("courseProgress")}
+            showValueLabel={true}
+            value={courseWithTranslations.userProgress}
+            color={
+              courseWithTranslations.userProgress === 100
+                ? "success"
+                : "primary"
+            }
+            className="max-w-md px-2 pb-4 italic text-small text-slate-500"
+          />
+        ) : null}
+
         {courseWithTranslations.chapters.map((chapter, i) => (
           <CourseSidebarItem
             courseId={courseWithTranslations.id}
@@ -93,6 +115,10 @@ export const CourseSidebar = ({ courseId }: Props) => {
             key={i}
           />
         ))}
+      </div>
+      <div className="flex justify-center items-center px-2 gap-x-3">
+        <LocalSwitcherSelect />
+        {isAuthenticated ? <UserButton /> : null}
       </div>
     </div>
   );
