@@ -36,7 +36,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     },
     {
       label: t("my_courses"),
-      href: "/courses",
+      href: "/courses/enrolled",
       icon: FiList,
     },
   ];

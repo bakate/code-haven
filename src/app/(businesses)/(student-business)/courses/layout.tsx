@@ -9,7 +9,7 @@ import { LuCompass, LuList } from "react-icons/lu";
 const StudentCoursesLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
   const pathname = usePathname();
-  const studentReportingPage = pathname && pathname === "/courses";
+  const studentReportingPage = pathname && pathname === "/courses/enrolled";
 
   const t = useTranslations("Navigation");
   if (session?.status === "loading") {
