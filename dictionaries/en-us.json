@@ -175,5 +175,17 @@
     "completeAndContinue": "Complete and continue",
     "completeCourse": "Complete course",
     "courseProgress": "Course progress"
+  },
+  "studentCoursesReporting": {
+    "title": "My courses",
+    "pageDescription": "Browse the courses you are learning and track your progress through some key metrics.",
+    "ctaLabel": "Browse courses",
+    "notStartedAnyCourse": "You have not started any course yet.",
+    "completedCourses": "Completed courses",
+    "completedChapters": "Completed chapters",
+    "inProgressCourses": "In progress courses",
+    "totalCourses": "Total courses",
+    "totalChapters": "Total chapters",
+    "totalDuration": "Total duration"
   }
 }

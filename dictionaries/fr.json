@@ -175,5 +175,17 @@
     "completeAndContinue": "Terminer et continuer",
     "completeCourse": "Terminer le cours",
     "courseProgress": "Progression du cours"
+  },
+  "studentCoursesReporting": {
+    "title": "Mes cours",
+    "pageDescription": "Parcours les cours que tu apprends et gère ta progression à travers quelques métriques clés.",
+    "ctaLabel": "Parcourir les cours",
+    "notStartedAnyCourse": "Tu n'as pas encore commencé de cours.",
+    "completedCourses": "Cours terminés",
+    "completedChapters": "Chapitres terminés",
+    "inProgressCourses": "Cours en cours",
+    "totalCourses": "Total de cours",
+    "totalChapters": "Total de chapitres",
+    "totalDuration": "Durée totale"
   }
 }
