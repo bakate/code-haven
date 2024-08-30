@@ -11,7 +11,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isPlayerPage = pathname?.includes("/player");
-  const isSearchPage = pathname === "/search";
   const session = useSession();
   const isAuthenticated = session.status === "authenticated";
 
