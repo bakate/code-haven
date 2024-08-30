@@ -3,6 +3,7 @@ import {
   attachment,
   chapter,
   course,
+  courseEnrollment,
   courseProgression,
   courseTranslation,
   lessonProgression,
@@ -84,6 +85,75 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
       });
     }
   )
+  .get("/enrolled", verifyAuth(), async (c) => {
+    const auth = c.get("authUser");
+    if (!auth.session?.user?.id) {
+      throw c.json({ error: "Unauthorized" } as const, 401);
+    }
+
+    const userId = auth.session.user.id;
+    // we need to get the courses that the user is enrolled in
+
+    const enrolledCourses = await db
+      .select({
+        id: course.id,
+        categoryId: course.categoryId,
+        imageUrl: course.imageUrl,
+        price: course.price,
+        titles: sql<
+          Array<{ lang: string; title: string; description?: string }>
+        >`
+json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${courseTranslation.lang}, 'description', ${courseTranslation.description})) FILTER (WHERE ${courseTranslation.title} IS NOT NULL)
+`,
+        totalChapters: sql<number>`
+    (
+      SELECT COUNT(DISTINCT ${chapter.id})
+      FROM ${chapter}
+      WHERE ${chapter.courseId} = ${course.id} AND ${chapter.isPublished} = true
+    )
+  `,
+
+        userProgress: sql<{
+          progressPercentage: number | null;
+          completedChapters: number | null;
+          totalChapters: number | null;
+          isCompleted: boolean | null;
+        }>`
+    (
+      SELECT json_build_object(
+        'progressPercentage', ${courseProgression.progressPercentage},
+        'completedChapters', ${courseProgression.completedChapters},
+        'totalChapters', ${courseProgression.totalChapters},
+        'isCompleted', ${courseProgression.isCompleted}
+      )
+      FROM ${courseProgression}
+      WHERE ${courseProgression.userId} = ${userId} AND ${courseProgression.courseId} = ${course.id}
+    )
+  `,
+      })
+      .from(courseEnrollment)
+      .where(eq(courseEnrollment.userId, userId))
+      .innerJoin(course, eq(courseEnrollment.courseId, course.id))
+      .leftJoin(
+        courseTranslation,
+        eq(courseEnrollment.courseId, courseTranslation.courseId)
+      )
+      .leftJoin(attachment, eq(courseEnrollment.courseId, attachment.courseId))
+      .orderBy(desc(courseEnrollment.enrolledAt))
+      .groupBy(
+        course.id,
+        courseEnrollment.courseId,
+        courseEnrollment.enrolledAt
+        // courseTranslation.title,
+        // courseTranslation.lang,
+        // courseTranslation.description,
+        // attachment.url
+      );
+
+    return c.json({
+      data: enrolledCourses,
+    });
+  })
   .get(
     "/:id",
     verifyAuth(),
@@ -266,6 +336,15 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
           422
         );
       }
+
+      // since there is no enrollment, we'll consider the user as enrolled when the user start watching the course
+      await db
+        .insert(courseEnrollment)
+        .values({
+          userId,
+          courseId,
+        })
+        .onConflictDoNothing();
 
       await db
         .update(lessonProgression)
