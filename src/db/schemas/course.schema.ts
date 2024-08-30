@@ -5,6 +5,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { users } from "./user.schema";
 import { category } from "./category.schema";
@@ -34,18 +35,29 @@ export const course = pgTable("course", {
 });
 
 // course enrollment
-export const courseEnrollment = pgTable("course_enrollment", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  courseId: text("course_id")
-    .notNull()
-    .references(() => course.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  enrolledAt: timestamp("enrolled_at", { mode: "date" }).defaultNow(),
-});
+export const courseEnrollment = pgTable(
+  "course_enrollment",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    courseId: text("course_id")
+      .notNull()
+      .references(() => course.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    enrolledAt: timestamp("enrolled_at", { mode: "date" }).defaultNow(),
+  },
+  (table) => ({
+    userCourseEnrollmentUnique: uniqueIndex(
+      "user_course_enrollment_unique_idx"
+    ).on(table.courseId, table.userId),
+  })
+);
 
 export const courseEnrollmentRelations = relations(
   courseEnrollment,
