@@ -3,16 +3,15 @@ import { CourseSidebar } from "@/features/student/components/course-sidebar";
 import NavbarComponent from "@/features/teacher/components/navbar";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 
-const DashboardLayout = ({
+const LearningDashboardLayout = ({
   children,
   params: { courseId },
 }: {
   children: React.ReactNode;
   params: { courseId: string };
 }) => {
-  const pathname = usePathname();
   const session = useSession();
 
   const t = useTranslations("Navigation");
@@ -48,4 +47,4 @@ const DashboardLayout = ({
   );
 };
 
-export default DashboardLayout;
+export default LearningDashboardLayout;
