@@ -57,7 +57,7 @@ export const SearchInput = ({}: Props) => {
   return (
     <Input
       classNames={{
-        base: "md:max-w-[30rem] sm:max-w-[10rem] h-10 flex-1",
+        base: "max-w-full min-w-[11rem] h-10 flex-1",
         mainWrapper: "h-full",
         input: "text-small",
         inputWrapper:

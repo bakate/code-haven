@@ -72,8 +72,9 @@ export const ChapterActions = ({
       <Button
         onPress={toggleChapterPublish}
         isDisabled={disabled || isPending}
+        variant="flat"
         startContent={isPublished ? <LuCheck /> : <LuSendHorizonal />}
-        color={isPublished ? "success" : "primary"}
+        color={isPublished ? "warning" : "primary"}
         isIconOnly={!isTablet}
         size="sm"
       >

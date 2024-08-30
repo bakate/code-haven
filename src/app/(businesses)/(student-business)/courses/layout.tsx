@@ -9,7 +9,7 @@ import { LuCompass, LuList } from "react-icons/lu";
 const StudentCoursesLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
   const pathname = usePathname();
-  const isLearning = pathname && pathname === "/courses";
+  const studentReportingPage = pathname && pathname === "/courses";
 
   const t = useTranslations("Navigation");
   if (session?.status === "loading") {
@@ -33,7 +33,7 @@ const StudentCoursesLayout = ({ children }: { children: React.ReactNode }) => {
     },
   ];
 
-  if (isLearning) {
+  if (studentReportingPage) {
     return (
       <div className="h-[100dvh]">
         <div className=" fixed inset-y-0 w-full">
@@ -50,7 +50,7 @@ const StudentCoursesLayout = ({ children }: { children: React.ReactNode }) => {
             isAuthenticated={isAuthenticatedStudent}
           />
         </div>
-        <main className="md:pl-60 pt-[80px] h-full max-w-6xl mx-auto">
+        <main className="md:max-2xl:pl-60 pt-[80px] h-full max-w-screen-xl mx-auto">
           {children}
         </main>
       </div>

@@ -52,37 +52,34 @@ export default function NavbarComponent({
         as="div"
         justify="center"
         className="hidden md:flex flex-1"
-      >
-        <NavbarItem>
-          <div></div>
-        </NavbarItem>
-      </NavbarContent>
+      ></NavbarContent>
 
       {!isLearning ? (
         <NavbarContent
           as="div"
-          justify="start"
-          className=" sm:flex gap-4 flex-1"
+          justify="center"
+          className=" sm:flex gap-4 lg:flex-[3] md:flex-[2]"
         >
-          <NavbarItem className="flex-1">
+          <NavbarItem className="flex-1 flex">
             <SearchInput />
           </NavbarItem>
         </NavbarContent>
       ) : null}
-      <NavbarContent as="div" justify="end">
+      <NavbarContent as="div" justify="end" className="flex-grow-0">
         {isTeacherPage ? (
           <NavbarItem>
             <Button
               href="/"
               as={Link}
               variant="light"
+              isIconOnly={!isTablet}
               startContent={<FiLogOut />}
             >
-              {isTablet ? t("leave_teacher_mode") : t("exit")}
+              {isTablet ? t("leave_teacher_mode") : ""}
             </Button>
           </NavbarItem>
         ) : isLearning ? null : isAuthenticated ? (
-          <NavbarItem className="hidden md:block">
+          <NavbarItem className="hidden md:block flex-grow-0">
             <Button
               as={Link}
               href="/teacher/courses"

@@ -6,12 +6,12 @@ import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LuCheck, LuSendHorizonal, LuTrash } from "react-icons/lu";
+import { useMedia } from "react-use";
 import { useDeleteCourseByTeacher } from "../data/use-delete-course-by-teacher";
 import {
   EditCourseResponseType,
   useEditCourseByTeacher,
 } from "../data/use-edit-course-by-teacher";
-import { useMedia } from "react-use";
 
 type ActionsProps = {
   disabled: boolean;
@@ -77,10 +77,11 @@ export const CourseActions = ({
         onPress={handlePublishCourse}
         isDisabled={disabled || isPending}
         size="sm"
+        variant="flat"
         isIconOnly={!isTablet}
         title={isPublished ? t("unpublish") : t("publish")}
         startContent={isPublished ? <LuCheck /> : <LuSendHorizonal />}
-        color={isPublished ? "success" : "primary"}
+        color={isPublished ? "warning" : "primary"}
       >
         {!isTablet ? "" : isPublished ? t("unpublish") : t("publish")}
       </Button>

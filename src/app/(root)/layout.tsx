@@ -17,7 +17,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   const isTeacherPage = pathname?.startsWith("/teacher");
-  const coursesPage = pathname?.startsWith("/courses");
   const isAuthenticated = session?.status === "authenticated";
 
   const guestRoutes = [
@@ -73,10 +72,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main
         className={cn(
-          "md:pl-60 pt-[80px] h-full max-w-6xl mx-auto",
-          coursesPage
-            ? "lg:max-w-screen-xl xl:max-w-screen-2xl 2xl:max-w-screen-3xl"
-            : ""
+          "pt-[80px] md:max-2xl:pl-60  h-full max-w-screen-xl mx-auto px-4"
         )}
       >
         {children}
