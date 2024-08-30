@@ -17,9 +17,6 @@ const main = async () => {
     await db.delete(category);
     const categories = [
       {
-        name: "React.js",
-      },
-      {
         name: "Next.js",
       },
       {
@@ -43,15 +40,6 @@ const main = async () => {
       },
       {
         name: "Hono",
-      },
-      {
-        name: "Jest",
-      },
-      {
-        name: "React Testing Library",
-      },
-      {
-        name: "TanStack Query (React Query)",
       },
       {
         name: "Angular",
