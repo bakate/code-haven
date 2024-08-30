@@ -17,7 +17,7 @@ type Props = {
   chapterId: string;
 };
 
-export const CallToAction = ({ courseId, chapterId }: Props) => {
+export const StartLearningButton = ({ courseId, chapterId }: Props) => {
   const { isOpen, onClose, onOpen } = useToggle();
   const session = useSession();
   const isAuthenticatedStudent = session?.status === "authenticated";

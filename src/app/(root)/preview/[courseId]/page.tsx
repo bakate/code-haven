@@ -1,7 +1,7 @@
 "use client";
 
-import { CallToAction } from "@/components/call-to-action";
 import { IconBadge } from "@/components/icon-badge";
+import { StartLearningButton } from "@/components/start-learning-button";
 import { VideoPlayer } from "@/features/student/components/video-player";
 import { useGetSinglePreviewCourse } from "@/features/student/data/use-get-single-preview-course-by-id";
 
@@ -50,7 +50,10 @@ const CoursePreviewPage = ({ params: { courseId } }: Props) => {
         </p>
       </div>
       <div className="lg:col-span-2 col-span-1">
-        <CallToAction courseId={courseId} chapterId={course.chapters[0].id} />
+        <StartLearningButton
+          courseId={courseId}
+          chapterId={course.chapters[0].id}
+        />
       </div>
     </div>
   );
