@@ -42,10 +42,7 @@ export const LocalSwitcherSelect = () => {
       startContent={<LuGlobe />}
     >
       {renderSelectItem("en-us", "United States", "https://flagcdn.com/us.svg")}
-      {renderSelectItem("de", "Germany", "https://flagcdn.com/de.svg")}
-      {renderSelectItem("es", "Spain", "https://flagcdn.com/es.svg")}
       {renderSelectItem("fr", "France", "https://flagcdn.com/fr.svg")}
-      {renderSelectItem("it", "Italy", "https://flagcdn.com/it.svg")}
     </Select>
   );
 };

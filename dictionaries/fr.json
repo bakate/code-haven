@@ -2,9 +2,6 @@
   "LocaleSwitcher": {
     "en-us": "Anglais",
     "fr": "Français",
-    "de": "Allemand",
-    "es": "Espagnol",
-    "it": "Italien",
     "label": "Choisis une langue"
   },
   "Navigation": {
