@@ -4,12 +4,15 @@ import {
   sessions,
   users,
   verificationTokens,
+  userRelations,
 } from "./schemas/user.schema";
 import {
   course,
   courseTranslation,
   courseRelations,
   courseTranslationRelations,
+  courseEnrollment,
+  courseEnrollmentRelations,
 } from "./schemas/course.schema";
 import { category } from "./schemas/category.schema";
 import { attachment, attachmentRelations } from "./schemas/attachment.schema";
@@ -34,6 +37,8 @@ export {
   courseTranslation,
   courseRelations,
   courseTranslationRelations,
+  courseEnrollment,
+  courseEnrollmentRelations,
   chapter,
   chapterTranslation,
   chapterRelations,
@@ -49,4 +54,5 @@ export {
   lessonProgressionRelations,
   courseProgression,
   courseProgressionRelations,
+  userRelations,
 };

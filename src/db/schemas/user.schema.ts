@@ -10,6 +10,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 import type { AdapterAccountType } from "next-auth/adapters";
+import { course } from "./course.schema";
 
 export const users = pgTable("user", {
   id: text("id")
@@ -87,3 +88,7 @@ export const authenticators = pgTable(
     }),
   })
 );
+
+export const userRelations = relations(users, ({ many }) => ({
+  courses: many(course),
+}));

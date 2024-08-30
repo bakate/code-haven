@@ -33,6 +33,34 @@ export const course = pgTable("course", {
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
 });
 
+// course enrollment
+export const courseEnrollment = pgTable("course_enrollment", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  courseId: text("course_id")
+    .notNull()
+    .references(() => course.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  enrolledAt: timestamp("enrolled_at", { mode: "date" }).defaultNow(),
+});
+
+export const courseEnrollmentRelations = relations(
+  courseEnrollment,
+  ({ one }) => ({
+    course: one(course, {
+      fields: [courseEnrollment.courseId],
+      references: [course.id],
+    }),
+    user: one(users, {
+      fields: [courseEnrollment.userId],
+      references: [users.id],
+    }),
+  })
+);
+
 // Define relations for course
 export const courseRelations = relations(course, ({ one, many }) => ({
   user: one(users, {
@@ -47,6 +75,7 @@ export const courseRelations = relations(course, ({ one, many }) => ({
   chapters: many(chapter),
   courseTranslations: many(courseTranslation),
   courseProgressions: many(courseProgression),
+  students: many(courseEnrollment),
 }));
 
 // Define the course translation table
