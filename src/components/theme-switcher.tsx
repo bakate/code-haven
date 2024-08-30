@@ -13,8 +13,6 @@ export const ThemeSwitcher = () => {
 
   return (
     <Switch
-      defaultSelected
-
       value={theme}
       onValueChange={(e) => setTheme(e ? "dark" : "light")}
       thumbIcon={({ isSelected, className }) =>
