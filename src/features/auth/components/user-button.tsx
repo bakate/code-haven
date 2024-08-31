@@ -10,15 +10,9 @@ import {
 } from "@nextui-org/react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import {
-  FiCreditCard,
-  FiHome,
-  FiLoader,
-  FiLogOut,
-  FiSettings,
-} from "react-icons/fi";
+import { FiLoader, FiLogOut } from "react-icons/fi";
 import { IconType } from "react-icons/lib";
-import { LuLogIn } from "react-icons/lu";
+import { LuHome, LuLogIn } from "react-icons/lu";
 
 type ItemProps = {
   label: string;
@@ -63,18 +57,18 @@ export const UserButton = () => {
     {
       label: t("home"),
       href: "/",
-      icon: FiHome,
+      icon: LuHome,
     },
-    {
-      label: t("settings"),
-      href: "/settings",
-      icon: FiSettings,
-    },
-    {
-      label: t("billing_subscription"),
-      href: "/billing",
-      icon: FiCreditCard,
-    },
+    // {
+    //   label: t("settings"),
+    //   href: "/settings",
+    //   icon: FiSettings,
+    // },
+    // {
+    //   label: t("billing_subscription"),
+    //   href: "/billing",
+    //   icon: FiCreditCard,
+    // },
     {
       label: t("logout"),
       href: "/logout",

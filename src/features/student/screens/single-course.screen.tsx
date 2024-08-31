@@ -6,11 +6,14 @@ import { useGetChapterById } from "@/features/teacher/data/use-get-chapter-by-id
 import { Button, Divider } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
+import { Heading } from "@/components/heading";
+import { NovelEditor } from "@/components/novel-editor/advanced-editor";
 import { LuArrowRight } from "react-icons/lu";
 import { useCreateUserProgression } from "../data/use-create-user-progression";
 import { useEditUserProgression } from "../data/use-edit-user-progression";
+import { EditorInstance } from "novel";
 
 type Props = {
   courseId: string;
@@ -26,6 +29,7 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
   const router = useRouter();
 
   const videoPlayerRef = useRef<{ seekToEnd: () => void } | null>(null);
+  const [editor, setEditor] = useState<EditorInstance | null>(null);
 
   if (isLoading) return <div>{t("loading")}</div>;
   if (!chapter) return <div>{t("noData")}</div>;
@@ -81,10 +85,8 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
             areOtherChaptersCompleted={chapter.allOtherChaptersCompleted}
           />
         </div>
-        <div className="p-4 flex flex-cols md:flex-row items-center justify-between">
-          <h2 className="text-2xl font-bold pb-2">
-            {chapterTranslation?.title}
-          </h2>
+        <div className="p-4 flex flex-cols md:flex-row items-center justify-between gap-5">
+          <Heading>{chapterTranslation?.title}</Heading>
           {chapter.nextChapterId ? (
             <Button
               variant="flat"
@@ -97,6 +99,13 @@ export const SingleCourseScreen = ({ courseId, chapterId }: Props) => {
           ) : null}
         </div>
         <Divider />
+        {chapter.content ? (
+          <NovelEditor
+            content={chapter.content}
+            teacherView={false}
+            setEditor={setEditor}
+          />
+        ) : null}
       </div>
     </div>
   );
