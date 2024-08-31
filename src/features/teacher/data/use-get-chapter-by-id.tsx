@@ -2,10 +2,10 @@ import { honoClient } from "@/lib/hono";
 import { useQuery } from "@tanstack/react-query";
 import { InferResponseType } from "hono";
 
-export type ResponseType = InferResponseType<
+export type SingleChapterType = InferResponseType<
   (typeof honoClient.api.chapters)[":id"]["$get"],
   200
->;
+>["data"];
 
 export const useGetChapterById = (chapterId: string, courseId: string) => {
   const query = useQuery({

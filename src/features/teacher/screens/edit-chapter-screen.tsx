@@ -4,9 +4,16 @@ import { IconBadge } from "@/components/icon-badge";
 import { Link, Skeleton } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import { LuArrowLeft, LuEye, LuLayoutDashboard, LuVideo } from "react-icons/lu";
+import {
+  LuArrowLeft,
+  LuBookDown,
+  LuEye,
+  LuLayoutDashboard,
+  LuVideo,
+} from "react-icons/lu";
 import { ChapterAccessSettingsForm } from "../components/chapter/chapter-access-settings-form";
 import { ChapterActions } from "../components/chapter/chapter-actions";
+import { ChapterContentForm } from "../components/chapter/chapter-content-form";
 import { ChapterDescriptionForm } from "../components/chapter/chapter-description-form";
 import { ChapterTitleForm } from "../components/chapter/chapter-title-form";
 import { ChapterVideoForm } from "../components/chapter/chapter-video-form";
@@ -134,6 +141,20 @@ export const EditChapterScreen = ({ params }: Props) => {
                   title: chapterTranslation.title,
                   isFree: chapter.isFree,
                   courseId: chapter.courseId,
+                }}
+              />
+            </div>
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={LuBookDown} />
+                <h2 className="md:text-xl text-lg">{t("contentLabel")}</h2>
+              </div>
+              <ChapterContentForm
+                initialData={{
+                  chapterId: chapter.id,
+                  content: chapter.content,
+                  courseId: chapter.courseId,
+                  title: chapterTranslation.title,
                 }}
               />
             </div>
