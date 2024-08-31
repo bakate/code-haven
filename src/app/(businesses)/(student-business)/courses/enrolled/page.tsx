@@ -1,7 +1,7 @@
-import { AllStudentCoursesReportingScreen } from "@/features/student/screens/all-enrolled-courses.screen";
+import { AllStudentEnrolledCoursesScreen } from "@/features/student/screens/all-enrolled-courses.screen";
 
 const CoursesPage = () => {
-  return <AllStudentCoursesReportingScreen />;
+  return <AllStudentEnrolledCoursesScreen />;
 };
 
 export default CoursesPage;

@@ -40,7 +40,7 @@ const LearningDashboardLayout = ({
           isAuthenticated={isAuthenticatedStudent}
         />
       </div>
-      <main className="md:pl-80 pt-[80px] h-full max-w-7xl mx-auto px-4">
+      <main className="md:pl-80 pt-[80px] h-full max-w-7xl 2xl:max-w-screen-2xl mx-auto px-4">
         {children}
       </main>
     </div>

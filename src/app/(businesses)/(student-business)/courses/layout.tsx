@@ -50,7 +50,7 @@ const StudentCoursesLayout = ({ children }: { children: React.ReactNode }) => {
             isAuthenticated={isAuthenticatedStudent}
           />
         </div>
-        <main className="md:max-2xl:pl-60 pt-[80px] h-full max-w-screen-xl mx-auto">
+        <main className="md:pl-60 pt-[80px] h-full max-w-screen-xl 2xl:max-w-screen-2xl mx-auto px-4">
           {children}
         </main>
       </div>
