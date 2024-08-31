@@ -169,6 +169,13 @@
       "when": 1725085392870,
       "tag": "0023_panoramic_liz_osborn",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1725102372656,
+      "tag": "0024_perpetual_scorpion",
+      "breakpoints": true
     }
   ]
 }

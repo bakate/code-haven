@@ -23,6 +23,7 @@ export const chapter = pgTable("chapter", {
   isPublished: boolean("is_published").default(false).notNull(),
   isFree: boolean("is_free").default(true).notNull(),
   position: integer("position").notNull(),
+  content: text("content"),
   muxDataId: text("mux_data_id"),
   videoUrl: text("video_url"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
