@@ -12,10 +12,10 @@ import {
 import { ImageResizer, handleCommandNavigation } from "novel/extensions";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 
-import { useState } from "react";
+import { useMemo } from "react";
 import { defaultExtensions } from "./extensions";
 
-import { cn } from "@/lib/utils";
+import { cn, safeJSONParse } from "@/lib/utils";
 import { EditorMenuWithContent } from "./editor-menu";
 import { uploadFn } from "./image-upload";
 import { slashCommand, suggestionItems } from "./slash-command";
@@ -49,11 +49,12 @@ export const NovelEditor = ({
   setEditor,
   teacherView,
 }: EditorProps) => {
-  const [saveStatus, setSaveStatus] = useState("saved");
-  const [charsCount, setCharsCount] = useState();
+  const initialContent = useMemo(() => {
+    if (!content) return defaultEditorContent;
 
-  const initialContent = content ? JSON.parse(content) : defaultEditorContent;
-
+    const parsedContent = safeJSONParse(content);
+    return parsedContent ?? defaultEditorContent;
+  }, [content]);
   if (!initialContent) return null;
 
   return (
@@ -75,10 +76,6 @@ export const NovelEditor = ({
           attributes: {
             class: `prose prose-lg prose-headings:font-title font-default focus:outline-none max-w-full`,
           },
-        }}
-        onUpdate={({ editor }) => {
-          setSaveStatus("unSaved");
-          // onChange(editor.getJSON());
         }}
         onCreate={({ editor }) => {
           if (setEditor) {

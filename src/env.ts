@@ -19,6 +19,7 @@ const schema = z.object({
   MUX_TOKEN_ID: z.string(),
   MUX_TOKEN_SECRET: z.string(),
   MUX_WEBHOOK_SECRET: z.string(),
+  BLOB_READ_WRITE_TOKEN: z.string(),
 });
 
 const validEnv = schema.safeParse(process.env);
