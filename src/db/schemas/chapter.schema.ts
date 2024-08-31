@@ -9,6 +9,7 @@ import {
 import { course } from "./course.schema";
 import { muxData } from "./mux.schema";
 import { lessonProgression } from "./progression.schema";
+import { attachment } from "./attachment.schema";
 
 const languageEnum = ["en-us", "fr", "es", "de", "it"] as const;
 
@@ -39,6 +40,7 @@ export const chapterRelations = relations(chapter, ({ one, many }) => ({
     references: [muxData.id],
   }),
   lessonProgressions: many(lessonProgression),
+  attachments: many(attachment),
 }));
 
 export const chapterTranslation = pgTable("chapter_translation", {
