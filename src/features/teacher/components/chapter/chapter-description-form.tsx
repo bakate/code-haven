@@ -92,6 +92,7 @@ export const ChapterDescriptionForm = ({ initialData }: Props) => {
                     label={t("descriptionLabel")}
                     placeholder={t("descriptionPlaceholder")}
                     isInvalid={!!fieldState.error}
+                    isRequired
                     errorMessage={fieldState.error?.message}
                   />
                 )}

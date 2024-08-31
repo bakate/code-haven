@@ -82,6 +82,7 @@ export const ChapterTitleForm = ({ initialData }: Props) => {
                   <Input
                     {...field}
                     label={t("titleLabel")}
+                    isRequired
                     placeholder={t("titlePlaceholder")}
                     isInvalid={!!fieldState.error}
                     errorMessage={fieldState.error?.message}
