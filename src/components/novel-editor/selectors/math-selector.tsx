@@ -1,0 +1,37 @@
+"use client";
+import { cn } from "@/lib/utils";
+import { Button } from "@nextui-org/react";
+
+import { useEditor } from "novel";
+import { LuSigma } from "react-icons/lu";
+
+export const MathSelector = () => {
+  const { editor } = useEditor();
+
+  if (!editor) return null;
+
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      className="w-12 rounded-none"
+      onClick={(evt) => {
+        if (editor.isActive("math")) {
+          editor.chain().focus().unsetLatex().run();
+        } else {
+          const { from, to } = editor.state.selection;
+          const latex = editor.state.doc.textBetween(from, to);
+
+          if (!latex) return;
+
+          editor.chain().focus().setLatex({ latex }).run();
+        }
+      }}
+    >
+      <LuSigma
+        className={cn("size-4", { "text-blue-500": editor.isActive("math") })}
+        strokeWidth={2.3}
+      />
+    </Button>
+  );
+};
