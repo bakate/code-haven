@@ -20,7 +20,11 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), nextui()],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    nextui(),
+  ],
 } satisfies Config;
 
 export default withUt(config);
