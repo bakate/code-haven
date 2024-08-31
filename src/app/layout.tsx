@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getLocale, getMessages } from "next-intl/server";
 import { Providers } from "../providers/providers";
 import "./globals.css";
+import "./prosemirror.css";
 
 export const metadata: Metadata = {
   title: "Code Haven",
