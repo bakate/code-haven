@@ -36,7 +36,7 @@ export const CourseSidebarItem = ({
       radius="none"
       className={cn(
         `
-        w-full justify-start
+        w-full justify-start mb-2
       `,
         isActive ? "border-r-3 border-r-primary-500 text-primary-500" : "",
         isCompleted ? "text-success-500 border-r-3 border-r-success-500" : ""

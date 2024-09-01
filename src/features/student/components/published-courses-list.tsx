@@ -24,9 +24,11 @@ export const PublishedCoursesList = () => {
     );
   }
   if (!data) {
+    // TODO rework this
     return <div>No data</div>;
   }
   if (!categories) {
+    // TODO rework this
     return <div>No categories</div>;
   }
   if (data.length === 0) {

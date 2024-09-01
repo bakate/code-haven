@@ -42,6 +42,7 @@ export const EditChapterScreen = ({ params }: Props) => {
   const locale = useLocale();
   const t = useTranslations("createOrEditCourseForm");
   if (isError) {
+    // TODO rework this
     return <div>Error</div>;
   }
   if (isFetching) {

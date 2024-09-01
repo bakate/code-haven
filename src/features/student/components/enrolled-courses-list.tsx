@@ -19,6 +19,7 @@ export const EnrolledCoursesList = ({}: Props) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   if (isLoading || loadingCategories) {
+    // TODO rework this
     return <div>Loading...</div>;
   }
 
@@ -27,9 +28,11 @@ export const EnrolledCoursesList = ({}: Props) => {
   }
 
   if (!data) {
+    // TODO rework this
     return <div>No data</div>;
   }
   if (!categories) {
+    // TODO rework this
     return <div>No categories</div>;
   }
 

@@ -20,7 +20,11 @@ const CoursePreviewPage = ({ params: { courseId } }: Props) => {
   const t = useTranslations("coursesList");
 
   if (isLoading) return <Loading />;
-  if (!course) return <div>No data</div>;
+
+  if (!course) {
+    // TODO rework this
+    return <div>No data</div>;
+  }
 
   return (
     <div className="grid lg:grid-cols-5 gap-4 lg:gap-8 pb-24">

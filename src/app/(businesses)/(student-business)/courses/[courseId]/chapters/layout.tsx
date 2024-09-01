@@ -1,9 +1,26 @@
 "use client";
 import { CourseSidebar } from "@/features/student/components/course-sidebar";
+import {
+  SingleCourse,
+  useGetSingleCourseById,
+} from "@/features/student/data/use-get-single-course-by-id";
 import NavbarComponent from "@/features/teacher/components/navbar";
 import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
+import { LuPlayCircle } from "react-icons/lu";
+
+// return an array of object with label:string, href:string and icon:IconType
+const formatRoutes = (course: SingleCourse, locale: string) => {
+  return course.chapters.map((chapter) => ({
+    label:
+      chapter.chapterTranslations.find(
+        (translation) => translation.lang === locale
+      )?.title ?? "",
+    href: `/courses/${course.id}/chapters/${chapter.id}`,
+    icon: LuPlayCircle,
+  }));
+};
 
 const LearningDashboardLayout = ({
   children,
@@ -13,8 +30,14 @@ const LearningDashboardLayout = ({
   params: { courseId: string };
 }) => {
   const session = useSession();
-
+  const { data: course } = useGetSingleCourseById(courseId);
+  const locale = useLocale();
   const t = useTranslations("Navigation");
+  if (!course) {
+    // TODO rework this
+    return <div>Course not found</div>;
+  }
+
   if (session?.status === "loading") {
     return "";
   }
@@ -24,11 +47,13 @@ const LearningDashboardLayout = ({
     redirect("/");
   }
 
+  const routes = formatRoutes(course, locale);
+
   return (
     <div className="h-[100dvh]">
       <div className=" fixed inset-y-0 w-full">
         <NavbarComponent
-          routes={[]}
+          routes={routes}
           isTeacherPage={false}
           isLearning={true}
           isAuthenticated={isAuthenticatedStudent}

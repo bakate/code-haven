@@ -57,9 +57,11 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     return <CourseSkeleton />;
   }
   if (isError) {
+    // TODO rework this
     return <div>Error</div>;
   }
   if (!course) {
+    // TODO rework this
     return <div>No data</div>;
   }
 
