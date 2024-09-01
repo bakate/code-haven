@@ -3,7 +3,7 @@ import NavbarComponent from "@/features/teacher/components/navbar";
 import { Sidebar } from "@/features/teacher/components/sidebar";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { FiBarChart2, FiCompass, FiLayout, FiList } from "react-icons/fi";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
@@ -13,6 +13,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const isPlayerPage = pathname?.includes("/player");
   const session = useSession();
   const isAuthenticated = session.status === "authenticated";
+
+  if (!isAuthenticated) {
+    redirect("/");
+  }
 
   const t = useTranslations("Navigation");
 

@@ -1,8 +1,6 @@
-import { protectServer } from "@/features/auth/utils/auth-utils";
 import { TeacherCoursesScreen } from "@/features/teacher/screens/teacher-courses-screen";
 
 const CoursesPage = async () => {
-  await protectServer();
   return (
     <div className="flex flex-col gap-4">
       <TeacherCoursesScreen />

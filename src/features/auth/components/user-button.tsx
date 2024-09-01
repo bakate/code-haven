@@ -71,7 +71,7 @@ export const UserButton = () => {
     // },
     {
       label: t("logout"),
-      href: "/logout",
+      href: "/",
       icon: FiLogOut,
       type: "logout",
     },
