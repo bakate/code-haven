@@ -1,16 +1,18 @@
 "use client";
+import { HoverEffect } from "@/components/card-hover-effect";
 import { useGetCategories } from "@/features/teacher/data/use-get-categories";
 import { Card, CardBody } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { useGetPublishedCourses } from "../data/use-get-published-courses";
 import { CourseCard } from "./course-card";
 import { CourseCardSkeleton } from "./course-card-skeleton";
 
-type Props = {};
-export const PublishedCoursesList = ({}: Props) => {
+export const PublishedCoursesList = () => {
   const { data, isLoading } = useGetPublishedCourses();
   const { data: categories, isLoading: loadingCategories } = useGetCategories();
   const t = useTranslations("Navigation");
+  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   if (isLoading || loadingCategories) {
     return (
@@ -41,12 +43,17 @@ export const PublishedCoursesList = ({}: Props) => {
   }
 
   return (
-    <div className="grid  sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-6 p-3">
-      {data.map((course) => {
-        return (
-          <CourseCard key={course.id} course={course} categories={categories} />
-        );
-      })}
+    <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-8 mt-6 p-3 py-10">
+      {data.map((course, idx) => (
+        <HoverEffect
+          key={`${course.id}-${idx}`}
+          idx={idx}
+          hoveredIndex={hoveredIndex}
+          onHover={setHoveredIndex}
+        >
+          <CourseCard course={course} categories={categories} />
+        </HoverEffect>
+      ))}
     </div>
   );
 };

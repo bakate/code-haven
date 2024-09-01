@@ -2,8 +2,10 @@
 import { Card, CardBody } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 
+import { HoverEffect } from "@/components/card-hover-effect";
 import { Heading } from "@/components/heading";
 import { useGetCategories } from "@/features/teacher/data/use-get-categories";
+import { useState } from "react";
 import { LuBookOpenCheck, LuCheck, LuClock } from "react-icons/lu";
 import { useGetEnrolledCourses } from "../data/use-get-enrolled-courses";
 import { CourseCard } from "./course-card";
@@ -14,6 +16,7 @@ export const EnrolledCoursesList = ({}: Props) => {
   const t = useTranslations("studentCoursesReporting");
   const { data, isLoading, error } = useGetEnrolledCourses();
   const { data: categories, isLoading: loadingCategories } = useGetCategories();
+  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   if (isLoading || loadingCategories) {
     return <div>Loading...</div>;
@@ -67,7 +70,7 @@ export const EnrolledCoursesList = ({}: Props) => {
   return (
     <div>
       <Heading description={t("pageDescription")}>{t("title")}</Heading>
-      <div className="space-y-6 mt-8">
+      <div className="space-y-14 mt-8">
         <div className="grid sm:grid-cols-3 gap-4">
           <InfoCard
             icon={LuBookOpenCheck}
@@ -86,17 +89,24 @@ export const EnrolledCoursesList = ({}: Props) => {
           />
         </div>
 
-        <div className="grid  sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-6 p-3">
-          {data.map((course) => {
+        <div className="grid  sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-8 mt-6 p-3">
+          {data.map((course, idx) => {
             return (
-              <CourseCard
-                key={course.id}
-                course={{
-                  ...course,
-                  userProgress: course.userProgress.progressPercentage,
-                }}
-                categories={categories}
-              />
+              <HoverEffect
+                key={`${course.id}-${idx}`}
+                idx={idx}
+                hoveredIndex={hoveredIndex}
+                onHover={setHoveredIndex}
+              >
+                <CourseCard
+                  key={course.id}
+                  course={{
+                    ...course,
+                    userProgress: course.userProgress.progressPercentage,
+                  }}
+                  categories={categories}
+                />
+              </HoverEffect>
             );
           })}
         </div>

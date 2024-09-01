@@ -32,7 +32,7 @@ export const CourseCard = ({ course, categories }: Props) => {
   return (
     <Card
       shadow="md"
-      className="group"
+      className="group relative z-20 h-full w-full hover:scale-105 transition"
       isPressable
       onPress={() => router.push(`/preview/${course.id}`)}
     >
@@ -41,7 +41,6 @@ export const CourseCard = ({ course, categories }: Props) => {
           shadow="sm"
           radius="none"
           width="100%"
-          isZoomed
           alt={translatedTitle}
           className="w-full object-cover h-[150px]"
           src={course.imageUrl ?? ""}
