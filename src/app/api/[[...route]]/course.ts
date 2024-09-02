@@ -144,12 +144,7 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
         course.id,
         courseEnrollment.courseId,
         courseEnrollment.enrolledAt
-        // courseTranslation.title,
-        // courseTranslation.lang,
-        // courseTranslation.description,
-        // attachment.url
       );
-
     return c.json({
       data: enrolledCourses,
     });

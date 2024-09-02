@@ -16,7 +16,7 @@ export const PublishedCoursesList = () => {
 
   if (isLoading || loadingCategories) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-6 p-3">
+      <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 sm:gap-8 gap-4  mt-6 p-3">
         {Array.from({ length: 8 }).map((_, index) => {
           return <CourseCardSkeleton key={index} />;
         })}

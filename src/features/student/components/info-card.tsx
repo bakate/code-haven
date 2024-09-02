@@ -1,5 +1,5 @@
 import { IconBadge } from "@/components/icon-badge";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Skeleton } from "@nextui-org/react";
 import { IconType } from "react-icons/lib";
 
 type Props = {
@@ -23,6 +23,22 @@ export const InfoCard = ({
         <div className="flex justify-between">
           <p className="font-medium">{label}</p>
           <p className="text-sm text-gray-500">{numberOfItems}</p>
+        </div>
+      </CardBody>
+    </Card>
+  );
+};
+
+export const InfoCardSkeleton = () => {
+  return (
+    <Card className="max-w-[400px]">
+      <CardHeader>
+        <Skeleton className="w-10 h-10 rounded-full" />
+      </CardHeader>
+      <CardBody>
+        <div className="flex justify-between">
+          <Skeleton className="w-1/2 h-5 rounded-lg" />
+          <Skeleton className="w-1/4 h-5 rounded-lg" />
         </div>
       </CardBody>
     </Card>

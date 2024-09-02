@@ -9,18 +9,17 @@ import { useState } from "react";
 import { LuBookOpenCheck, LuCheck, LuClock } from "react-icons/lu";
 import { useGetEnrolledCourses } from "../data/use-get-enrolled-courses";
 import { CourseCard } from "./course-card";
-import { InfoCard } from "./info-card";
+import { CourseCardSkeleton } from "./course-card-skeleton";
+import { InfoCard, InfoCardSkeleton } from "./info-card";
 
-type Props = {};
-export const EnrolledCoursesList = ({}: Props) => {
+export const EnrolledCoursesList = () => {
   const t = useTranslations("studentCoursesReporting");
   const { data, isLoading, error } = useGetEnrolledCourses();
   const { data: categories, isLoading: loadingCategories } = useGetCategories();
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   if (isLoading || loadingCategories) {
-    // TODO rework this
-    return <div>Loading...</div>;
+    return <EnrolledCoursesListSkeleton />;
   }
 
   if (error) {
@@ -113,6 +112,23 @@ export const EnrolledCoursesList = ({}: Props) => {
             );
           })}
         </div>
+      </div>
+    </div>
+  );
+};
+
+const EnrolledCoursesListSkeleton = () => {
+  return (
+    <div className="space-y-14 mt-8">
+      <div className="grid sm:grid-cols-3 gap-4">
+        {Array.from({ length: 3 }).map((_, idx) => (
+          <InfoCardSkeleton key={idx} />
+        ))}
+      </div>
+      <div className="grid  sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-8 mt-6 p-3">
+        {Array.from({ length: 8 }).map((_, idx) => (
+          <CourseCardSkeleton key={idx} />
+        ))}
       </div>
     </div>
   );
