@@ -11,7 +11,13 @@ export type RequestType = InferRequestType<
   (typeof honoClient.api.attachments)[":id"]["$delete"]
 >["param"];
 
-export const useDeleteAttachmentById = (courseId: string) => {
+export const useDeleteAttachmentById = ({
+  courseId,
+  chapterId,
+}: {
+  courseId?: string;
+  chapterId?: string;
+}) => {
   const queryClient = useQueryClient();
   return useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
@@ -20,7 +26,8 @@ export const useDeleteAttachmentById = (courseId: string) => {
           id: json.id,
         },
         json: {
-          courseId,
+          courseId: courseId ?? null,
+          chapterId: chapterId ?? null,
         },
       });
       if (!response.ok) {
@@ -32,6 +39,9 @@ export const useDeleteAttachmentById = (courseId: string) => {
       toast.success(response.message);
       queryClient.invalidateQueries({
         queryKey: ["teacher", { courseId }],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["chapter", { chapterId }],
       });
     },
     onError: (error) => {

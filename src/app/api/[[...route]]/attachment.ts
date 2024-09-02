@@ -7,7 +7,7 @@ import {
 
 import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";
-import { and, eq } from "drizzle-orm";
+import { and, eq, or } from "drizzle-orm";
 import { Hono } from "hono";
 import { getTranslations } from "next-intl/server";
 
@@ -21,6 +21,7 @@ const app = new Hono()
         courseId: true,
         url: true,
         name: true,
+        chapterId: true,
       })
     ),
     async (c) => {
@@ -30,7 +31,11 @@ const app = new Hono()
       }
       const translations = await getTranslations("createOrEditCourseForm");
       const values = c.req.valid("json");
-      if (!values.url || !values.name || !values.courseId) {
+      if (
+        !values.url ||
+        !values.name ||
+        (!values.chapterId && !values.courseId)
+      ) {
         throw c.json({ error: "Missing required fields" } as const, 422);
       }
 
@@ -56,6 +61,7 @@ const app = new Hono()
       "json",
       selectAttachmentSchema.pick({
         courseId: true,
+        chapterId: true,
       })
     ),
     async (c) => {
@@ -68,8 +74,8 @@ const app = new Hono()
       if (!attachmentId) {
         throw c.json({ error: "Missing required attachment ID" } as const, 422);
       }
-      const { courseId } = c.req.valid("json");
-      if (!courseId) {
+      const { courseId, chapterId } = c.req.valid("json");
+      if (!courseId && !chapterId) {
         throw c.json({ error: "Missing required course ID" } as const, 422);
       }
       const [deletedAttachment] = await db
@@ -77,7 +83,8 @@ const app = new Hono()
         .where(
           and(
             eq(attachment.id, attachmentId),
-            eq(attachment.courseId, courseId)
+            courseId ? eq(attachment.courseId, courseId) : undefined,
+            chapterId ? eq(attachment.chapterId, chapterId) : undefined
           )
         )
         .returning();

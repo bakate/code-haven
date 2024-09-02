@@ -77,6 +77,7 @@
     "courseAttachments": "Course attachments",
     "addFile": "Add a file",
     "noAttachmentsYet": "No attachments yet",
+    "chapterAttachments": "Chapter attachments",
     "addAnything": "Add anything your students might need to complete the course",
     "priceLabel": "Price",
     "createChapters": "Create chapters",
@@ -178,7 +179,8 @@
     "chapterCompleted": "Chapter completed 💪",
     "completeAndContinue": "Complete and continue",
     "completeCourse": "Complete course",
-    "courseProgress": "Course progress"
+    "courseProgress": "Course progress",
+    "attachments": "Attachments"
   },
   "studentCoursesReporting": {
     "title": "My courses",

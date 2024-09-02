@@ -24,6 +24,9 @@ export const useCreateAttachment = () => {
         queryClient.invalidateQueries({
           queryKey: ["teacher", { courseId: data.courseId }],
         });
+        queryClient.invalidateQueries({
+          queryKey: ["chapter", { chapterId: data.chapterId }],
+        });
         toast.success(message);
       }
     },

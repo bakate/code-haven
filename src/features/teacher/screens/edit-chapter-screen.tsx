@@ -25,6 +25,7 @@ import {
   useGetChapterById,
   useVideoStatus,
 } from "../data/use-get-chapter-by-id";
+import { ChapterAttachmentsForm } from "../components/chapter/chapter-attachments-form";
 
 type Props = {
   params: {
@@ -172,6 +173,15 @@ export const EditChapterScreen = ({ params }: Props) => {
                 title: chapterTranslation.title,
                 courseId: chapter.courseId,
                 videoStatus: videoStatus ?? null,
+              }}
+            />
+          </div>
+          <div>
+            <ChapterAttachmentsForm
+              initialData={{
+                chapterId: chapter.id,
+                attachments: chapter.attachments,
+                title: chapterTranslation.title,
               }}
             />
           </div>

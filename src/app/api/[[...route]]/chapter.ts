@@ -1,5 +1,6 @@
 import { db } from "@/db/drizzle";
 import {
+  attachment,
   chapter,
   chapterTranslation,
   lessonProgression,
@@ -422,6 +423,28 @@ const app = new Hono()
         AND (otherProgression.id IS NULL OR otherProgression.is_completed = FALSE)
     ) = 0 THEN true ELSE false END
          `,
+          attachments: sql<
+            Array<{
+              id: string;
+              name: string;
+              url: string;
+            }>
+          >`
+       COALESCE(
+    (
+      SELECT jsonb_agg(
+        jsonb_build_object(
+          'id', attachment.id,
+          'name', attachment.name,
+          'url', attachment.url
+        )
+      )
+      FROM ${attachment} attachment
+      WHERE attachment.chapter_id = ${chapterId} AND attachment.id IS NOT NULL
+    ),
+    '[]'::jsonb
+  )
+       `,
         })
         .from(chapter)
         .leftJoin(
@@ -429,6 +452,7 @@ const app = new Hono()
           eq(chapter.id, chapterTranslation.chapterId)
         )
         .leftJoin(muxData, eq(muxData.chapterId, chapterId))
+        .leftJoin(attachment, eq(attachment.chapterId, chapterId))
         .leftJoin(
           lessonProgression,
           and(

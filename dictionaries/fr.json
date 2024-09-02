@@ -78,6 +78,7 @@
     "courseAttachments": "Pièces jointes du cours",
     "addFile": "Ajoute un fichier",
     "noAttachmentsYet": "Pas encore de pièces jointes",
+    "chapterAttachments": "Pièces jointes du chapitre",
     "addAnything": "Ajoute tout ce dont tes étudiants pourraient avoir besoin pour compléter le cours",
     "createChapters": "Créer des chapitres",
     "addChapterTitle": "Ajouter un titre de chapitre",
@@ -178,7 +179,8 @@
     "chapterCompleted": "Chapitre terminé 💪",
     "completeAndContinue": "Terminer et continuer",
     "completeCourse": "Terminer le cours",
-    "courseProgress": "Progression du cours"
+    "courseProgress": "Progression du cours",
+    "attachments": "Pièces jointes"
   },
   "studentCoursesReporting": {
     "title": "Mes cours",

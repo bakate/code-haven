@@ -3,17 +3,19 @@
 import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { ImCancelCircle } from "react-icons/im";
 import { LuFile, LuLoader2, LuPencil, LuPlus, LuX } from "react-icons/lu";
+
+import { Heading } from "@/components/heading";
+import { ImCancelCircle } from "react-icons/im";
 import { useMedia } from "react-use";
-import { useCreateAttachment } from "../data/use-create-attachment";
-import { useDeleteAttachmentById } from "../data/use-delete-attachment";
-import FileUpload from "./file-upload";
-import { FormContainer } from "./form-container";
+import { useCreateAttachment } from "../../data/use-create-attachment";
+import { useDeleteAttachmentById } from "../../data/use-delete-attachment";
+import FileUpload from "../file-upload";
+import { FormContainer } from "../form-container";
 
 type Props = {
   initialData: {
-    courseId: string;
+    chapterId: string;
     imageUrl?: string;
     title: string;
     attachments: {
@@ -24,10 +26,12 @@ type Props = {
   };
 };
 
-export const AttachmentsForm = ({ initialData }: Props) => {
+export const ChapterAttachmentsForm = ({ initialData }: Props) => {
   const { mutate, isPending } = useCreateAttachment();
   const { mutate: deleteMutation, isPending: isDeleting } =
-    useDeleteAttachmentById({ courseId: initialData.courseId });
+    useDeleteAttachmentById({
+      chapterId: initialData.chapterId,
+    });
   const [isEditing, setIsEditing] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const toggleEditing = () => setIsEditing((prev) => !prev);
@@ -40,9 +44,9 @@ export const AttachmentsForm = ({ initialData }: Props) => {
   const onSubmit = ({ url, name }: { url: string; name: string }) => {
     mutate(
       {
-        courseId: initialData.courseId,
         name,
         url,
+        chapterId: initialData.chapterId,
       },
       {
         onSuccess: () => {
@@ -68,7 +72,7 @@ export const AttachmentsForm = ({ initialData }: Props) => {
   return (
     <FormContainer>
       <div className="font-medium flex items-center justify-between">
-        Course attachments
+        <Heading level="h3">{t("chapterAttachments")}</Heading>
         <Button
           variant="ghost"
           color="primary"
