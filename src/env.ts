@@ -10,8 +10,6 @@ const schema = z.object({
   AUTH_RESEND_KEY: z.string(),
   AUTH_GITHUB_ID: z.string(),
   AUTH_GITHUB_SECRET: z.string(),
-  AUTH_TWITTER_ID: z.string(),
-  AUTH_TWITTER_SECRET: z.string(),
   RESEND_FROM_EMAIL: z.string(),
   MICROSOFT_TRANSLATOR_KEY: z.string(),
   NEXT_PUBLIC_APP_URL: z.string(),
