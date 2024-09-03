@@ -1,5 +1,16 @@
 import { Footer } from "@/components/footer";
 
+import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations("loginForm");
+  return {
+    title: t("pageTitle"),
+    description: t("pageDescription"),
+  };
+};
+
 export default function AuthScreenLayout({
   children,
 }: {

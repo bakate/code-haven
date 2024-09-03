@@ -23,6 +23,8 @@
     "sign_in": "Sign In"
   },
   "loginForm": {
+    "pageTitle": "Sign in",
+    "pageDescription": "Sign in to your account to continue",
     "title": "Code Haven",
     "subtitle": "Connect to your account to continue",
     "emailLabel": "Email address",
@@ -39,6 +41,8 @@
     "copyright": "© 2024 Code Haven. All rights reserved."
   },
   "createOrEditCourseForm": {
+    "pageTitle": "Create|Edit course",
+    "pageDescription": "Create or edit a course by an instructor",
     "title": "Name your course",
     "titleDescription": "What would you like to name your course? Don't worry, you can change this later.",
     "min_error": "The title is too short.",
@@ -139,6 +143,8 @@
     "addContent": "Add content"
   },
   "teacherCourseById": {
+    "title": "Course",
+    "description": "Course created by an instructor",
     "loading": "Loading...",
     "error": "Error",
     "noData": "No data",
@@ -157,6 +163,14 @@
     "courseDeletedSuccessfully": "Course deleted successfully",
     "courseDeletedError": "Error deleting course"
   },
+  "teacherCourses": {
+    "title": "Courses",
+    "description": "Courses created by an instructor"
+  },
+  "teacherCourseByIdChapterPage": {
+    "title": "Chapter",
+    "description": "Chapter created by an instructor"
+  },
   "notFound": {
     "title": "Page not found",
     "description": "The page you are looking for does not exist.",
@@ -171,6 +185,8 @@
     "startWatching": "start watching"
   },
   "studentCourseById": {
+    "title": "Course",
+    "description": "Course page with a specific chapter",
     "loading": "Loading...",
     "error": "Error",
     "noData": "No data",
@@ -193,5 +209,13 @@
     "totalCourses": "Total courses",
     "totalChapters": "Total chapters",
     "totalDuration": "Total duration"
+  },
+  "home": {
+    "title": "Code Haven",
+    "description": "a learning platform for future developers"
+  },
+  "legal": {
+    "pageTitle": "Terms of Service",
+    "pageDescription": "Terms of Service for Code Haven"
   }
 }

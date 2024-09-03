@@ -23,6 +23,8 @@
     "sign_in": "Se connecter"
   },
   "loginForm": {
+    "pageTitle": "Se connecter",
+    "pageDescription": "Se connecter à ton compte pour continuer",
     "title": "Code Haven",
     "subtitle": "Connecte-toi à ton compte pour continuer.",
     "emailLabel": "Adresse e-mail",
@@ -39,6 +41,8 @@
     "copyright": "© 2024 Code Haven. Tous droits réservés."
   },
   "createOrEditCourseForm": {
+    "pageTitle": "Créer|Modifier un cours",
+    "pageDescription": "Créer ou modifier un cours par un enseignant",
     "title": "Titre du cours",
     "titleDescription": "Comment souhaites-tu nommer ton cours ? Ne t'inquiète pas, tu pourras changer cela plus tard.",
     "titleLabel": "titre",
@@ -139,6 +143,8 @@
     "addContent": "Ajouter du contenu"
   },
   "teacherCourseById": {
+    "title": "Cours",
+    "description": "Page du cours créé par un enseignant",
     "loading": "Chargement...",
     "error": "Erreur",
     "noData": "Pas de données",
@@ -157,6 +163,14 @@
     "courseDeletedSuccessfully": "Cours supprimé avec succès",
     "courseDeletedError": "Erreur lors de la suppression du cours"
   },
+  "teacherCourses": {
+    "title": "Cours",
+    "description": "Courses created by an instructor"
+  },
+  "teacherCourseByIdChapterPage": {
+    "title": "Chapitre",
+    "description": "Chapitre créé par un enseignant"
+  },
   "notFound": {
     "title": "Page non trouvée",
     "description": "La page que tu cherches n'existe pas.",
@@ -171,6 +185,8 @@
     "startWatching": "commence à regarder"
   },
   "studentCourseById": {
+    "title": "Cours",
+    "description": "Page du cours avec un chapitre spécifique",
     "loading": "Chargement...",
     "error": "Erreur",
     "noData": "Pas de données",
@@ -193,5 +209,17 @@
     "totalCourses": "Total de cours",
     "totalChapters": "Total de chapitres",
     "totalDuration": "Durée totale"
+  },
+  "home": {
+    "title": "Code Haven",
+    "description": "une plateforme d'apprentissage pour les futurs développeurs"
+  },
+  "coursePreview": {
+    "title": "Prévisualisation du cours",
+    "description": "Prévisualise le cours avant de le commencer"
+  },
+  "legal": {
+    "pageTitle": "Conditions d'utilisation",
+    "pageDescription": "Conditions d'utilisation pour Code Haven"
   }
 }

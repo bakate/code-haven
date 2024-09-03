@@ -1,15 +1,10 @@
 import { auth } from "@/auth";
 import { cn, customFont } from "@/lib/utils";
-import type { Metadata } from "next";
+
 import { getLocale, getMessages } from "next-intl/server";
 import { Providers } from "../providers/providers";
 import "./globals.css";
 import "./prosemirror.css";
-
-export const metadata: Metadata = {
-  title: "Code Haven",
-  description: "a learning platform for future developers",
-};
 
 export default async function RootLayout({
   children,
