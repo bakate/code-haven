@@ -3,8 +3,7 @@
 import { CategoryList } from "../components/category-list";
 import { PublishedCoursesList } from "../components/published-courses-list";
 
-type Props = {};
-export const AllCoursesScreen = ({}: Props) => {
+export const AllCoursesScreen = () => {
   return (
     <div>
       <CategoryList />

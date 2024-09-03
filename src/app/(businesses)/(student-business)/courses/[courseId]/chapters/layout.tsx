@@ -1,14 +1,18 @@
 "use client";
-import { CourseSidebar } from "@/features/student/components/course-sidebar";
+import {
+  CourseSidebar,
+  CourseSidebarSkeleton,
+} from "@/features/student/components/course-sidebar";
 import {
   SingleCourse,
   useGetSingleCourseById,
 } from "@/features/student/data/use-get-single-course-by-id";
 import NavbarComponent from "@/features/teacher/components/navbar";
 import { useSession } from "next-auth/react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { redirect } from "next/navigation";
 import { LuPlayCircle } from "react-icons/lu";
+import Loading from "./loading";
 
 // return an array of object with label:string, href:string and icon:IconType
 const formatRoutes = (course: SingleCourse, locale: string) => {
@@ -30,12 +34,23 @@ const LearningDashboardLayout = ({
   params: { courseId: string };
 }) => {
   const session = useSession();
-  const { data: course } = useGetSingleCourseById(courseId);
+  const { data: course, isLoading } = useGetSingleCourseById(courseId);
   const locale = useLocale();
-  const t = useTranslations("Navigation");
+
+  if (isLoading) {
+    return (
+      <div className="h-[100dvh]">
+        <div className="hidden md:grid w-80 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
+          <CourseSidebarSkeleton />
+        </div>
+        <div className="md:pl-80 pt-[80px] h-full max-w-7xl 2xl:max-w-screen-2xl mx-auto px-4">
+          <Loading />
+        </div>
+      </div>
+    );
+  }
   if (!course) {
-    // TODO rework this
-    return <div>Course not found</div>;
+    return <div />;
   }
 
   if (session?.status === "loading") {

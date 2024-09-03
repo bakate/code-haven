@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@nextui-org/react";
+import { Button, Skeleton } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import { LuCheckCircle, LuLock, LuPlayCircle } from "react-icons/lu";
 
@@ -48,5 +48,13 @@ export const CourseSidebarItem = ({
       <span className="text-sm">{label}</span>
       <p className="text-xs text-right flex-1">{duration}</p>
     </Button>
+  );
+};
+
+export const CourseSidebarItemSkeleton = () => {
+  return (
+    <div className="w-full justify-start mb-2">
+      <Skeleton className="w-full h-10" />
+    </div>
   );
 };

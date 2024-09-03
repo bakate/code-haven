@@ -12,7 +12,10 @@ import {
 } from "../data/use-get-single-course-by-id";
 import { Category } from "../types/category.type";
 import { formatSeconds } from "../utils/format-seconds";
-import { CourseSidebarItem } from "./course-sidebar-item";
+import {
+  CourseSidebarItem,
+  CourseSidebarItemSkeleton,
+} from "./course-sidebar-item";
 
 type Props = {
   courseId: string;
@@ -119,6 +122,22 @@ export const CourseSidebar = ({ courseId, isAuthenticated }: Props) => {
       <div className="flex justify-center items-center px-2 gap-x-3">
         <LocalSwitcherSelect />
         {isAuthenticated ? <UserButton /> : null}
+      </div>
+    </div>
+  );
+};
+
+export const CourseSidebarSkeleton = () => {
+  return (
+    <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-2">
+      <div className="w-full h-16 flex items-center px-2">
+        <Logo />
+        <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
+      </div>
+      <div className="w-full h-16 pt-4 pl-2">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <CourseSidebarItemSkeleton key={i} />
+        ))}
       </div>
     </div>
   );
