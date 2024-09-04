@@ -8,7 +8,7 @@ export const CategoryList = () => {
   const categoriesQuery = useGetCategories();
   if (!categoriesQuery.data) return null;
   return (
-    <div className="flex items-center gap-x-2 overflow-x-auto py-2">
+    <div className="flex items-center gap-x-2 overflow-x-auto py-2 justify-start md:justify-center">
       {categoriesQuery.data.map((category) => (
         <CategoryItem
           key={category.id}

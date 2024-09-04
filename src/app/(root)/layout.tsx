@@ -68,7 +68,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <main
         className={cn(
           "pt-[80px] md:pl-[21.5rem] h-full max-w-screen-xl 2xl:max-w-screen-2xl px-4",
-          !routes.length ? "mx-auto md:pl-4" : ""
+          !routes.length ? "mx-auto md:pl-0" : ""
         )}
       >
         {children}
