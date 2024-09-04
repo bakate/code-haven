@@ -72,7 +72,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main
         className={cn(
-          "pt-[80px] md:pl-60 h-full max-w-screen-xl 2xl:max-w-screen-2xl mx-auto px-4 sm:px-0"
+          "pt-[80px] md:pl-[21.5rem] h-full max-w-screen-xl 2xl:max-w-screen-2xl px-4 sm:px-0"
         )}
       >
         {children}

@@ -48,17 +48,12 @@ export default function NavbarComponent({
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         className="sm:hidden"
       />
-      <NavbarContent
-        as="div"
-        justify="center"
-        className="hidden md:flex flex-1"
-      ></NavbarContent>
 
       {!isLearning ? (
         <NavbarContent
           as="div"
           justify="center"
-          className=" sm:flex gap-4 lg:flex-[3] md:flex-[2]"
+          className="sm:flex flex-1 sm:pl-56 lg:pl-80"
         >
           <NavbarItem className="flex-1 flex">
             <SearchInput />

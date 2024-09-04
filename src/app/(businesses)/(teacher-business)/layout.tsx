@@ -4,7 +4,7 @@ import { Sidebar } from "@/features/teacher/components/sidebar";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { redirect, usePathname } from "next/navigation";
-import { FiBarChart2, FiCompass, FiLayout, FiList } from "react-icons/fi";
+import { FiCompass, FiLayout, FiList } from "react-icons/fi";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -38,11 +38,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       href: "/teacher/courses",
       icon: FiList,
     },
-    {
-      label: t("analytics"),
-      href: "/teacher/analytics",
-      icon: FiBarChart2,
-    },
+    // {
+    //   label: t("analytics"),
+    //   href: "/teacher/analytics",
+    //   icon: FiBarChart2,
+    // },
   ];
 
   const routes = isTeacherPage ? teacherRoutes : guestRoutes;
