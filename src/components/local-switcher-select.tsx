@@ -1,11 +1,15 @@
 import { Locale } from "@/i18n-config";
+import { cn } from "@/lib/utils";
 import { setUserLocale } from "@/services/locale";
 import { Avatar, Select, SelectItem } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChangeEvent, useState, useTransition } from "react";
 import { LuGlobe } from "react-icons/lu";
 
-export const LocalSwitcherSelect = () => {
+type Props = {
+  className?: string;
+};
+export const LocalSwitcherSelect = ({ className }: Props) => {
   const locale = useLocale();
 
   const [isPending, startTransition] = useTransition();
@@ -32,7 +36,7 @@ export const LocalSwitcherSelect = () => {
 
   return (
     <Select
-      className="hidden md:max-w-40 md:block"
+      className={cn("hidden md:max-w-40 md:block", className)}
       color="primary"
       variant="flat"
       selectedKeys={[value]}

@@ -1,12 +1,13 @@
 "use client";
-import { Card, CardBody } from "@nextui-org/react";
+import { Button, Card, CardBody } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 
 import { HoverEffect } from "@/components/card-hover-effect";
 import { Heading } from "@/components/heading";
 import { useGetCategories } from "@/features/teacher/data/use-get-categories";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { LuBookOpenCheck, LuCheck, LuClock } from "react-icons/lu";
+import { LuBookOpenCheck, LuCheck, LuClock, LuCompass } from "react-icons/lu";
 import { useGetEnrolledCourses } from "../data/use-get-enrolled-courses";
 import { CourseCard } from "./course-card";
 import { CourseCardSkeleton } from "./course-card-skeleton";
@@ -16,6 +17,7 @@ export const EnrolledCoursesList = () => {
   const t = useTranslations("studentCoursesReporting");
   const { data, isLoading, error } = useGetEnrolledCourses();
   const { data: categories, isLoading: loadingCategories } = useGetCategories();
+  const router = useRouter();
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   if (isLoading || loadingCategories) {
@@ -37,14 +39,22 @@ export const EnrolledCoursesList = () => {
 
   if (data.length === 0) {
     return (
-      <Card
-        shadow="md"
-        className="group hover:scale-105 transition overflow-hidden border mt-7 h-28 md:h-64"
-      >
-        <CardBody className="h-full grid place-content-center">
-          <p className="text-gray-500">{t("notStartedAnyCourse")}</p>
-        </CardBody>
-      </Card>
+      <div className="h-[100dvh] grid place-items-center">
+        <Card shadow="md" className="h-28 md:h-64 w-full">
+          <CardBody className="h-full grid place-content-center gap-y-3 justify-items-center">
+            <p className="text-gray-500">{t("notStartedAnyCourse")}</p>
+            <Button
+              color="primary"
+              variant="flat"
+              className="w-52 items-center"
+              onPress={() => router.push("/")}
+              startContent={<LuCompass />}
+            >
+              {t("ctaLabel")}
+            </Button>
+          </CardBody>
+        </Card>
+      </div>
     );
   }
 

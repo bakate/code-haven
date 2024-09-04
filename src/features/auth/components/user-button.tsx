@@ -13,6 +13,7 @@ import { useTranslations } from "next-intl";
 import { FiLoader, FiLogOut } from "react-icons/fi";
 import { IconType } from "react-icons/lib";
 import { LuHome, LuLogIn } from "react-icons/lu";
+import { useMedia } from "react-use";
 
 type ItemProps = {
   label: string;
@@ -23,6 +24,7 @@ type ItemProps = {
 
 export const UserButton = () => {
   const t = useTranslations("Navigation");
+  const isTablet = useMedia("(min-width: 640px)", false);
   const session = useSession();
 
   if (session?.status === "loading") {
@@ -37,10 +39,11 @@ export const UserButton = () => {
           href="/sign-in"
           variant="light"
           color="primary"
+          isIconOnly={!isTablet}
           startContent={<LuLogIn />}
           title={t("sign_in")}
         >
-          {t("sign_in")}
+          {isTablet ? t("sign_in") : null}
         </Button>
       </div>
     );
@@ -59,16 +62,6 @@ export const UserButton = () => {
       href: "/",
       icon: LuHome,
     },
-    // {
-    //   label: t("settings"),
-    //   href: "/settings",
-    //   icon: FiSettings,
-    // },
-    // {
-    //   label: t("billing_subscription"),
-    //   href: "/billing",
-    //   icon: FiCreditCard,
-    // },
     {
       label: t("logout"),
       href: "/",

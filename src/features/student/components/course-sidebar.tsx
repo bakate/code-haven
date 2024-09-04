@@ -1,10 +1,11 @@
 "use client";
 
+import { MoveBackButton } from "@/components/go-back-button";
 import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 import { Logo } from "@/components/logo";
 import { UserButton } from "@/features/auth/components/user-button";
 import { useGetCategories } from "@/features/teacher/data/use-get-categories";
-import { Link, Progress } from "@nextui-org/react";
+import { Progress } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import {
   SingleCourse,
@@ -81,12 +82,10 @@ export const CourseSidebar = ({ courseId, isAuthenticated }: Props) => {
 
   return (
     <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-2">
-      <Link color="foreground" href="/" isBlock className="w-full h-16">
-        <Logo />
-        <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
-      </Link>
+      <Logo />
 
       <div className="pt-4">
+        <MoveBackButton className="pl-2" />
         <h1 className="font-semibold pt-3 pb-4 px-2">
           {courseWithTranslations.title}
         </h1>
@@ -130,9 +129,8 @@ export const CourseSidebar = ({ courseId, isAuthenticated }: Props) => {
 export const CourseSidebarSkeleton = () => {
   return (
     <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-2">
-      <div className="w-full h-16 flex items-center px-2">
+      <div className="px-2">
         <Logo />
-        <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
       </div>
       <div className="w-full h-16 pt-4 pl-2">
         {Array.from({ length: 6 }).map((_, i) => (

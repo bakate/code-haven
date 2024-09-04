@@ -19,10 +19,7 @@ export const Sidebar = ({ routes, isAuthenticated }: Props) => {
   }
   return (
     <div className="h-screen grid grid-rows-[auto_1fr_auto] pb-4">
-      <Link color="foreground" href="/" isBlock className="w-full h-16">
-        <Logo />
-        <p className="font-bold text-inherit text-[#007DFC] ml-2">Code Haven</p>
-      </Link>
+      <Logo />
 
       <div className="mt-4">
         {routes.map((route) => (

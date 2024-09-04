@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { FiBarChart2, FiCompass, FiList } from "react-icons/fi";
+import { FiBarChart2, FiList } from "react-icons/fi";
+import { LuCompass, LuList } from "react-icons/lu";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -19,25 +20,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isAuthenticated = session?.status === "authenticated";
 
-  const guestRoutes = [
-    {
-      label: t("browse"),
-      href: "/",
-      icon: FiCompass,
-    },
-  ];
-
-  // TODO to rework
   const studentRoutes = [
     {
       label: t("browse"),
       href: "/",
-      icon: FiCompass,
+      icon: LuCompass,
     },
     {
       label: t("my_courses"),
       href: "/courses/enrolled",
-      icon: FiList,
+      icon: LuList,
     },
   ];
   const teacherRoutes = [
@@ -57,7 +49,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     ? teacherRoutes
     : isAuthenticated
     ? studentRoutes
-    : guestRoutes;
+    : [];
+
   return (
     <div className="h-[100dvh]">
       <div className=" fixed inset-y-0 w-full">
@@ -67,12 +60,15 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           isAuthenticated={isAuthenticated}
         />
       </div>
-      <div className="hidden md:grid w-56 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
-        <Sidebar routes={routes} isAuthenticated={isAuthenticated} />
-      </div>
+      {routes.length ? (
+        <div className="hidden md:grid w-56 fixed inset-y-0 z-50 bg-slate-50 dark:bg-slate-900">
+          <Sidebar routes={routes} isAuthenticated={isAuthenticated} />
+        </div>
+      ) : null}
       <main
         className={cn(
-          "pt-[80px] md:pl-[21.5rem] h-full max-w-screen-xl 2xl:max-w-screen-2xl px-4 sm:px-0"
+          "pt-[80px] md:pl-[21.5rem] h-full max-w-screen-xl 2xl:max-w-screen-2xl px-4",
+          !routes.length ? "mx-auto md:pl-4" : ""
         )}
       >
         {children}

@@ -3,14 +3,10 @@ import NavbarComponent from "@/features/teacher/components/navbar";
 import { Sidebar } from "@/features/teacher/components/sidebar";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { redirect, usePathname } from "next/navigation";
-import { FiCompass, FiLayout, FiList } from "react-icons/fi";
+import { redirect } from "next/navigation";
+import { LuBarChart2, LuList } from "react-icons/lu";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname();
-
-  const isTeacherPage = pathname?.startsWith("/teacher");
-  const isPlayerPage = pathname?.includes("/player");
   const session = useSession();
   const isAuthenticated = session.status === "authenticated";
 
@@ -20,38 +16,25 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const t = useTranslations("Navigation");
 
-  const guestRoutes = [
-    {
-      label: t("dashboard"),
-      href: "/",
-      icon: FiLayout,
-    },
-    {
-      label: t("browse"),
-      href: "/search",
-      icon: FiCompass,
-    },
-  ];
-  const teacherRoutes = [
+  const routes = [
     {
       label: t("courses"),
       href: "/teacher/courses",
-      icon: FiList,
+      icon: LuList,
     },
-    // {
-    //   label: t("analytics"),
-    //   href: "/teacher/analytics",
-    //   icon: FiBarChart2,
-    // },
+    {
+      label: t("analytics"),
+      href: "/teacher/analytics",
+      icon: LuBarChart2,
+    },
   ];
 
-  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
   return (
     <div className="h-[100dvh]">
       <div className=" fixed inset-y-0 w-full">
         <NavbarComponent
           routes={routes}
-          isTeacherPage={isTeacherPage || isPlayerPage || false}
+          isTeacherPage={true}
           isAuthenticated={isAuthenticated}
         />
       </div>

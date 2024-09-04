@@ -2,13 +2,17 @@
 
 import { useMedia } from "react-use";
 
+import { LocalSwitcherSelect } from "@/components/local-switcher-select";
+import { Logo } from "@/components/logo";
 import { SearchInput } from "@/components/search-input";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { UserButton } from "@/features/auth/components/user-button";
+import { cn } from "@/lib/utils";
 import {
   Button,
   Link,
   Navbar,
+  NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenu,
@@ -41,19 +45,34 @@ export default function NavbarComponent({
   return (
     <Navbar
       maxWidth="full"
+      isBordered
+      shouldHideOnScroll
       onMenuOpenChange={setIsMenuOpen}
       isMenuOpen={isMenuOpen}
     >
-      <NavbarMenuToggle
-        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        className="sm:hidden"
-      />
+      {isAuthenticated ? (
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+      ) : null}
+      {!isAuthenticated ? (
+        <NavbarBrand className="hidden md:block">
+          <Logo />
+        </NavbarBrand>
+      ) : null}
 
-      {!isLearning ? (
+      {!isLearning && !isTeacherPage ? (
         <NavbarContent
           as="div"
           justify="center"
-          className="sm:flex flex-1 sm:pl-56 lg:pl-80"
+          className={cn(
+            "sm:flex flex-1",
+            isAuthenticated ? "sm:pl-56 lg:pl-80" : ""
+            // !routes.length
+            //   ? "md:pl-[20rem] 2xl:pl-[32rem] flex-[3] sm:pl-5"
+            //   : ""
+          )}
         >
           <NavbarItem className="flex-1 flex">
             <SearchInput />
@@ -88,24 +107,34 @@ export default function NavbarComponent({
         ) : (
           <UserButton />
         )}
-        {!isTablet ? <UserButton /> : null}
+        {/* {!isTablet ? <UserButton /> : null} */}
+        {!isAuthenticated ? (
+          <LocalSwitcherSelect className="md:max-w-36" />
+        ) : null}
         <ThemeSwitcher />
       </NavbarContent>
       <NavbarMenu className="dark:bg-slate-900">
-        {routes.map((route, index) => (
-          <NavbarMenuItem key={`${route}-${index}`}>
-            <Button
-              as={Link}
-              className="w-full justify-start"
-              href={route.href}
-              variant="light"
-              startContent={<route.icon />}
-              onPress={() => setIsMenuOpen(false)}
-            >
-              {route.label}
-            </Button>
-          </NavbarMenuItem>
-        ))}
+        <div className="grid grid-rows-[auto_1fr_auto] pb-12 h-full">
+          <Logo />
+
+          <div>
+            {routes.map((route, index) => (
+              <NavbarMenuItem key={`${route}-${index}`}>
+                <Button
+                  as={Link}
+                  className="w-full justify-start"
+                  href={route.href}
+                  variant="light"
+                  startContent={<route.icon />}
+                  onPress={() => setIsMenuOpen(false)}
+                >
+                  {route.label}
+                </Button>
+              </NavbarMenuItem>
+            ))}
+          </div>
+          <UserButton />
+        </div>
       </NavbarMenu>
     </Navbar>
   );
