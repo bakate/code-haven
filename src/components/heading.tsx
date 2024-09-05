@@ -15,7 +15,9 @@ export const Heading = ({
   const Tag = level;
   return (
     <div className="flex flex-col gap-2">
-      <Tag className={cn("text-2xl font-semibold", className)}>{children}</Tag>
+      <Tag className={cn("text-lg md:text-2xl font-semibold", className)}>
+        {children}
+      </Tag>
       {description && <p className="text-gray-500">{description}</p>}
     </div>
   );

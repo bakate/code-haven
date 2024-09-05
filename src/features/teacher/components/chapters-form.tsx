@@ -11,9 +11,8 @@ import { useForm } from "react-hook-form";
 
 import { useRouter } from "next/navigation";
 import { FiPlus } from "react-icons/fi";
-import { useMedia } from "react-use";
-import { LuFilePlus, LuPencil } from "react-icons/lu";
 import { ImCancelCircle } from "react-icons/im";
+import { useMedia } from "react-use";
 import { useCreateChapter } from "../data/use-create-chapter";
 import { useReorderChapters } from "../data/use-reorder-chapters";
 import {
@@ -83,7 +82,7 @@ export const ChaptersForm = ({ initialData }: Props) => {
   };
   return (
     <FormContainer>
-      <div className="font-medium flex items-center justify-between">
+      <div className="font-medium flex items-center justify-between pb-2">
         {t("createChapters")}
         <Button
           variant="ghost"

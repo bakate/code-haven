@@ -2,19 +2,21 @@
 
 import useClientCheck from "@/hooks/use-client-check";
 
+import { Heading } from "@/components/heading";
+import { IconBadge } from "@/components/icon-badge";
 import MuxPlayer from "@mux/mux-player-react";
 import { Button, CircularProgress } from "@nextui-org/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { memo, useEffect, useReducer } from "react";
-import { FaPencil, FaPlus, FaVideo } from "react-icons/fa6";
-import { LuPencil, LuPlus } from "react-icons/lu";
+import { FaVideo } from "react-icons/fa6";
 import { ImCancelCircle } from "react-icons/im";
+import { LuPencil, LuPlus, LuVideo } from "react-icons/lu";
+import { useMedia } from "react-use";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { SelectMuxDataType } from "../../types/mux.type";
 import FileUpload from "../file-upload";
 import { FormContainer } from "../form-container";
-import { useMedia } from "react-use";
 
 type Props = {
   initialData: {
@@ -158,43 +160,50 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
   }
 
   return (
-    <FormContainer>
-      <div className="font-medium flex items-center justify-between">
-        {t("chapterVideo")}
-        <Button
-          variant="ghost"
-          color="primary"
-          isIconOnly={!isTablet}
-          onPress={() =>
-            dispatch({ type: "SET_EDITING", payload: !state.isEditing })
-          }
-          disabled={state.isLoading || isPending}
-          startContent={getButtonStartIcon(state.isEditing, state.playbackId)}
-        >
-          {getButtonContent(state.isEditing, state.playbackId, isTablet)}
-        </Button>
-      </div>
+    <div>
+      <di className="flex items-center gap-x-2">
+        <IconBadge icon={LuVideo} />
+        <Heading>{t("addVideo")}</Heading>
+      </di>
 
-      {state.isLoading ? (
-        <Loader
-          withLabel={Boolean(initialData.videoStatus === "processing")}
-          label={t("videoProcessing")}
-        />
-      ) : state.isEditing ? (
-        <>
-          <FileUpload endpoint="chapterVideo" onChange={handleFileUpload} />
-          <div className="text-small mt-4 text-slate-500 dark:text-slate-200">
-            {t("uploadInstruction", { size: 512 })}
-          </div>
-        </>
-      ) : (
-        <VideoDisplay
-          playbackId={state.playbackId}
-          courseId={initialData.courseId}
-          title={initialData.title}
-        />
-      )}
-    </FormContainer>
+      <FormContainer>
+        <div className="font-medium flex items-center justify-between">
+          {t("chapterVideo")}
+          <Button
+            variant="ghost"
+            color="primary"
+            isIconOnly={!isTablet}
+            onPress={() =>
+              dispatch({ type: "SET_EDITING", payload: !state.isEditing })
+            }
+            disabled={state.isLoading || isPending}
+            startContent={getButtonStartIcon(state.isEditing, state.playbackId)}
+          >
+            {getButtonContent(state.isEditing, state.playbackId, isTablet)}
+          </Button>
+        </div>
+
+        {state.isLoading ? (
+          <Loader
+            withLabel={Boolean(initialData.videoStatus === "processing")}
+            label={t("videoProcessing")}
+          />
+        ) : state.isEditing ? (
+          <>
+            <FileUpload endpoint="chapterVideo" onChange={handleFileUpload} />
+            <div className="text-small mt-4 text-slate-500 dark:text-slate-200">
+              {t("uploadInstruction", { size: 512 })}
+            </div>
+          </>
+        ) : (
+          <VideoDisplay
+            playbackId={state.playbackId}
+            courseId={initialData.courseId}
+            title={initialData.title}
+          />
+        )}
+      </FormContainer>
+    </div>
   );
 };
 

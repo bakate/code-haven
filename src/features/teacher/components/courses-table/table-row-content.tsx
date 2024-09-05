@@ -120,9 +120,6 @@ export const TableRowContent = ({
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="courses table Actions" variant="flat">
-              <DropdownItem key="view" startContent={<LuEye />}>
-                {t("view")}
-              </DropdownItem>
               <DropdownItem
                 key="edit"
                 startContent={<LuPencil />}

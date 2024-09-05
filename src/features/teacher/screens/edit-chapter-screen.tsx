@@ -1,18 +1,12 @@
 "use client";
 import { Banner } from "@/components/banner";
-import { IconBadge } from "@/components/icon-badge";
+import { Heading } from "@/components/heading";
 import { Link, Skeleton } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import {
-  LuArrowLeft,
-  LuBookDown,
-  LuEye,
-  LuLayoutDashboard,
-  LuVideo,
-} from "react-icons/lu";
-import { ChapterAccessSettingsForm } from "../components/chapter/chapter-access-settings-form";
+import { LuArrowLeft, LuLayoutDashboard, LuVideo } from "react-icons/lu";
 import { ChapterActions } from "../components/chapter/chapter-actions";
+import { ChapterAttachmentsForm } from "../components/chapter/chapter-attachments-form";
 import { ChapterContentForm } from "../components/chapter/chapter-content-form";
 import { ChapterDescriptionForm } from "../components/chapter/chapter-description-form";
 import { ChapterTitleForm } from "../components/chapter/chapter-title-form";
@@ -25,7 +19,6 @@ import {
   useGetChapterById,
   useVideoStatus,
 } from "../data/use-get-chapter-by-id";
-import { ChapterAttachmentsForm } from "../components/chapter/chapter-attachments-form";
 
 type Props = {
   params: {
@@ -89,14 +82,14 @@ export const EditChapterScreen = ({ params }: Props) => {
               {t("backToCourseSetup")}
             </Link>
             <div className="flex items-center justify-between w-full">
-              <div className="flex flex-col gap-y-2">
-                <h1 className="text-xl md:text-2xl font-medium">
-                  {t("chapterCreation")}
-                </h1>
-                <span className="text-small text-slate-700 dark:text-slate-200">
-                  {t("completeAllFields")} {completionText}
-                </span>
-              </div>
+              <Heading
+                className="text-2xl md:text-3xl"
+                level="h1"
+                description={`${t("completeAllFields")} ${completionText}`}
+              >
+                {t("chapterCreation")}
+              </Heading>
+
               <ChapterActions
                 disabled={!isComplete || isFetching}
                 courseId={params.courseId}
@@ -106,66 +99,41 @@ export const EditChapterScreen = ({ params }: Props) => {
             </div>
           </div>
         </div>
+        {/* main layout */}
+        <div className="grid gap-6 mt-16 lg:grid-cols-2 lg:grid-rows-3 pb-2 lg:pb-8">
+          {/* Title and description */}
+          <div className="row-span-1 lg:row-span-3 lg:space-y-12">
+            {/* <div className="space-y-2 h-64">
+              <div className="lg:row-span-3 row-span-1 grid items-stretch"> */}
+            <ChapterTitleForm
+              initialData={{
+                chapterId: chapter.id,
+                title: chapterTranslation.title,
+                courseId: chapter.courseId,
+              }}
+            />
 
-        <div className="grid md:grid-cols-2 gap-6 mt-16">
-          <div className="space-y-6">
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={LuLayoutDashboard} />
-                <h2 className="md:text-xl text-lg">
-                  {t("customizeYourChapter")}
-                </h2>
-              </div>
-              <ChapterTitleForm
-                initialData={{
-                  chapterId: chapter.id,
-                  title: chapterTranslation.title,
-                  courseId: chapter.courseId,
-                }}
-              />
-              <ChapterDescriptionForm
-                initialData={{
-                  chapterId: chapter.id,
-                  description: chapterTranslation.description,
-                  courseId: chapter.courseId,
-                  title: chapterTranslation.title,
-                }}
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={LuEye} />
-                <h2 className="md:text-xl text-lg">{t("accessSettings")}</h2>
-              </div>
-              <ChapterAccessSettingsForm
-                initialData={{
-                  chapterId: chapter.id,
-                  title: chapterTranslation.title,
-                  isFree: chapter.isFree,
-                  courseId: chapter.courseId,
-                }}
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={LuBookDown} />
-                <h2 className="md:text-xl text-lg">{t("contentLabel")}</h2>
-              </div>
-              <ChapterContentForm
-                initialData={{
-                  chapterId: chapter.id,
-                  content: chapter.content,
-                  courseId: chapter.courseId,
-                  title: chapterTranslation.title,
-                }}
-              />
-            </div>
+            <ChapterDescriptionForm
+              initialData={{
+                chapterId: chapter.id,
+                description: chapterTranslation.description,
+                courseId: chapter.courseId,
+                title: chapterTranslation.title,
+              }}
+            />
+            <ChapterAttachmentsForm
+              initialData={{
+                chapterId: chapter.id,
+                attachments: chapter.attachments,
+                title: chapterTranslation.title,
+              }}
+            />
+            {/* </div>
+            </div> */}
           </div>
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={LuVideo} />
-              <h2 className="md:text-xl text-lg">{t("addVideo")}</h2>
-            </div>
+
+          {/* Video and attachments */}
+          <div className="row-span-2 lg:row-span-3">
             <ChapterVideoForm
               initialData={{
                 chapterId: chapter.id,
@@ -176,11 +144,14 @@ export const EditChapterScreen = ({ params }: Props) => {
               }}
             />
           </div>
-          <div>
-            <ChapterAttachmentsForm
+
+          {/* Content */}
+          <div className="row-span-2 lg:col-span-2  w-full">
+            <ChapterContentForm
               initialData={{
                 chapterId: chapter.id,
-                attachments: chapter.attachments,
+                content: chapter.content,
+                courseId: chapter.courseId,
                 title: chapterTranslation.title,
               }}
             />

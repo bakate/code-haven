@@ -54,7 +54,7 @@ export const CreateCourseFormSchema = (
         (value) => {
           if (value) {
             const price = parseFloat(value);
-            return price > 0;
+            return price >= 0;
           }
           return true;
         },

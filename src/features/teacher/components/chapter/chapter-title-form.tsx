@@ -2,11 +2,14 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { Heading } from "@/components/heading";
+import { IconBadge } from "@/components/icon-badge";
 import { Form, FormField } from "@/components/ui/form";
 import { Button, CircularProgress, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { LuLayoutDashboard } from "react-icons/lu";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { CourseFormType, CreateCourseFormSchema } from "../../types";
 import { FormContainer } from "../form-container";
@@ -48,57 +51,63 @@ export const ChapterTitleForm = ({ initialData }: Props) => {
     });
   };
   return (
-    <FormContainer>
-      <div className="font-medium flex items-center justify-between">
-        {t("courseTitle")}
-
-        <ToggleButton
-          isEditing={isEditing}
-          toggleEditing={toggleEditing}
-          isPending={isPending}
-          editingContent={t("cancel")}
-          readonlyContent={t("editTitle")}
-        />
+    <div>
+      <div className="flex items-center gap-x-2 row-span-1">
+        <IconBadge icon={LuLayoutDashboard} />
+        <Heading>{t("customizeYourChapter")}</Heading>
       </div>
-      {!isEditing ? (
-        <p className="text-small mt-2">{initialData.title}</p>
-      ) : null}
-      {isEditing ? (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
-          >
-            {isPending ? (
-              <div className="flex justify-center items-center">
-                <CircularProgress color="primary" />
-              </div>
-            ) : (
-              <FormField
-                control={form.control}
-                name="title"
-                disabled={isPending}
-                render={({ field, fieldState }) => (
-                  <Input
-                    {...field}
-                    label={t("titleLabel")}
-                    isRequired
-                    placeholder={t("titlePlaceholder")}
-                    isInvalid={!!fieldState.error}
-                    errorMessage={fieldState.error?.message}
-                  />
-                )}
-              />
-            )}
+      <FormContainer>
+        <div className="font-medium flex items-center justify-between">
+          {t("courseTitle")}
 
-            <div className="flex items-center gap-x2">
-              <Button type="submit" color="primary" disabled={isPending}>
-                {t("saveChange")}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      ) : null}
-    </FormContainer>
+          <ToggleButton
+            isEditing={isEditing}
+            toggleEditing={toggleEditing}
+            isPending={isPending}
+            editingContent={t("cancel")}
+            readonlyContent={t("editTitle")}
+          />
+        </div>
+        {!isEditing ? (
+          <p className="text-small mt-2">{initialData.title}</p>
+        ) : null}
+        {isEditing ? (
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 mt-4"
+            >
+              {isPending ? (
+                <div className="flex justify-center items-center">
+                  <CircularProgress color="primary" />
+                </div>
+              ) : (
+                <FormField
+                  control={form.control}
+                  name="title"
+                  disabled={isPending}
+                  render={({ field, fieldState }) => (
+                    <Input
+                      {...field}
+                      label={t("titleLabel")}
+                      isRequired
+                      placeholder={t("titlePlaceholder")}
+                      isInvalid={!!fieldState.error}
+                      errorMessage={fieldState.error?.message}
+                    />
+                  )}
+                />
+              )}
+
+              <div className="flex items-center gap-x2">
+                <Button type="submit" color="primary" disabled={isPending}>
+                  {t("saveChange")}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        ) : null}
+      </FormContainer>
+    </div>
   );
 };

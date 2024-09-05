@@ -1,6 +1,7 @@
 "use client";
 
 import { Banner } from "@/components/banner";
+import { Heading } from "@/components/heading";
 import { IconBadge } from "@/components/icon-badge";
 import { Skeleton } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
@@ -21,7 +22,6 @@ import {
 } from "../components/custom-skeletons";
 import { DescriptionForm } from "../components/description-form";
 import { ImageForm } from "../components/image-form";
-import { PriceForm } from "../components/price-form";
 import { TitleForm } from "../components/title-form";
 import { useGetCategories } from "../data/use-get-categories";
 import { useGetSingleCourseByTeacher } from "../data/use-get-single-course-by-teacher";
@@ -75,7 +75,6 @@ export const TeacherCourseById = ({ courseId }: Props) => {
     course.categoryId,
     course.imageUrl,
     course.price,
-    course.attachments,
     course.chapters.some((chapter) => chapter.isPublished),
   ];
 
@@ -89,14 +88,14 @@ export const TeacherCourseById = ({ courseId }: Props) => {
       {!course.isPublished ? <Banner label={t("unpublishedBanner")} /> : null}
       <div className="p-6">
         <div className="flex items-center justify-between">
-          <div className="flex flex-col gap-y-2">
-            <h1 className="text-xl md:text-2xl font-medium">
-              {t("courseSetup")}
-            </h1>
-            <span className="text-sm text-slate-700 dark:text-slate-200">
-              {t("completeAllFields")} {completionText}
-            </span>
-          </div>
+          <Heading
+            level="h1"
+            className="text-2xl md:text-3xl"
+            description={`${t("completeAllFields")} ${completionText}`}
+          >
+            {t("courseSetup")}
+          </Heading>
+
           <CourseActions
             disabled={!isComplete}
             courseId={courseId}
@@ -108,7 +107,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LuLayoutDashboard} />
-              <h2 className="md:text-xl text-lg">{t("customizeYourCourse")}</h2>
+              <Heading>{t("customizeYourCourse")}</Heading>
             </div>
             <TitleForm
               initialData={{
@@ -144,7 +143,7 @@ export const TeacherCourseById = ({ courseId }: Props) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LuListChecks} />
-                <h2 className="md:text-xl text-lg">{t("courseChapters")}</h2>
+                <Heading>{t("courseChapters")}</Heading>
               </div>
               <ChaptersForm
                 initialData={{
@@ -154,23 +153,10 @@ export const TeacherCourseById = ({ courseId }: Props) => {
               />
             </div>
 
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={LuEuro} />
-              <h2 className="md:text-xl text-lg">{t("sellYourCourse")}</h2>
-            </div>
-            <PriceForm
-              initialData={{
-                courseId: course.id,
-                price: course.price ? String(course.price) : undefined,
-                title: translatedTitleAndDescription?.title ?? "",
-              }}
-            />
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LuFile} />
-                <h2 className="md:text-xl text-lg">
-                  {t("resourcesAndAttachments")}
-                </h2>
+                <Heading>{t("resourcesAndAttachments")}</Heading>
               </div>
               <AttachmentsForm
                 initialData={{

@@ -64,7 +64,8 @@ export const NovelEditor = ({
         extensions={extensions}
         initialContent={initialContent}
         className={cn(
-          "border p-4 rounded-xl relative w-full max-w-screen-lg 2xl:max-w-screen-2xl bg-background mt-4 dark:border-slate-700"
+          "border p-4 rounded-xl relative w-full bg-background mt-4 dark:border-slate-700 h-full",
+          teacherView ? "md:min-h-[60dvh] min-h-[30dvh] transition" : ""
         )}
         editorProps={{
           handleDOMEvents: {
@@ -74,7 +75,7 @@ export const NovelEditor = ({
           handleDrop: (view, event, _slice, moved) =>
             handleImageDrop(view, event, moved, uploadFn),
           attributes: {
-            class: `prose prose-lg prose-headings:font-title font-default focus:outline-none max-w-full`,
+            class: `prose prose-lg prose-headings:font-title font-default focus:outline-none max-w-full dark:text-white`,
           },
         }}
         onCreate={({ editor }) => {
@@ -87,7 +88,7 @@ export const NovelEditor = ({
         }}
         slotAfter={<ImageResizer />}
       >
-        <EditorCommand className="z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
+        <EditorCommand className="z-50 h-auto overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
           <EditorCommandEmpty className="px-2 text-muted-foreground">
             No results
           </EditorCommandEmpty>
@@ -96,7 +97,7 @@ export const NovelEditor = ({
               <EditorCommandItem
                 value={item.title}
                 onCommand={(val) => item.command?.(val)}
-                className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent `}
+                className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent hover:cursor-pointer `}
                 key={item.title}
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background">

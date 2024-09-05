@@ -92,7 +92,7 @@ const starterKit = StarterKit.configure({
   codeBlock: {
     HTMLAttributes: {
       class: cx(
-        "rounded-md bg-muted text-muted-foreground p-5 font-mono font-medium"
+        "rounded-md bg-muted text-muted-foreground dark:text-white p-5 font-mono font-medium"
       ),
     },
   },
