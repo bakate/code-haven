@@ -12,7 +12,6 @@ import {
   LuLayoutDashboard,
   LuListChecks,
 } from "react-icons/lu";
-import { AttachmentsForm } from "../components/attachments-form";
 import { CategoryForm } from "../components/category-form";
 import { ChaptersForm } from "../components/chapters-form";
 import { CourseActions } from "../components/course-actions";
@@ -68,14 +67,16 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   const translatedTitleAndDescription = course.titles.find(
     (title) => title.lang === locale
   );
+  const isAtLeastOneChapterPublished = course.chapters.some(
+    (chapter) => chapter.isPublished
+  );
 
   const requiredFields = [
     translatedTitleAndDescription?.title,
     translatedTitleAndDescription?.description,
     course.categoryId,
     course.imageUrl,
-    course.price,
-    course.chapters.some((chapter) => chapter.isPublished),
+    isAtLeastOneChapterPublished,
   ];
 
   const totalFields = requiredFields.length;
@@ -86,86 +87,75 @@ export const TeacherCourseById = ({ courseId }: Props) => {
   return (
     <>
       {!course.isPublished ? <Banner label={t("unpublishedBanner")} /> : null}
-      <div className="p-6">
-        <div className="flex items-center justify-between">
-          <Heading
-            level="h1"
-            className="text-2xl md:text-3xl"
-            description={`${t("completeAllFields")} ${completionText}`}
-          >
-            {t("courseSetup")}
-          </Heading>
 
-          <CourseActions
-            disabled={!isComplete}
-            courseId={courseId}
-            isPublished={course.isPublished}
+      <div className="flex items-center justify-between pb-6">
+        <Heading
+          level="h1"
+          className="text-2xl md:text-3xl"
+          description={`${t("completeAllFields")} ${completionText}`}
+        >
+          {t("courseSetup")}
+        </Heading>
+
+        <CourseActions
+          disabled={!isComplete}
+          courseId={courseId}
+          isPublished={course.isPublished}
+        />
+      </div>
+
+      {!isAtLeastOneChapterPublished ? (
+        <Banner label={t("atLeastOneChapterPublished")} />
+      ) : null}
+
+      <div className="grid md:grid-cols-2 gap-6 mt-16 pb-8">
+        <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={LuLayoutDashboard} />
+            <Heading>{t("customizeYourCourse")}</Heading>
+          </div>
+          <TitleForm
+            initialData={{
+              courseId: course.id,
+              title: translatedTitleAndDescription?.title ?? "",
+            }}
+          />
+          <DescriptionForm
+            initialData={{
+              courseId: course.id,
+              description: translatedTitleAndDescription?.description,
+              title: translatedTitleAndDescription?.title ?? "",
+            }}
+          />
+          <ImageForm
+            initialData={{
+              courseId: course.id,
+              imageUrl: course.imageUrl ?? "",
+              title: translatedTitleAndDescription?.title ?? "",
+            }}
+          />
+
+          <CategoryForm
+            initialData={{
+              courseId: course.id,
+              categoryId: course.categoryId ?? "",
+              title: translatedTitleAndDescription?.title ?? "",
+            }}
+            options={transformedCategories ? transformedCategories() : []}
           />
         </div>
-
-        <div className="grid md:grid-cols-2 gap-6 mt-16">
+        <div className="space-y-6">
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={LuLayoutDashboard} />
-              <Heading>{t("customizeYourCourse")}</Heading>
+              <IconBadge icon={LuListChecks} />
+              <Heading>{t("courseChapters")}</Heading>
             </div>
-            <TitleForm
+            <ChaptersForm
               initialData={{
                 courseId: course.id,
-                title: translatedTitleAndDescription?.title ?? "",
+                chapters: translatedChapters ? translatedChapters() : [],
               }}
             />
-            <DescriptionForm
-              initialData={{
-                courseId: course.id,
-                description: translatedTitleAndDescription?.description,
-                title: translatedTitleAndDescription?.title ?? "",
-              }}
-            />
-            <ImageForm
-              initialData={{
-                courseId: course.id,
-                imageUrl: course.imageUrl ?? "",
-                title: translatedTitleAndDescription?.title ?? "",
-              }}
-            />
-
-            <CategoryForm
-              initialData={{
-                courseId: course.id,
-                categoryId: course.categoryId ?? "",
-                title: translatedTitleAndDescription?.title ?? "",
-              }}
-              options={transformedCategories ? transformedCategories() : []}
-            />
-          </div>
-          <div className="space-y-6">
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={LuListChecks} />
-                <Heading>{t("courseChapters")}</Heading>
-              </div>
-              <ChaptersForm
-                initialData={{
-                  courseId: course.id,
-                  chapters: translatedChapters ? translatedChapters() : [],
-                }}
-              />
-            </div>
-
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={LuFile} />
-                <Heading>{t("resourcesAndAttachments")}</Heading>
-              </div>
-              <AttachmentsForm
-                initialData={{
-                  courseId: course.id,
-                  attachments: course.attachments ?? [],
-                  title: translatedTitleAndDescription?.title ?? "",
-                }}
-              />
-            </div>
           </div>
         </div>
       </div>

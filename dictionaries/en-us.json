@@ -112,7 +112,7 @@
     "uploadInstruction": "Upload this chapter's video. The maximum file size is {size}GB",
     "chapterVideo": "Chapter video",
     "publish": "Publish",
-    "unpublish": "Unpublish",
+    "unpublish": "Draft",
     "unpublished": "Unpublished",
     "delete": "Delete",
     "deleteChapter": "Delete chapter",
@@ -157,11 +157,12 @@
     "sellYourCourse": "Sell your course",
     "resourcesAndAttachments": "Resources and attachments",
     "publish": "Publish",
-    "unpublish": "Unpublish",
+    "unpublish": "Draft",
     "deleteCourse": "Delete course",
     "deleteCourseConfirmation": "Are you sure you want to delete this course? \n\nThis action cannot be undone.",
     "courseDeletedSuccessfully": "Course deleted successfully",
-    "courseDeletedError": "Error deleting course"
+    "courseDeletedError": "Error deleting course",
+    "atLeastOneChapterPublished": "At least one chapter must be published to publish the course"
   },
   "teacherCourses": {
     "title": "Courses",

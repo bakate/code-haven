@@ -32,6 +32,9 @@ export const useEditChapterById = (chapterId: string) => {
         queryClient.invalidateQueries({
           queryKey: ["chapter", { chapterId }],
         });
+        queryClient.invalidateQueries({
+          queryKey: ["teacher", { courseId: data.courseId }],
+        });
       }
       if (data.status === "processing") {
         queryClient.invalidateQueries({

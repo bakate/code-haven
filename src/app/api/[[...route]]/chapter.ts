@@ -21,6 +21,7 @@ import { zValidator } from "@hono/zod-validator";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { getLocale, getTranslations } from "next-intl/server";
+import { json } from "stream/consumers";
 import { z } from "zod";
 
 const app = new Hono()
@@ -206,7 +207,7 @@ const app = new Hono()
       if (!values) {
         throw c.json({ error: "Missing required fields" } as const, 422);
       }
-      if (!values?.courseId) {
+      if (!values.courseId) {
         throw c.json({ error: "Missing required course ID" } as const, 422);
       }
       const [currentLocale, translations] = await Promise.all([
@@ -282,7 +283,7 @@ const app = new Hono()
           translations,
         });
         if (muxResult.status === "error") {
-          return c.json(muxResult);
+          throw c.json(muxResult);
         }
         values.muxDataId = muxResult.muxDataId;
         newPlaybackId = muxResult.playbackId;

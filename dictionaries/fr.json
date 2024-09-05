@@ -112,7 +112,7 @@
     "uploadInstruction": "Télécharge la vidéo de ce chapitre. La taille maximale du fichier est de {size} Go",
     "chapterVideo": "Vidéo du chapitre",
     "publish": "Publier",
-    "unpublish": "Dépublier",
+    "unpublish": "Brouillon",
     "unpublished": "Non publié",
     "delete": "Supprimer",
     "deleteChapter": "Supprimer le chapitre",
@@ -161,7 +161,8 @@
     "deleteCourse": "Supprimer le cours",
     "deleteCourseConfirmation": "Es-tu sûr de vouloir supprimer ce cours ? \n\nCette action est irréversible.",
     "courseDeletedSuccessfully": "Cours supprimé avec succès",
-    "courseDeletedError": "Erreur lors de la suppression du cours"
+    "courseDeletedError": "Erreur lors de la suppression du cours",
+    "atLeastOneChapterPublished": "Au moins un chapitre doit être publié pour publier le cours."
   },
   "teacherCourses": {
     "title": "Cours",
