@@ -61,6 +61,7 @@
     "descriptionPlaceholder": "par ex. 'Ce cours est sur...'",
     "noDescription": "Pas de description",
     "cancel": "Annuler",
+    "status": "état",
     "courseImage": "Image du cours",
     "addImage": "Ajouter une image",
     "editImage": "Modifier l'image",

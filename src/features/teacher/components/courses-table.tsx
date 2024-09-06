@@ -55,7 +55,7 @@ export const CoursesTable = () => {
       { name: "ID", uid: "id", sortable: true },
       { name: t("titleLabel"), uid: "titles", sortable: true },
       { name: t("priceLabel"), uid: "price", sortable: true },
-      { name: t("published"), uid: "isPublished", sortable: true },
+      { name: t("status"), uid: "isPublished", sortable: true },
       { name: t("category"), uid: "categoryId", sortable: true },
       { name: t("actions"), uid: "actions", sortable: false },
     ];

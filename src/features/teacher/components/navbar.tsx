@@ -69,9 +69,6 @@ export default function NavbarComponent({
           className={cn(
             "sm:flex flex-1",
             isAuthenticated ? "sm:pl-56 lg:pl-80" : ""
-            // !routes.length
-            //   ? "md:pl-[20rem] 2xl:pl-[32rem] flex-[3] sm:pl-5"
-            //   : ""
           )}
         >
           <NavbarItem className="flex-1 flex">

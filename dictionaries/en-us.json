@@ -94,6 +94,7 @@
     "published": "Published",
     "draft": "Draft",
     "noChapters": "No chapters",
+    "status": "status",
     "chapterLabel": "Chapter",
     "searchCategory": "Search a category",
     "freePreview": "This chapter is free for preview.",
