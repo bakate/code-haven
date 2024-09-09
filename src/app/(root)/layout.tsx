@@ -4,25 +4,37 @@ import { Sidebar } from "@/features/teacher/components/sidebar";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import qs from "query-string";
+import { useEffect } from "react";
 import { FiBarChart2, FiList } from "react-icons/fi";
 import { LuCompass, LuList } from "react-icons/lu";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() ?? "";
   const session = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const searchParams = useSearchParams();
+  const categories = searchParams?.get("categories") ?? "";
+  const title = searchParams?.get("title") ?? "";
 
-  const categories = searchParams?.get("categories");
-  const title = searchParams?.get("title");
+  useEffect(() => {
+    const url = qs.stringifyUrl(
+      {
+        url: pathname,
+        query: {
+          categories,
+          title,
+        },
+      },
+      {
+        skipEmptyString: true,
+        skipNull: true,
+      }
+    );
+    router.push(url);
+  }, [categories, title, pathname, router]);
 
   const t = useTranslations("Navigation");
   if (session?.status === "loading") {
@@ -89,4 +101,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+export default AppLayout;
