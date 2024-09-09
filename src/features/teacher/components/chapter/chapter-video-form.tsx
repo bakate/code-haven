@@ -161,10 +161,10 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
 
   return (
     <div>
-      <di className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2">
         <IconBadge icon={LuVideo} />
         <Heading>{t("addVideo")}</Heading>
-      </di>
+      </div>
 
       <FormContainer>
         <div className="font-medium flex items-center justify-between">
