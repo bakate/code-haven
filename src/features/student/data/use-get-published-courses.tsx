@@ -10,15 +10,15 @@ export type PublishedCourseType = InferResponseType<
 
 export const useGetPublishedCourses = () => {
   const params = useSearchParams();
-  const categoryId = params?.get("categoryId") || "";
+  const categories = params?.get("categories") || "";
   const title = params?.get("title") || "";
 
   const query = useQuery({
-    queryKey: ["student", { categoryId, title }],
+    queryKey: ["student", { categories, title }],
     queryFn: async () => {
       const response = await honoClient.api.courses.$get({
         query: {
-          categoryId,
+          categories,
           title,
         },
       });

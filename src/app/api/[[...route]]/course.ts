@@ -9,33 +9,29 @@ import {
   lessonProgression,
 } from "@/db/schema";
 import { zValidator } from "@hono/zod-validator";
-import { selectCourseSchema } from "@/features/teacher/types/course.type";
 
-import { and, asc, desc, eq, ilike, sql } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { verifyAuth, getAuthUser } from "@hono/auth-js";
 import { z } from "zod";
 import { selectLessonProgressionSchema } from "@/features/student/types/lesson-pogression.type";
 
+const selectCourseSchema = z.object({
+  categories: z.string().optional(),
+  title: z.string().optional(),
+});
 const app = new Hono()
   .get(
     "/",
-    zValidator(
-      "query",
-      selectCourseSchema
-        .pick({
-          categoryId: true,
-          title: true,
-        })
-        .optional()
-    ),
+    zValidator("query", selectCourseSchema),
 
     async (c) => {
       const session = await getAuthUser(c);
       const userId = session?.user?.id;
 
       const values = c.req.valid("query");
-      const { categoryId = "", title = "" } = values || {};
+      const { categories = "", title = "" } = values || {};
+      const categoryIds = categories ? categories.split(",") : [];
 
       const publishedCourses = await db
         .select({
@@ -71,7 +67,9 @@ json_agg(json_build_object('title', ${courseTranslation.title}, 'lang', ${course
         .where(
           and(
             eq(course.isPublished, true),
-            categoryId ? eq(course.categoryId, categoryId) : undefined,
+            categoryIds.length > 0
+              ? inArray(course.categoryId, categoryIds)
+              : undefined,
             title ? ilike(courseTranslation.title, `%${title}%`) : undefined
           )
         )
