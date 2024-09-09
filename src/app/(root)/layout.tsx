@@ -17,11 +17,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() ?? "";
   const session = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const searchParams = useSearchParams();
 
-  const categories = searchParams?.get("categories") ?? "";
-  const title = searchParams?.get("title") ?? "";
+  const categories = searchParams?.get("categories");
+  const title = searchParams?.get("title");
 
   const t = useTranslations("Navigation");
   if (session?.status === "loading") {
