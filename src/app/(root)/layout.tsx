@@ -4,13 +4,15 @@ import { Sidebar } from "@/features/teacher/components/sidebar";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { FiBarChart2, FiList } from "react-icons/fi";
 import { LuCompass, LuList } from "react-icons/lu";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
   const session = useSession();
+  const router = useRouter();
+  const params = useParams<{ categories: string; title: string }>();
 
   const t = useTranslations("Navigation");
   if (session?.status === "loading") {
