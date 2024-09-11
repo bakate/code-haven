@@ -192,7 +192,7 @@ export const ChapterVideoForm = ({ initialData }: Props) => {
           <>
             <FileUpload endpoint="chapterVideo" onChange={handleFileUpload} />
             <div className="text-small mt-4 text-slate-500 dark:text-slate-200">
-              {t("uploadInstruction", { size: 512 })}
+              {t("uploadInstruction", { size: 1 })}
             </div>
           </>
         ) : (

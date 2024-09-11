@@ -1,7 +1,7 @@
 "use client";
 
 import { ourFileRouter } from "@/app/api/uploadthing/core";
-import { UploadDropzone } from "@/lib/uploadthing";
+import { UploadButton } from "@/lib/uploadthing";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
@@ -11,17 +11,19 @@ type Props = {
 };
 const FileUpload = ({ onChange, endpoint }: Props) => {
   const t = useTranslations("createOrEditCourseForm");
+
   return (
-    <UploadDropzone
-      endpoint={endpoint}
-      content={{
-        label: t("chooseFilesOrDragAndDrop"),
-      }}
-      onClientUploadComplete={(res) => onChange(res?.[0]?.url, res?.[0]?.name)}
-      onUploadError={(error: Error) => {
-        toast.error(`${error?.message}`);
-      }}
-    />
+    <div className="p-10 lg:p-[7.3rem]">
+      <UploadButton
+        endpoint={endpoint}
+        onClientUploadComplete={(res) => {
+          onChange(res?.[0]?.url, res?.[0]?.name);
+        }}
+        onUploadError={(error: Error) => {
+          toast.error(`${error?.message}`);
+        }}
+      />
+    </div>
   );
 };
 
