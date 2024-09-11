@@ -217,7 +217,7 @@ const app = new Hono()
       const usLocale = "en-us";
 
       const updateTranslations = async (field: "title" | "description") => {
-        if (values[field]) {
+        if (values[field] !== undefined && values[field] !== null) {
           const [fieldTranslations] = (await translateText({
             from: currentLocale === usLocale ? "en" : currentLocale,
             texts: [values[field]],
@@ -254,6 +254,12 @@ const app = new Hono()
                   );
               })
             );
+            return c.json({
+              status: "success",
+              message: translations("courseUpdatedSuccessfully"),
+              courseId,
+              chapterId: id,
+            } as const);
           } catch (error) {
             return {
               status: "error",
@@ -263,7 +269,7 @@ const app = new Hono()
         }
       };
 
-      if (values.title || values.description) {
+      if (values.title !== undefined || values.description !== undefined) {
         const updateResults = await Promise.all([
           updateTranslations("title"),
           updateTranslations("description"),
@@ -289,28 +295,31 @@ const app = new Hono()
         newPlaybackId = muxResult.playbackId;
       }
 
-      try {
-        await db
-          .update(chapter)
-          .set({
-            ...values,
-            updatedAt: new Date(),
-          })
-          .where(
-            and(eq(chapter.id, id), eq(chapter.courseId, values.courseId))
-          );
-        return c.json({
-          status: values.videoUrl ? "processing" : "success",
-          message: translations("courseUpdatedSuccessfully"),
-          courseId: values.courseId,
-          chapterId: id,
-          playbackId: newPlaybackId,
-        } as const);
-      } catch (error) {
-        return c.json({
-          status: "error",
-          message: translations("error_message"),
-        } as const);
+      const { title, description, courseId, ...rest } = values;
+      if (rest) {
+        try {
+          await db
+            .update(chapter)
+            .set({
+              ...values,
+              updatedAt: new Date(),
+            })
+            .where(
+              and(eq(chapter.id, id), eq(chapter.courseId, values.courseId))
+            );
+          return c.json({
+            status: values.videoUrl ? "processing" : "success",
+            message: translations("courseUpdatedSuccessfully"),
+            courseId: values.courseId,
+            chapterId: id,
+            playbackId: newPlaybackId,
+          } as const);
+        } catch (error) {
+          return c.json({
+            status: "error",
+            message: translations("error_message"),
+          } as const);
+        }
       }
     }
   )
