@@ -51,7 +51,7 @@ export const ChapterDescriptionForm = ({ initialData }: Props) => {
     });
   };
   return (
-    <FormContainer>
+    <FormContainer warningMode={!initialData.description && !isEditing}>
       <div className="font-medium flex items-center justify-between">
         {t("courseDescription")}
         <ToggleButton
@@ -80,12 +80,16 @@ export const ChapterDescriptionForm = ({ initialData }: Props) => {
           >
             {isPending ? (
               <div className="flex justify-center items-center">
-                <CircularProgress color="primary" />
+                <CircularProgress
+                  color="primary"
+                  aria-label="loading description"
+                />
               </div>
             ) : (
               <FormField
                 control={form.control}
                 name="description"
+                disabled={isPending}
                 render={({ field, fieldState }) => (
                   <Textarea
                     {...field}

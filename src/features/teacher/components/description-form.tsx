@@ -49,7 +49,7 @@ export const DescriptionForm = ({ initialData }: Props) => {
     });
   };
   return (
-    <FormContainer>
+    <FormContainer warningMode={!initialData.description && !isEditing}>
       <div className="font-medium flex items-center justify-between">
         {t("courseDescription")}
         <ToggleButton

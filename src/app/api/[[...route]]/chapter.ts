@@ -257,7 +257,7 @@ const app = new Hono()
             return c.json({
               status: "success",
               message: translations("courseUpdatedSuccessfully"),
-              courseId,
+              courseId: values.courseId,
               chapterId: id,
             } as const);
           } catch (error) {
@@ -295,31 +295,28 @@ const app = new Hono()
         newPlaybackId = muxResult.playbackId;
       }
 
-      const { title, description, courseId, ...rest } = values;
-      if (rest) {
-        try {
-          await db
-            .update(chapter)
-            .set({
-              ...values,
-              updatedAt: new Date(),
-            })
-            .where(
-              and(eq(chapter.id, id), eq(chapter.courseId, values.courseId))
-            );
-          return c.json({
-            status: values.videoUrl ? "processing" : "success",
-            message: translations("courseUpdatedSuccessfully"),
-            courseId: values.courseId,
-            chapterId: id,
-            playbackId: newPlaybackId,
-          } as const);
-        } catch (error) {
-          return c.json({
-            status: "error",
-            message: translations("error_message"),
-          } as const);
-        }
+      try {
+        await db
+          .update(chapter)
+          .set({
+            ...values,
+            updatedAt: new Date(),
+          })
+          .where(
+            and(eq(chapter.id, id), eq(chapter.courseId, values.courseId))
+          );
+        return c.json({
+          status: values.videoUrl ? "processing" : "success",
+          message: translations("courseUpdatedSuccessfully"),
+          courseId: values.courseId,
+          chapterId: id,
+          playbackId: newPlaybackId,
+        } as const);
+      } catch (error) {
+        return c.json({
+          status: "error",
+          message: translations("error_message"),
+        } as const);
       }
     }
   )
