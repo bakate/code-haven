@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Image } from "@nextui-org/react";
+import { Button, Image } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import NextImage from "next/image";
 import { useState } from "react";

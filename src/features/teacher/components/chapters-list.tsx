@@ -8,7 +8,7 @@ import {
   Droppable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { LuGrip, LuPencil } from "react-icons/lu";

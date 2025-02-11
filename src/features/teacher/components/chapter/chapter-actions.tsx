@@ -1,5 +1,5 @@
 import { useConfirm } from "@/hooks/use-confirm";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LuCheck, LuSendHorizonal, LuTrash } from "react-icons/lu";

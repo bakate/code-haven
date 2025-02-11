@@ -1,5 +1,5 @@
 "use client";
-import { Button, Link } from "@nextui-org/react";
+import { Button, Link } from "@heroui/react";
 
 import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 import { Logo } from "@/components/logo";

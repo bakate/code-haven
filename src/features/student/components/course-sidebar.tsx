@@ -5,7 +5,7 @@ import { LocalSwitcherSelect } from "@/components/local-switcher-select";
 import { Logo } from "@/components/logo";
 import { UserButton } from "@/features/auth/components/user-button";
 import { useGetCategories } from "@/features/teacher/data/use-get-categories";
-import { Progress } from "@nextui-org/react";
+import { Progress } from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import {
   SingleCourse,

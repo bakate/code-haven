@@ -9,7 +9,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Tooltip,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { Key } from "react";

@@ -8,7 +8,7 @@ import {
   Chip,
   Image,
   Progress,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LuBookOpen } from "react-icons/lu";

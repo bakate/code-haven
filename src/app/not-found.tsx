@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import useClientCheck from "@/hooks/use-client-check";
-import { Button, Image } from "@nextui-org/react";
+import { Button, Image } from "@heroui/react";
 import { LuArrowLeft } from "react-icons/lu";
 import { useTranslations } from "next-intl";
 

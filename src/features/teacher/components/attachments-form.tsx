@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ImCancelCircle } from "react-icons/im";

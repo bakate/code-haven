@@ -1,4 +1,4 @@
-import { Divider } from "@nextui-org/react";
+import { Divider } from "@heroui/react";
 import { EditorBubble, useEditor } from "novel";
 import { type ReactNode, useEffect, useState } from "react";
 import {

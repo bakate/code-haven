@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 
 import { useEditor } from "novel";
 import { LuSigma } from "react-icons/lu";

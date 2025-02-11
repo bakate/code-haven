@@ -3,7 +3,7 @@
 import { Banner } from "@/components/banner";
 import { VideoPlayer } from "@/features/student/components/video-player";
 import { useGetChapterById } from "@/features/teacher/data/use-get-chapter-by-id";
-import { Button, Divider, Link } from "@nextui-org/react";
+import { Button, Divider, Link } from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";

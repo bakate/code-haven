@@ -11,7 +11,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useGetCategories } from "../data/use-get-categories";
 import { StateType } from "../types";
 import { CourseTableSkeleton } from "./courses-table/course-table-skeleton";

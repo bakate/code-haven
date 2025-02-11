@@ -2,7 +2,7 @@
 
 import { Form, FormField } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Link } from "@nextui-org/react";
+import { Button, Input, Link } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { useCreateCourseByTeacher } from "../data/use-create-course-by-teacher";

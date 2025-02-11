@@ -1,7 +1,7 @@
 // app/providers.tsx
 "use client";
 import useClientCheck from "@/hooks/use-client-check";
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
@@ -29,7 +29,7 @@ export function Providers({ children, session, messages, locale }: Props) {
     <SessionProvider session={session}>
       <NextIntlClientProvider messages={messages} locale={locale}>
         <QueryProvider>
-          <NextUIProvider navigate={router.push}>
+          <HeroUIProvider navigate={router.push}>
             <NextThemesProvider
               attribute="class"
               defaultTheme="light"
@@ -40,7 +40,7 @@ export function Providers({ children, session, messages, locale }: Props) {
               <ConfettiProvider />
               {children}
             </NextThemesProvider>
-          </NextUIProvider>
+          </HeroUIProvider>
         </QueryProvider>
       </NextIntlClientProvider>
     </SessionProvider>

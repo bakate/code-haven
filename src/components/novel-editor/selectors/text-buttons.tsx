@@ -1,7 +1,7 @@
 import { EditorBubbleItem, useEditor } from "novel";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import {
   LuBold,
   LuCode,

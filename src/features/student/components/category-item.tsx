@@ -1,6 +1,6 @@
 "use client";
 
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@heroui/react";
 import { IconType } from "react-icons/lib";
 
 type Props = {

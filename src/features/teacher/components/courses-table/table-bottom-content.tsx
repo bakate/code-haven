@@ -1,5 +1,5 @@
 
-import { Button, divider, Pagination } from "@nextui-org/react";
+import { Button, divider, Pagination } from "@heroui/react";
 import { Dispatch } from "react";
 import { CourseTableAction } from "./reducer";
 

@@ -7,7 +7,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Link,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { FiLoader, FiLogOut } from "react-icons/fi";

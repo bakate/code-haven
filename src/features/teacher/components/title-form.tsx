@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form, FormField } from "@/components/ui/form";
-import { Button, CircularProgress, Input } from "@nextui-org/react";
+import { Button, CircularProgress, Input } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

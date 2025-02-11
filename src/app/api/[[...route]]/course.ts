@@ -15,16 +15,18 @@ import { Hono } from "hono";
 import { verifyAuth, getAuthUser } from "@hono/auth-js";
 import { z } from "zod";
 import { selectLessonProgressionSchema } from "@/features/student/types/lesson-pogression.type";
+import { selectCourseSchema } from "@/features/teacher/types/course.type";
 
-const selectCourseSchema = z.object({
-  categories: z.string().optional(),
-  title: z.string().optional(),
-});
 const app = new Hono()
   .get(
     "/",
-    zValidator("query", selectCourseSchema),
-
+    zValidator(
+      "query",
+      z.object({
+        categories: z.string().optional(),
+        title: z.string().optional(),
+      })
+    ),
     async (c) => {
       const session = await getAuthUser(c);
       const userId = session?.user?.id;

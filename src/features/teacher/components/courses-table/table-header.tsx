@@ -1,4 +1,4 @@
-import { TableHeader as NextUITableHeader, TableColumn } from "@nextui-org/react";
+import { TableHeader as NextUITableHeader, TableColumn } from "@heroui/react";
 type Props = {
   headerColumns: {
     name: string;

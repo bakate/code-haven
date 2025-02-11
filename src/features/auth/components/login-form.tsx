@@ -3,7 +3,7 @@
 import { Form, FormField } from "@/components/ui/form";
 import { useAuthStore } from "@/hooks/use-auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Card, CardBody, Divider, Input } from "@nextui-org/react";
+import { Button, Card, CardBody, Divider, Input } from "@heroui/react";
 import { signIn as SocialSignIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";

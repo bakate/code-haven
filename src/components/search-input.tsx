@@ -1,7 +1,7 @@
 "use client";
 
 import useClientCheck from "@/hooks/use-client-check";
-import { Input } from "@nextui-org/react";
+import { Input } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 

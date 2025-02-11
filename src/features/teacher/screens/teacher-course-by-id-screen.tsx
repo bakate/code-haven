@@ -3,7 +3,7 @@
 import { Banner } from "@/components/banner";
 import { Heading } from "@/components/heading";
 import { IconBadge } from "@/components/icon-badge";
-import { Skeleton } from "@nextui-org/react";
+import { Skeleton } from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback } from "react";
 import {

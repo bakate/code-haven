@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Button, Skeleton } from "@nextui-org/react";
+import { Button, Skeleton } from "@heroui/react";
 import { usePathname, useRouter } from "next/navigation";
 import { LuCheckCircle, LuLock, LuPlayCircle } from "react-icons/lu";
 

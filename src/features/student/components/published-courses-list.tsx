@@ -1,7 +1,7 @@
 "use client";
 import { HoverEffect } from "@/components/card-hover-effect";
 import { useGetCategories } from "@/features/teacher/data/use-get-categories";
-import { Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useGetPublishedCourses } from "../data/use-get-published-courses";

@@ -6,7 +6,7 @@ import {
   DropdownTrigger,
   Input,
   Link,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { Dispatch, useState } from "react";
 import { LuChevronDown, LuPlus, LuSearch } from "react-icons/lu";
 import { CourseTableAction } from "./reducer";

@@ -3,7 +3,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 import { EditorBubbleItem, useEditor } from "novel";
 import { LuCheck, LuChevronDown } from "react-icons/lu";

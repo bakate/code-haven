@@ -9,7 +9,7 @@ import {
   AutocompleteItem,
   Button,
   CircularProgress,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

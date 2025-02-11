@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form, FormField } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import { Button, Checkbox, CircularProgress } from "@nextui-org/react";
+import { Button, Checkbox, CircularProgress } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

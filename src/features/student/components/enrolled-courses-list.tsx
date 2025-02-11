@@ -1,5 +1,5 @@
 "use client";
-import { Button, Card, CardBody } from "@nextui-org/react";
+import { Button, Card, CardBody } from "@heroui/react";
 import { useTranslations } from "next-intl";
 
 import { HoverEffect } from "@/components/card-hover-effect";

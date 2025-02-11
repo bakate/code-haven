@@ -1,7 +1,7 @@
 "use client";
 
 import useClientCheck from "@/hooks/use-client-check";
-import { Switch } from "@nextui-org/react";
+import { Switch } from "@heroui/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { LuMoon, LuSun } from "react-icons/lu";

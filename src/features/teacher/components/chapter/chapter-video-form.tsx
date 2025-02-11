@@ -5,7 +5,7 @@ import useClientCheck from "@/hooks/use-client-check";
 import { Heading } from "@/components/heading";
 import { IconBadge } from "@/components/icon-badge";
 import MuxPlayer from "@mux/mux-player-react";
-import { Button, CircularProgress } from "@nextui-org/react";
+import { Button, CircularProgress } from "@heroui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { memo, useEffect, useReducer } from "react";

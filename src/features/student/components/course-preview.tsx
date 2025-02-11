@@ -3,7 +3,7 @@
 import { IconBadge } from "@/components/icon-badge";
 import { Loader } from "@/components/loader";
 import { StartLearningButton } from "@/components/start-learning-button";
-import { Divider } from "@nextui-org/react";
+import { Divider } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { LuBookOpen } from "react-icons/lu";
 import { useGetSinglePreviewCourse } from "../data/use-get-single-preview-course-by-id";

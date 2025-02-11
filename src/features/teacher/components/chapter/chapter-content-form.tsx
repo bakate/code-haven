@@ -1,7 +1,7 @@
 "use client";
 
 import { NovelEditor } from "@/components/novel-editor/advanced-editor";
-import { Button, CircularProgress } from "@nextui-org/react";
+import { Button, CircularProgress } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { EditorInstance } from "novel";
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import { IconBadge } from "@/components/icon-badge";
-import { Card, CardBody, CardHeader, Skeleton } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Skeleton } from "@heroui/react";
 import { IconType } from "react-icons/lib";
 
 type Props = {

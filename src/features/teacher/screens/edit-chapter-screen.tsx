@@ -1,7 +1,7 @@
 "use client";
 import { Banner } from "@/components/banner";
 import { Heading } from "@/components/heading";
-import { Link, Skeleton } from "@nextui-org/react";
+import { Link, Skeleton } from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { LuArrowLeft, LuLayoutDashboard, LuVideo } from "react-icons/lu";

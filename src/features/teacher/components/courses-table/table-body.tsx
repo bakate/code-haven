@@ -2,7 +2,7 @@ import {
   TableBody as NextUITableBody,
   TableCell,
   TableRow,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import { Key } from "react";
 

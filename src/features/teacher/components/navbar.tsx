@@ -18,7 +18,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { FaChalkboardTeacher } from "react-icons/fa";
