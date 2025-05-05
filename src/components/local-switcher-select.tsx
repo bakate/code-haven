@@ -1,6 +1,8 @@
+"use client";
+import { setUserLocale } from "@/i18n/config";
 import { Locale } from "@/i18n/request";
 import { cn } from "@/lib/utils";
-import { setUserLocale } from "@/services/locale";
+
 import { Avatar, Select, SelectItem } from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChangeEvent, useState, useTransition } from "react";
