@@ -18,8 +18,8 @@ export const LocalSwitcherSelect = ({ className }: Props) => {
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const locale = event.target.value;
     setValue(locale);
-    startTransition(() => {
-      setUserLocale(locale as Locale);
+    startTransition(async () => {
+      await setUserLocale(locale as Locale);
     });
   };
 
