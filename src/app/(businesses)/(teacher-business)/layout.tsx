@@ -4,7 +4,7 @@ import { Sidebar } from "@/features/teacher/components/sidebar";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import { LuBarChart2, LuList } from "react-icons/lu";
+import { LuChartBar, LuList } from "react-icons/lu";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
@@ -25,7 +25,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     {
       label: t("analytics"),
       href: "/teacher/analytics",
-      icon: LuBarChart2,
+      icon: LuChartBar,
     },
   ];
 

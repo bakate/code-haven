@@ -11,7 +11,7 @@ import NavbarComponent from "@/features/teacher/components/navbar";
 import { useSession } from "next-auth/react";
 import { useLocale } from "next-intl";
 import { redirect } from "next/navigation";
-import { LuPlayCircle } from "react-icons/lu";
+import { LuPlay } from "react-icons/lu";
 import Loading from "./loading";
 
 // return an array of object with label:string, href:string and icon:IconType
@@ -22,7 +22,7 @@ const formatRoutes = (course: SingleCourse, locale: string) => {
         (translation) => translation.lang === locale
       )?.title ?? "",
     href: `/courses/${course.id}/chapters/${chapter.id}`,
-    icon: LuPlayCircle,
+    icon: LuPlay,
   }));
 };
 
