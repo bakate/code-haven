@@ -1,4 +1,4 @@
-import { locales } from "@/i18n-config";
+import { locales } from "@/i18n/request";
 import { z } from "zod";
 
 type TranslationProps = {
@@ -47,16 +47,10 @@ export async function translateText({ from, texts, to }: TranslationProps) {
   }
 }
 
-const usLocale = "en-us";
 export const remainingLocales = (currentLocale: string) =>
   locales.reduce((acc: string[], curr) => {
     if (curr !== currentLocale) {
-      // check if curr === en-us to transform it to en before pushing in acc since microsoft translator doesn't support en-us
-      if (curr === usLocale) {
-        acc.push("en");
-      } else {
-        acc.push(curr);
-      }
+      acc.push(curr);
     }
     return acc;
   }, []);

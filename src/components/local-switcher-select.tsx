@@ -1,4 +1,4 @@
-import { Locale } from "@/i18n-config";
+import { Locale } from "@/i18n/request";
 import { cn } from "@/lib/utils";
 import { setUserLocale } from "@/services/locale";
 import { Avatar, Select, SelectItem } from "@heroui/react";
@@ -16,10 +16,10 @@ export const LocalSwitcherSelect = ({ className }: Props) => {
   const [value, setValue] = useState<string>(locale);
   const t = useTranslations("LocaleSwitcher");
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const locale = event.target.value as Locale;
+    const locale = event.target.value;
     setValue(locale);
     startTransition(() => {
-      setUserLocale(locale);
+      setUserLocale(locale as Locale);
     });
   };
 
@@ -45,7 +45,7 @@ export const LocalSwitcherSelect = ({ className }: Props) => {
       aria-label={t("label")}
       startContent={<LuGlobe />}
     >
-      {renderSelectItem("en-us", "United States", "https://flagcdn.com/us.svg")}
+      {renderSelectItem("en", "United States", "https://flagcdn.com/us.svg")}
       {renderSelectItem("fr", "France", "https://flagcdn.com/fr.svg")}
     </Select>
   );

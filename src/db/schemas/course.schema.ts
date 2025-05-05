@@ -13,7 +13,7 @@ import { attachment } from "./attachment.schema";
 import { chapter } from "./chapter.schema";
 import { courseProgression } from "./progression.schema";
 
-const languageEnum = ["en-us", "fr", "es", "de", "it"] as const;
+const languageEnum = ["en", "fr"] as const;
 
 // Course Schemas
 export const course = pgTable("course", {

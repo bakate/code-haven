@@ -14,7 +14,7 @@ import {
   remainingLocales,
   translateText,
 } from "@/features/teacher/utils/translation";
-import { Locale } from "@/i18n-config";
+import { Locale } from "@/i18n/request";
 import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";
 import { and, desc, eq, sql } from "drizzle-orm";
@@ -112,7 +112,7 @@ const app = new Hono()
           },
           ...titleTranslation.translations.map(({ text, to }) => ({
             courseId: newCourseId,
-            lang: to === "en" ? usLocale : (to as Locale),
+            lang: to as Locale,
             title: text,
           })),
         ]);
@@ -255,11 +255,10 @@ const app = new Hono()
         getLocale(),
         getTranslations("createOrEditCourseForm"),
       ]);
-      const usLocale = "en-us";
 
       if (values.title && !values.description) {
         const [titleTranslation] = (await translateText({
-          from: currentLocale === usLocale ? "en" : currentLocale,
+          from: currentLocale,
           texts: [values.title],
           to: remainingLocales(currentLocale),
         })) ?? [{ translations: [] }];
@@ -285,10 +284,7 @@ const app = new Hono()
                 .where(
                   and(
                     eq(courseTranslation.courseId, courseId),
-                    eq(
-                      courseTranslation.lang,
-                      to === "en" ? usLocale : (to as Locale)
-                    )
+                    eq(courseTranslation.lang, to as Locale)
                   )
                 )
             )
@@ -302,7 +298,7 @@ const app = new Hono()
       }
       if (values.description) {
         const [descriptionTranslation] = (await translateText({
-          from: currentLocale === usLocale ? "en" : currentLocale,
+          from: currentLocale,
           texts: [values.description],
           to: remainingLocales(currentLocale),
         })) ?? [{ translations: [] }];
@@ -328,10 +324,7 @@ const app = new Hono()
                 .where(
                   and(
                     eq(courseTranslation.courseId, courseId),
-                    eq(
-                      courseTranslation.lang,
-                      to === "en" ? usLocale : (to as Locale)
-                    )
+                    eq(courseTranslation.lang, to as Locale)
                   )
                 )
                 .catch((error) => {

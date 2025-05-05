@@ -1,7 +1,7 @@
 "use client";
 
 import useClientCheck from "@/hooks/use-client-check";
-import { Locale, locales } from "@/i18n-config";
+import { Locale, locales } from "@/i18n/request";
 import { cn } from "@/lib/utils";
 import { useLocale } from "next-intl";
 

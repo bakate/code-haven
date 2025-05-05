@@ -15,13 +15,12 @@ import {
   remainingLocales,
   translateText,
 } from "@/features/teacher/utils/translation";
-import { Locale } from "@/i18n-config";
+import { Locale } from "@/i18n/request";
 import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { getLocale, getTranslations } from "next-intl/server";
-import { json } from "stream/consumers";
 import { z } from "zod";
 
 const app = new Hono()
@@ -47,13 +46,12 @@ const app = new Hono()
       }
       // TODO check if the user is the course owner
 
-      const usLocale = "en-us";
       const [currentLocale, translations] = await Promise.all([
         getLocale(),
         getTranslations("createOrEditCourseForm"),
       ]);
       const [titleTranslations] = (await translateText({
-        from: currentLocale === usLocale ? "en" : currentLocale,
+        from: currentLocale,
         texts: [values.title],
         to: remainingLocales(currentLocale),
       })) ?? [{ translations: [] }];
@@ -90,7 +88,7 @@ const app = new Hono()
           },
           ...titleTranslations.translations.map(({ text, to }) => ({
             chapterId: newChapterId,
-            lang: to === "en" ? usLocale : (to as Locale),
+            lang: to as Locale,
             title: text,
           })),
         ]);
@@ -246,10 +244,7 @@ const app = new Hono()
                   .where(
                     and(
                       eq(chapterTranslation.chapterId, id),
-                      eq(
-                        chapterTranslation.lang,
-                        to === "en" ? usLocale : (to as Locale)
-                      )
+                      eq(chapterTranslation.lang, to as Locale)
                     )
                   );
               })

@@ -13,7 +13,7 @@ import { selectCourseSchema } from "@/features/teacher/types/course.type";
 import { and, eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { getLocale } from "next-intl/server";
-import { Locale } from "@/i18n-config";
+import { Locale } from "@/i18n/request";
 
 const app = new Hono().get(
   "/:id",

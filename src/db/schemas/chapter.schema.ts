@@ -11,7 +11,7 @@ import { muxData } from "./mux.schema";
 import { lessonProgression } from "./progression.schema";
 import { attachment } from "./attachment.schema";
 
-const languageEnum = ["en-us", "fr", "es", "de", "it"] as const;
+const languageEnum = ["en", "fr"] as const;
 
 export const chapter = pgTable("chapter", {
   id: text("id")
