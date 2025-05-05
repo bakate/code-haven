@@ -5,7 +5,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { LuCheck, LuSendHorizonal, LuTrash } from "react-icons/lu";
+import { LuCheck, LuSendHorizontal, LuTrash } from "react-icons/lu";
 import { useMedia } from "react-use";
 import { useDeleteCourseByTeacher } from "../data/use-delete-course-by-teacher";
 import {
@@ -80,7 +80,7 @@ export const CourseActions = ({
         variant="flat"
         isIconOnly={!isTablet}
         title={isPublished ? t("unpublish") : t("publish")}
-        startContent={isPublished ? <LuCheck /> : <LuSendHorizonal />}
+        startContent={isPublished ? <LuCheck /> : <LuSendHorizontal />}
         color={isPublished ? "warning" : "primary"}
       >
         {!isTablet ? "" : isPublished ? t("unpublish") : t("publish")}

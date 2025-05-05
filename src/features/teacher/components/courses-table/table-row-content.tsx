@@ -13,17 +13,12 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { Key } from "react";
-import {
-  LuEye,
-  LuMoreVertical,
-  LuPencil,
-  LuTrash,
-  LuTrash2,
-} from "react-icons/lu";
+import { LuEye, LuPencil, LuTrash, LuTrash2 } from "react-icons/lu";
 import { useMedia } from "react-use";
 import { useDeleteCourseByTeacher } from "../../data/use-delete-course-by-teacher";
 import { CategoriesType } from "../../data/use-get-categories";
 import { CoursesType } from "../../data/use-get-courses-by-teacher";
+import { FiMoreVertical } from "react-icons/fi";
 
 type Props = {
   course: CoursesType[number];
@@ -116,7 +111,7 @@ export const TableRowContent = ({
           <Dropdown>
             <DropdownTrigger>
               <Button isIconOnly size="sm" variant="light">
-                <LuMoreVertical />
+                <FiMoreVertical />
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="courses table Actions" variant="flat">

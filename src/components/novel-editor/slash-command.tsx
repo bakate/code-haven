@@ -1,6 +1,6 @@
 import { Command, createSuggestionItems, renderItems } from "novel/extensions";
 import {
-  LuCheckSquare,
+  LuCheck,
   LuCode,
   LuHeading1,
   LuHeading2,
@@ -44,7 +44,7 @@ export const suggestionItems = createSuggestionItems([
     title: "To-do List",
     description: "Track tasks with a to-do list.",
     searchTerms: ["todo", "task", "list", "check", "checkbox"],
-    icon: <LuCheckSquare size={18} />,
+    icon: <LuCheck size={18} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleTaskList().run();
     },

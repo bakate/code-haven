@@ -12,7 +12,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { FiLoader, FiLogOut } from "react-icons/fi";
 import { IconType } from "react-icons/lib";
-import { LuHome, LuLogIn } from "react-icons/lu";
+import { LuHouse, LuLogIn } from "react-icons/lu";
 import { useMedia } from "react-use";
 
 type ItemProps = {
@@ -60,7 +60,7 @@ export const UserButton = () => {
     {
       label: t("home"),
       href: "/",
-      icon: LuHome,
+      icon: LuHouse,
     },
     {
       label: t("logout"),

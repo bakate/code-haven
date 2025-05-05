@@ -2,7 +2,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { LuCheck, LuSendHorizonal, LuTrash } from "react-icons/lu";
+import { LuCheck, LuSendHorizontal, LuTrash } from "react-icons/lu";
 import { useDeleteChapterById } from "../../data/chapter/use-delete-chapter";
 import { useEditChapterById } from "../../data/chapter/use-edit-chapter";
 import { useMedia } from "react-use";
@@ -73,7 +73,7 @@ export const ChapterActions = ({
         onPress={toggleChapterPublish}
         isDisabled={disabled || isPending}
         variant="flat"
-        startContent={isPublished ? <LuCheck /> : <LuSendHorizonal />}
+        startContent={isPublished ? <LuCheck /> : <LuSendHorizontal />}
         color={isPublished ? "warning" : "primary"}
         isIconOnly={!isTablet}
         size="sm"

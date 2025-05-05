@@ -1,15 +1,9 @@
 import { EditorBubbleItem, EditorInstance, useEditor } from "novel";
 
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@heroui/react";
+import { Button, Popover, PopoverContent, PopoverTrigger } from "@heroui/react";
 import { IconType } from "react-icons/lib";
 import {
   LuCheck,
-  LuCheckSquare,
   LuChevronDown,
   LuCode,
   LuHeading1,
@@ -61,7 +55,7 @@ const items: SelectorItem[] = [
   },
   {
     name: "To-do List",
-    icon: LuCheckSquare,
+    icon: LuCheck,
     command: (editor) =>
       editor.chain().focus().clearNodes().toggleTaskList().run(),
     isActive: (editor) => editor.isActive("taskItem"),

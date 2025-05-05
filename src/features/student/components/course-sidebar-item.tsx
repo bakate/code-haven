@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Button, Skeleton } from "@heroui/react";
 import { usePathname, useRouter } from "next/navigation";
-import { LuCheckCircle, LuLock, LuPlayCircle } from "react-icons/lu";
+import { LuCircleCheck, LuLock, LuPlay } from "react-icons/lu";
 
 type Props = {
   id: string;
@@ -24,7 +24,7 @@ export const CourseSidebarItem = ({
   const pathname = usePathname();
   const router = useRouter();
 
-  const Icon = isLocked ? LuLock : isCompleted ? LuCheckCircle : LuPlayCircle;
+  const Icon = isLocked ? LuLock : isCompleted ? LuCircleCheck : LuPlay;
   const isActive = pathname?.includes(id);
 
   const onPress = () => {

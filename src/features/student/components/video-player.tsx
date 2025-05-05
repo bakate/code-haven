@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { LuLoader2, LuLock } from "react-icons/lu";
+import { LuLoader, LuLock } from "react-icons/lu";
 import { useDebounce } from "react-use";
 import { toast } from "sonner";
 
@@ -105,7 +105,7 @@ export const VideoPlayer = forwardRef<{ seekToEnd: () => void }, Props>(
       <div className="relative aspect-video">
         {!isReady && !isLocked && (
           <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
-            <LuLoader2 className="h-8 w-8 animate-spin text-secondary" />
+            <LuLoader className="h-8 w-8 animate-spin text-secondary" />
           </div>
         )}
         {isLocked ? (

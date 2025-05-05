@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import NextImage from "next/image";
 import { useState } from "react";
 import { useMedia } from "react-use";
-import { LuPencil } from "react-icons/lu";
 import { ImCancelCircle } from "react-icons/im";
 import { FaImage, FaPencil, FaPlus } from "react-icons/fa6";
 import { useEditCourseByTeacher } from "../data/use-edit-course-by-teacher";

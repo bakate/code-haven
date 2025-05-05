@@ -3,7 +3,7 @@
 import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { LuFile, LuLoader2, LuPencil, LuPlus, LuX } from "react-icons/lu";
+import { LuFile, LuLoader, LuPencil, LuPlus, LuX } from "react-icons/lu";
 
 import { Heading } from "@/components/heading";
 import { ImCancelCircle } from "react-icons/im";
@@ -110,12 +110,12 @@ export const ChapterAttachmentsForm = ({ initialData }: Props) => {
                   <p className="text-xs line-clamp-1">{attachment.name}</p>
                   {deletingId === attachment.id && (
                     <div>
-                      <LuLoader2 className="h-4 w-4 animate-spin" />
+                      <LuLoader className="h-4 w-4 animate-spin" />
                     </div>
                   )}
                   {deletingId !== attachment.id && (
                     <Button
-                      onClick={() => onDelete(attachment.id)}
+                      onPress={() => onDelete(attachment.id)}
                       type="button"
                       disabled={isDeleting}
                       color="danger"
