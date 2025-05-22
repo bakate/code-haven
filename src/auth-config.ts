@@ -31,6 +31,7 @@ export const providerMap = providers.map((provider) => {
 export const nextAuthConfiguration = {
   adapter: DrizzleAdapter(db),
   secret: process.env.AUTH_SECRET,
+  basePath: "/api/auth",
   providers: [...providers],
   callbacks: {
     async session({ session, user }) {
